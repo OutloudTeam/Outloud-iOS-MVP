@@ -1,0 +1,2 @@
+AUDIOKIT_LIBRARY_SEARCH_PATHS = "$(PODS_ROOT)/AudioKit/AudioKit/Platforms/iOS/libs" "$(PODS_ROOT)/AudioKit/AudioKit/Platforms/iOS/libs"
+AUDIOKIT_OTHER_LDFLAGS = -l"csound" -l"sndfile"

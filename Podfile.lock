@@ -1,10 +1,13 @@
 PODS:
+  - AudioKit (2.1.1)
   - SnapKit (0.15.0)
 
 DEPENDENCIES:
+  - AudioKit (~> 2.1.1)
   - SnapKit (~> 0.15.0)
 
 SPEC CHECKSUMS:
+  AudioKit: 54c92607d7c0fe14035793e81afe1717324ce5fa
   SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87
 
 COCOAPODS: 0.38.2
