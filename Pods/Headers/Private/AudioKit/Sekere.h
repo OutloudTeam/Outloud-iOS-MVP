@@ -1,1 +1,0 @@
-../../../AudioKit/AudioKit/Utilities/Instruments/Emulations/Sekere.h

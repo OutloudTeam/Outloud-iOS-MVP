@@ -1,1 +1,0 @@
-../../../AudioKit/AudioKit/Operations/Signal Generators/Subtractive Synthesis/AKAdditiveCosines.h
