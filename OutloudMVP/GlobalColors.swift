@@ -8,4 +8,13 @@
 
 import Foundation
 import UIKit
-let topBarColor = UIColor(red: 0.827, green: 0.827, blue: 0.827, alpha: 1.0)
+
+let topBarColor = UIColor.whiteColor()
+let brightRed = UIColor(red: 0.745, green: 0.125, blue: 0.145, alpha: 1.0)
+let black = UIColor(red: 0.137, green: 0.122, blue: 0.125, alpha: 1.0)
+let darkRed = UIColor(red: 0.224, green: 0.071, blue: 0.067, alpha: 1)
+let transparentBlack = UIColor(red: 0.137, green: 0.122, blue: 0.125, alpha: 0.3)
+//Bright Red: BE2025
+//Black: 231F20
+//Black Alpha: 30%
+//Dark Red: 391211
