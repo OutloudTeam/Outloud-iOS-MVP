@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5BD602BE40DC388ADC4F0824 /* libPods-OutloudMVP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63521D8DF6BE00BE2F3AC456 /* libPods-OutloudMVP.a */; };
 		F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */; };
 		F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8C1BC98DA3003DF922 /* ViewController.swift */; };
 		F3332C901BC98DA3003DF922 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3332C8E1BC98DA3003DF922 /* Main.storyboard */; };
@@ -34,6 +35,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		50056F4AFFE9C35607D4A4D0 /* Pods-OutloudMVP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutloudMVP.release.xcconfig"; path = "Pods/Target Support Files/Pods-OutloudMVP/Pods-OutloudMVP.release.xcconfig"; sourceTree = "<group>"; };
+		63521D8DF6BE00BE2F3AC456 /* libPods-OutloudMVP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OutloudMVP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8960603C0EF526FA2406CA24 /* Pods-OutloudMVP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutloudMVP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OutloudMVP/Pods-OutloudMVP.debug.xcconfig"; sourceTree = "<group>"; };
 		F3332C871BC98DA3003DF922 /* OutloudMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OutloudMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3332C8C1BC98DA3003DF922 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BD602BE40DC388ADC4F0824 /* libPods-OutloudMVP.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +79,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		35A7B5EB1095A11966116738 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8960603C0EF526FA2406CA24 /* Pods-OutloudMVP.debug.xcconfig */,
+				50056F4AFFE9C35607D4A4D0 /* Pods-OutloudMVP.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		9A69A350BE41733EBDD20AAE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				63521D8DF6BE00BE2F3AC456 /* libPods-OutloudMVP.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F3332C7E1BC98DA3003DF922 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +103,8 @@
 				F3332C9E1BC98DA3003DF922 /* OutloudMVPTests */,
 				F3332CA91BC98DA3003DF922 /* OutloudMVPUITests */,
 				F3332C881BC98DA3003DF922 /* Products */,
+				35A7B5EB1095A11966116738 /* Pods */,
+				9A69A350BE41733EBDD20AAE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -132,9 +156,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F3332CAF1BC98DA3003DF922 /* Build configuration list for PBXNativeTarget "OutloudMVP" */;
 			buildPhases = (
+				83D1F7538CC495A1BFCC85AE /* Check Pods Manifest.lock */,
 				F3332C831BC98DA3003DF922 /* Sources */,
 				F3332C841BC98DA3003DF922 /* Frameworks */,
 				F3332C851BC98DA3003DF922 /* Resources */,
+				6FB4B77305B9A0FF3BB4597F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -249,6 +275,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6FB4B77305B9A0FF3BB4597F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OutloudMVP/Pods-OutloudMVP-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		83D1F7538CC495A1BFCC85AE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F3332C831BC98DA3003DF922 /* Sources */ = {
@@ -396,6 +455,7 @@
 		};
 		F3332CB01BC98DA3003DF922 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8960603C0EF526FA2406CA24 /* Pods-OutloudMVP.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = OutloudMVP/Info.plist;
@@ -407,6 +467,7 @@
 		};
 		F3332CB11BC98DA3003DF922 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50056F4AFFE9C35607D4A4D0 /* Pods-OutloudMVP.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = OutloudMVP/Info.plist;
@@ -483,6 +544,7 @@
 				F3332CB11BC98DA3003DF922 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F3332CB21BC98DA3003DF922 /* Build configuration list for PBXNativeTarget "OutloudMVPTests" */ = {
 			isa = XCConfigurationList;
@@ -491,6 +553,7 @@
 				F3332CB41BC98DA3003DF922 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F3332CB51BC98DA3003DF922 /* Build configuration list for PBXNativeTarget "OutloudMVPUITests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +562,7 @@
 				F3332CB71BC98DA3003DF922 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
