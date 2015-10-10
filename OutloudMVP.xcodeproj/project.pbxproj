@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5BD602BE40DC388ADC4F0824 /* libPods-OutloudMVP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63521D8DF6BE00BE2F3AC456 /* libPods-OutloudMVP.a */; };
+		B6857BD85E6B83BD1BAB2A61 /* Pods_OutloudMVP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C16C86DA9BCFCD78DB593ACA /* Pods_OutloudMVP.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */; };
 		F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8C1BC98DA3003DF922 /* ViewController.swift */; };
 		F3332C901BC98DA3003DF922 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3332C8E1BC98DA3003DF922 /* Main.storyboard */; };
@@ -36,8 +36,8 @@
 
 /* Begin PBXFileReference section */
 		50056F4AFFE9C35607D4A4D0 /* Pods-OutloudMVP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutloudMVP.release.xcconfig"; path = "Pods/Target Support Files/Pods-OutloudMVP/Pods-OutloudMVP.release.xcconfig"; sourceTree = "<group>"; };
-		63521D8DF6BE00BE2F3AC456 /* libPods-OutloudMVP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OutloudMVP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8960603C0EF526FA2406CA24 /* Pods-OutloudMVP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutloudMVP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OutloudMVP/Pods-OutloudMVP.debug.xcconfig"; sourceTree = "<group>"; };
+		C16C86DA9BCFCD78DB593ACA /* Pods_OutloudMVP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OutloudMVP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3332C871BC98DA3003DF922 /* OutloudMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OutloudMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3332C8C1BC98DA3003DF922 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BD602BE40DC388ADC4F0824 /* libPods-OutloudMVP.a in Frameworks */,
+				B6857BD85E6B83BD1BAB2A61 /* Pods_OutloudMVP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +91,7 @@
 		9A69A350BE41733EBDD20AAE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				63521D8DF6BE00BE2F3AC456 /* libPods-OutloudMVP.a */,
+				C16C86DA9BCFCD78DB593ACA /* Pods_OutloudMVP.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -161,6 +161,7 @@
 				F3332C841BC98DA3003DF922 /* Frameworks */,
 				F3332C851BC98DA3003DF922 /* Resources */,
 				6FB4B77305B9A0FF3BB4597F /* Copy Pods Resources */,
+				E4048B7147F1A36760EB4C9A /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -305,6 +306,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E4048B7147F1A36760EB4C9A /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OutloudMVP/Pods-OutloudMVP-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
