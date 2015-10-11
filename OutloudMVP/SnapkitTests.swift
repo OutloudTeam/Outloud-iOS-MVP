@@ -9,9 +9,25 @@
 import Foundation
 import UIKit
 import SnapKit
+import AVFoundation
+
 
 class SnapkitTests: UIViewController {
-    @IBOutlet var superview: UIView!
+    @IBOutlet var superView: UIView!
+    var scrollView: UIScrollView!
+    
+    var backgroundMusic : AVAudioPlayer?
+    func playSound()  {
+        backgroundMusic?.volume = 10.0
+        backgroundMusic?.play()
+    }
+    override func viewDidAppear(animated: Bool) {
+        if let backgroundMusic = setupAudioPlayerWithFile("TestAudio", type:"mp3") {
+            self.backgroundMusic = backgroundMusic
+//            playSound()
+        }
+    }
+    
     
     override func viewDidLoad() {
         let topBar = UIView()
@@ -22,10 +38,15 @@ class SnapkitTests: UIViewController {
         let secondSlash = UILabel()
 
         
-        superview.addSubview(topBar)
-        superview.addSubview(articleBar)
-        superview.addSubview(bottomBar)
-        superview.addSubview(middleView)
+        superView.addSubview(topBar)
+        superView.addSubview(articleBar)
+        superView.addSubview(bottomBar)
+        superView.addSubview(middleView)
+        
+        scrollView = UIScrollView(frame: middleView.bounds)
+        middleView.addSubview(scrollView)
+        scrollView.backgroundColor = UIColor.redColor()
+        
         
         topBar.backgroundColor = topBarColor
         articleBar.backgroundColor = UIColor.whiteColor()
@@ -34,27 +55,27 @@ class SnapkitTests: UIViewController {
         
         topBar.snp_makeConstraints { (make) -> Void in
             make.height.equalTo(50)
-            make.top.equalTo(superview).offset(20)
-            make.left.equalTo(superview).offset(0)
-            make.right.equalTo(superview).offset(0)
+            make.top.equalTo(superView).offset(20)
+            make.left.equalTo(superView).offset(0)
+            make.right.equalTo(superView).offset(0)
         }
         articleBar.snp_makeConstraints { (make) -> Void in
             make.height.equalTo(75)
             make.top.equalTo(topBar.snp_bottom).offset(0)
-            make.left.equalTo(superview).offset(0)
-            make.right.equalTo(superview).offset(0)
+            make.left.equalTo(superView).offset(0)
+            make.right.equalTo(superView).offset(0)
         }
         middleView.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(articleBar.snp_bottom)
             make.bottom.equalTo(bottomBar.snp_top)
-            make.left.equalTo(superview).offset(0)
-            make.right.equalTo(superview).offset(0)
+            make.left.equalTo(superView).offset(0)
+            make.right.equalTo(superView).offset(0)
         }
         bottomBar.snp_makeConstraints { (make) -> Void in
             make.height.equalTo(75)
-            make.bottom.equalTo(superview).offset(0)
-            make.left.equalTo(superview).offset(0)
-            make.right.equalTo(superview).offset(0)
+            make.bottom.equalTo(superView).offset(0)
+            make.left.equalTo(superView).offset(0)
+            make.right.equalTo(superView).offset(0)
         }
         
         //Declarations for topBar
@@ -118,7 +139,6 @@ class SnapkitTests: UIViewController {
             make.centerY.equalTo(topBar)
             make.left.equalTo(secondSlash.snp_right).offset(5)
         }
-    
         //Declarations for articleBar
         let articleTitle = UILabel()
         articleTitle.text = "Article One"
@@ -158,14 +178,27 @@ class SnapkitTests: UIViewController {
             make.leading.equalTo(authorName).offset(-80)
             make.top.equalTo(authorName)
         }
+        let authorRatingBarBackground = UIView()
+        authorRatingBarBackground.backgroundColor = UIColor.whiteColor()
+        authorRatingBarBackground.layer.borderColor = brightRed.CGColor
+        authorRatingBarBackground.layer.borderWidth = 0.5
+        articleBar.addSubview(authorRatingBarBackground)
+        authorRatingBarBackground.snp_makeConstraints { (make) -> Void in
+            make.height.equalTo(3)
+            make.top.equalTo(authorName.snp_bottom).offset(5)
+            make.left.equalTo(authorLabel.snp_left)
+            make.right.equalTo(authorName.snp_right)
+        }
         let authorRatingBar = UIView()
         authorRatingBar.backgroundColor = UIColor.redColor()
+        authorRatingBar.layer.borderColor = brightRed.CGColor
+        authorRatingBar.layer.borderWidth = 0.5
         articleBar.addSubview(authorRatingBar)
         authorRatingBar.snp_makeConstraints { (make) -> Void in
             make.height.equalTo(3)
             make.top.equalTo(authorName.snp_bottom).offset(5)
             make.left.equalTo(authorLabel.snp_left)
-            make.right.equalTo(authorName.snp_right)
+            make.right.equalTo(authorName.snp_right).offset(-40)
         }
         //Voice stuff
         let voiceName = UILabel()
@@ -187,25 +220,57 @@ class SnapkitTests: UIViewController {
             make.leading.equalTo(voiceName).offset(-80)
             make.top.equalTo(voiceName)
         }
-        let voiceRatingBar = UIView()
-        voiceRatingBar.backgroundColor = UIColor.redColor()
-        articleBar.addSubview(voiceRatingBar)
-        voiceRatingBar.snp_makeConstraints { (make) -> Void in
+        let voiceRatingBarBackground = UIView()
+        voiceRatingBarBackground.backgroundColor = UIColor.whiteColor()
+        voiceRatingBarBackground.layer.borderColor = brightRed.CGColor
+        voiceRatingBarBackground.layer.borderWidth = 0.5
+        articleBar.addSubview(voiceRatingBarBackground)
+        voiceRatingBarBackground.snp_makeConstraints { (make) -> Void in
             make.height.equalTo(3)
             make.top.equalTo(voiceName.snp_bottom).offset(5)
-            make.left.equalTo(authorRatingBar.snp_left)
-            make.right.equalTo(voiceName.snp_right)
+            make.left.equalTo(authorLabel.snp_left)
+            make.right.equalTo(authorName.snp_right)
         }
-
+        let voiceRatingBar = UIView()
+        voiceRatingBar.backgroundColor = UIColor.redColor()
+        voiceRatingBar.layer.borderColor = brightRed.CGColor
+        voiceRatingBar.layer.borderWidth = 0.5
+        articleBar.addSubview(voiceRatingBar)
+        voiceRatingBar.snp_makeConstraints { (make) -> Void in
+            make.height.equalTo(authorRatingBar.snp_height)
+            make.top.equalTo(voiceName.snp_bottom).offset(5)
+            make.left.equalTo(authorRatingBar.snp_left)
+            make.right.equalTo(voiceName.snp_right).offset(-40)
+        }
+        
+        let playButton   = UIButton(type: UIButtonType.System) as UIButton
+        playButton.frame = CGRectMake(50, 50, 50, 50)
+        playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+        playButton.setBackgroundImage(UIImage(named: "play-button-clicked"), forState: .Selected)
+        bottomBar.addSubview(playButton)
+        playButton.addTarget(self, action: "playSound", forControlEvents: .TouchUpInside)
+        playButton.snp_makeConstraints { (make) -> Void in
+            make.centerY.equalTo(bottomBar)
+            make.width.height.equalTo(60)
+            make.centerX.equalTo(bottomBar.snp_centerX)
+        }
+        func buttonClicked(){
+            print("KEK")
+            playSound()
+        }
         
         
-    
-    
-    
     }
 }
+func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
+    let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
+    let url = NSURL.fileURLWithPath(path!)
 
-func buttonAction(sender:UIButton!)
-{
-    print("Button tapped")
+    var audioPlayer:AVAudioPlayer?
+    do {
+        try audioPlayer = AVAudioPlayer(contentsOfURL: url)
+    } catch {
+        print("Player not available")
+    }
+    return audioPlayer
 }

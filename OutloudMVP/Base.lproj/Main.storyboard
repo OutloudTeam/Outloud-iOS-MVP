@@ -35,7 +35,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="superview" destination="KBE-mg-eQo" id="ahz-de-gqQ"/>
+                        <outlet property="superView" destination="KBE-mg-eQo" id="Jgg-l0-Qak"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJ7-sV-LAw" userLabel="First Responder" sceneMemberID="firstResponder"/>
