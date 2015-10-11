@@ -12,14 +12,20 @@ import SnapKit
 import AVFoundation
 
 
-class SnapkitTests: UIViewController {
+class ArticleDetail: UIViewController {
     @IBOutlet var superView: UIView!
     var scrollView: UIScrollView!
+    var playOrPause = false
     
     var backgroundMusic : AVAudioPlayer?
     func playSound()  {
-        backgroundMusic?.volume = 10.0
-        backgroundMusic?.play()
+        if playOrPause == false {
+            playOrPause = true
+            backgroundMusic?.play()
+        } else {
+            playOrPause = false
+            backgroundMusic?.pause()
+        }
     }
     func sliderValueDidChange(sender:UISlider)
     {
@@ -92,7 +98,7 @@ class SnapkitTests: UIViewController {
         backButton.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 20)
         topBar.addSubview(backButton)
         backButton.snp_makeConstraints { (make) -> Void in
-            make.centerY.equalTo(topBar)
+            make.centerY.equalTo(topBar.snp_centerY)
             make.left.equalTo(topBar).offset(10)
         }
         let outloudTopbarButton = UIButton(type: UIButtonType.System) as UIButton
@@ -103,7 +109,7 @@ class SnapkitTests: UIViewController {
         outloudTopbarButton.titleLabel?.font = UIFont(name: ".SFNSDisplay-Ultralight", size: 18)
         topBar.addSubview(outloudTopbarButton)
         outloudTopbarButton.snp_makeConstraints { (make) -> Void in
-            make.centerY.equalTo(topBar)
+            make.centerY.equalTo(backButton.snp_centerY)
             make.left.equalTo(topBar).offset(40)
         }
         firstSlash.text = "/"

@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		B6857BD85E6B83BD1BAB2A61 /* Pods_OutloudMVP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C16C86DA9BCFCD78DB593ACA /* Pods_OutloudMVP.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		DB02F2081BCA25F800064CEB /* ArticleDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02F2071BCA25F800064CEB /* ArticleDetails.swift */; };
+		DB02F20A1BCA28D300064CEB /* ArticleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02F2091BCA28D300064CEB /* ArticleList.swift */; };
 		DB5664271BC999C200568D8E /* TestAudio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB5664261BC999C200568D8E /* TestAudio.mp3 */; };
-		DB5664291BC9A75900568D8E /* SnapkitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5664281BC9A75900568D8E /* SnapkitTests.swift */; };
 		DB56642C1BC9B12600568D8E /* GlobalColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB56642B1BC9B12600568D8E /* GlobalColors.swift */; };
 		F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */; };
 		F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8C1BC98DA3003DF922 /* ViewController.swift */; };
@@ -41,9 +42,10 @@
 		50056F4AFFE9C35607D4A4D0 /* Pods-OutloudMVP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutloudMVP.release.xcconfig"; path = "Pods/Target Support Files/Pods-OutloudMVP/Pods-OutloudMVP.release.xcconfig"; sourceTree = "<group>"; };
 		8960603C0EF526FA2406CA24 /* Pods-OutloudMVP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutloudMVP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OutloudMVP/Pods-OutloudMVP.debug.xcconfig"; sourceTree = "<group>"; };
 		C16C86DA9BCFCD78DB593ACA /* Pods_OutloudMVP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OutloudMVP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB02F2071BCA25F800064CEB /* ArticleDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDetails.swift; sourceTree = "<group>"; };
+		DB02F2091BCA28D300064CEB /* ArticleList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleList.swift; sourceTree = "<group>"; };
 		DB5664241BC9994C00568D8E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DB5664261BC999C200568D8E /* TestAudio.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = TestAudio.mp3; path = ../../../../../Desktop/TestAudio.mp3; sourceTree = "<group>"; };
-		DB5664281BC9A75900568D8E /* SnapkitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapkitTests.swift; sourceTree = "<group>"; };
 		DB56642B1BC9B12600568D8E /* GlobalColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalColors.swift; sourceTree = "<group>"; };
 		F3332C871BC98DA3003DF922 /* OutloudMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OutloudMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -140,12 +142,13 @@
 				DB56642A1BC9B11A00568D8E /* Global Variables */,
 				F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */,
 				F3332C8C1BC98DA3003DF922 /* ViewController.swift */,
+				DB02F2071BCA25F800064CEB /* ArticleDetails.swift */,
+				DB02F2091BCA28D300064CEB /* ArticleList.swift */,
 				F3332C8E1BC98DA3003DF922 /* Main.storyboard */,
 				F3332C911BC98DA3003DF922 /* Assets.xcassets */,
 				F3332C931BC98DA3003DF922 /* LaunchScreen.storyboard */,
 				F3332C961BC98DA3003DF922 /* Info.plist */,
 				DB5664261BC999C200568D8E /* TestAudio.mp3 */,
-				DB5664281BC9A75900568D8E /* SnapkitTests.swift */,
 			);
 			path = OutloudMVP;
 			sourceTree = "<group>";
@@ -351,8 +354,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB56642C1BC9B12600568D8E /* GlobalColors.swift in Sources */,
+				DB02F2081BCA25F800064CEB /* ArticleDetails.swift in Sources */,
+				DB02F20A1BCA28D300064CEB /* ArticleList.swift in Sources */,
 				F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */,
-				DB5664291BC9A75900568D8E /* SnapkitTests.swift in Sources */,
 				F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
