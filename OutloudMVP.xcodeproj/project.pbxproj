@@ -15,6 +15,8 @@
 		F3332C951BC98DA3003DF922 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3332C931BC98DA3003DF922 /* LaunchScreen.storyboard */; };
 		F3332CA01BC98DA3003DF922 /* OutloudMVPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C9F1BC98DA3003DF922 /* OutloudMVPTests.swift */; };
 		F3332CAB1BC98DA3003DF922 /* OutloudMVPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332CAA1BC98DA3003DF922 /* OutloudMVPUITests.swift */; };
+		F3C40AB31BCAB09600A033FF /* RecordPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C40AB21BCAB09600A033FF /* RecordPageViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		F3C40ABA1BCAB44A00A033FF /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C40AB91BCAB44A00A033FF /* RecordButton.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		F3332CA61BC98DA3003DF922 /* OutloudMVPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OutloudMVPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3332CAA1BC98DA3003DF922 /* OutloudMVPUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutloudMVPUITests.swift; sourceTree = "<group>"; };
 		F3332CAC1BC98DA3003DF922 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F3C40AB21BCAB09600A033FF /* RecordPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordPageViewController.swift; sourceTree = "<group>"; };
+		F3C40AB91BCAB44A00A033FF /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +125,8 @@
 		F3332C891BC98DA3003DF922 /* OutloudMVP */ = {
 			isa = PBXGroup;
 			children = (
+				F3C40AB41BCAB1C300A033FF /* Views */,
+				F3C40AB11BCAB02600A033FF /* ViewControllers */,
 				F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */,
 				F3332C8C1BC98DA3003DF922 /* ViewController.swift */,
 				F3332C8E1BC98DA3003DF922 /* Main.storyboard */,
@@ -147,6 +153,22 @@
 				F3332CAC1BC98DA3003DF922 /* Info.plist */,
 			);
 			path = OutloudMVPUITests;
+			sourceTree = "<group>";
+		};
+		F3C40AB11BCAB02600A033FF /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F3C40AB21BCAB09600A033FF /* RecordPageViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F3C40AB41BCAB1C300A033FF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F3C40AB91BCAB44A00A033FF /* RecordButton.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,6 +352,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3C40ABA1BCAB44A00A033FF /* RecordButton.swift in Sources */,
+				F3C40AB31BCAB09600A033FF /* RecordPageViewController.swift in Sources */,
 				F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */,
 				F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */,
 			);
