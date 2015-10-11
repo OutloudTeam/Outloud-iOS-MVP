@@ -21,6 +21,12 @@ class SnapkitTests: UIViewController {
         backgroundMusic?.volume = 10.0
         backgroundMusic?.play()
     }
+    func sliderValueDidChange(sender:UISlider)
+    {
+        backgroundMusic?.volume = sender.value
+    }
+    
+    
     override func viewDidAppear(animated: Bool) {
         if let backgroundMusic = setupAudioPlayerWithFile("TestAudio", type:"mp3") {
             self.backgroundMusic = backgroundMusic
@@ -243,6 +249,8 @@ class SnapkitTests: UIViewController {
             make.right.equalTo(voiceName.snp_right).offset(-40)
         }
         
+        
+        //Bottom bar
         let playButton   = UIButton(type: UIButtonType.System) as UIButton
         playButton.frame = CGRectMake(50, 50, 50, 50)
         playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
@@ -254,12 +262,19 @@ class SnapkitTests: UIViewController {
             make.width.height.equalTo(60)
             make.centerX.equalTo(bottomBar.snp_centerX)
         }
-        func buttonClicked(){
-            print("KEK")
-            playSound()
+        let volumeSlider = UISlider(frame:CGRectMake(20, 260, 280, 20))
+        volumeSlider.minimumValue = 0
+        volumeSlider.maximumValue = 10
+        volumeSlider.continuous = true
+        volumeSlider.tintColor = UIColor.redColor()
+        volumeSlider.value = 5
+        bottomBar.addSubview(volumeSlider)
+        volumeSlider.addTarget(self, action: "sliderValueDidChange:", forControlEvents: .ValueChanged)
+        volumeSlider.snp_makeConstraints { (make) -> Void in
+            make.centerY.equalTo(bottomBar.snp_centerY)
+            make.width.height.equalTo(80)
+            make.right.equalTo(playButton.snp_left).offset(-20)
         }
-        
-        
     }
 }
 func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
