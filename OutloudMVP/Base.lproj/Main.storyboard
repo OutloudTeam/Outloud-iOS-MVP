@@ -80,36 +80,24 @@
             </objects>
             <point key="canvasLocation" x="388" y="400"/>
         </scene>
+        <!--Article Detail-->
+        <scene sceneID="1Y5-rc-wWQ">
         <!--View Controller-->
         <scene sceneID="5Lc-uv-45a">
             <objects>
+                <viewController id="OTw-4d-QSI" customClass="ArticleDetail" customModule="OutloudMVP" customModuleProvider="target" sceneMemberID="viewController">
                 <viewController id="e42-ep-ZzO" sceneMemberID="viewController">
                     <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zLm-pt-QJJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="bpK-NG-QXA"/>
                         <viewControllerLayoutGuide type="top" id="Y8K-em-sZN"/>
                         <viewControllerLayoutGuide type="bottom" id="zp1-Aa-FTX"/>
                     </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KBE-mg-eQo">
                     <view key="view" contentMode="scaleToFill" id="0I7-jz-kCi">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5FC-qT-720" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="388" y="1066"/>
-        </scene>
-        <!--Article Detail-->
-        <scene sceneID="1Y5-rc-wWQ">
-            <objects>
-                <viewController id="OTw-4d-QSI" customClass="ArticleDetail" customModule="OutloudMVP" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="zLm-pt-QJJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="bpK-NG-QXA"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="KBE-mg-eQo">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
@@ -117,8 +105,10 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJ7-sV-LAw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5FC-qT-720" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="539" y="1587"/>
+            <point key="canvasLocation" x="388" y="1066"/>
         </scene>
         <!--Article List-->
         <scene sceneID="3xm-qP-2qx">
