@@ -28,7 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4ADF22F7FE60AD369AB80A3E73E2F097 /* PBXContainerItemProxy */ = {
+		B281A9DE3E24BBB9E2DF497C15500F7A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
@@ -231,7 +231,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				AB74758ACA720010CCF54E4B466E9FC4 /* PBXTargetDependency */,
+				19391E64843A28BD2022FBDFF668A425 /* PBXTargetDependency */,
 			);
 			name = "Pods-OutloudMVP";
 			productName = "Pods-OutloudMVP";
@@ -314,11 +314,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AB74758ACA720010CCF54E4B466E9FC4 /* PBXTargetDependency */ = {
+		19391E64843A28BD2022FBDFF668A425 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SnapKit;
 			target = 4EDA452517A913B556C7860F490D5FD3 /* SnapKit */;
-			targetProxy = 4ADF22F7FE60AD369AB80A3E73E2F097 /* PBXContainerItemProxy */;
+			targetProxy = B281A9DE3E24BBB9E2DF497C15500F7A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -99,5 +99,47 @@
             </objects>
             <point key="canvasLocation" x="388" y="1066"/>
         </scene>
+        <!--Article Detail-->
+        <scene sceneID="1Y5-rc-wWQ">
+            <objects>
+                <viewController id="OTw-4d-QSI" customClass="ArticleDetail" customModule="OutloudMVP" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zLm-pt-QJJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="bpK-NG-QXA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KBE-mg-eQo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="superView" destination="KBE-mg-eQo" id="Jgg-l0-Qak"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FJ7-sV-LAw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="539" y="1587"/>
+        </scene>
+        <!--Article List-->
+        <scene sceneID="3xm-qP-2qx">
+            <objects>
+                <viewController id="Gie-jf-3Yc" customClass="ArticleList" customModule="OutloudMVP" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rnC-5O-8TX"/>
+                        <viewControllerLayoutGuide type="bottom" id="wsg-Dw-8hd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iHx-9z-ZrO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="superView" destination="iHx-9z-ZrO" id="WiU-YD-nHb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DgH-bI-55i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1188" y="1579"/>
+        </scene>
     </scenes>
 </document>
