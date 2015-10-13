@@ -11,7 +11,6 @@
 		DB02F2081BCA25F800064CEB /* ArticleDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02F2071BCA25F800064CEB /* ArticleDetails.swift */; };
 		DB02F20A1BCA28D300064CEB /* ArticleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02F2091BCA28D300064CEB /* ArticleList.swift */; };
 		DB5664271BC999C200568D8E /* TestAudio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB5664261BC999C200568D8E /* TestAudio.mp3 */; };
-		DB56642C1BC9B12600568D8E /* GlobalColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB56642B1BC9B12600568D8E /* GlobalColors.swift */; };
 		F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */; };
 		F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8C1BC98DA3003DF922 /* ViewController.swift */; };
 		F3332C901BC98DA3003DF922 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3332C8E1BC98DA3003DF922 /* Main.storyboard */; };
@@ -21,6 +20,7 @@
 		F3332CAB1BC98DA3003DF922 /* OutloudMVPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332CAA1BC98DA3003DF922 /* OutloudMVPUITests.swift */; };
 		F3C40AB31BCAB09600A033FF /* RecordPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C40AB21BCAB09600A033FF /* RecordPageViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F3C40ABA1BCAB44A00A033FF /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C40AB91BCAB44A00A033FF /* RecordButton.swift */; settings = {ASSET_TAGS = (); }; };
+		F3F127231BCC823B00F15E21 /* GlobalColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F127221BCC823B00F15E21 /* GlobalColors.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +48,6 @@
 		DB02F2091BCA28D300064CEB /* ArticleList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleList.swift; sourceTree = "<group>"; };
 		DB5664241BC9994C00568D8E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DB5664261BC999C200568D8E /* TestAudio.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = TestAudio.mp3; path = ../../../../../Desktop/TestAudio.mp3; sourceTree = "<group>"; };
-		DB56642B1BC9B12600568D8E /* GlobalColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalColors.swift; sourceTree = "<group>"; };
 		F3332C871BC98DA3003DF922 /* OutloudMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OutloudMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3332C8C1BC98DA3003DF922 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +63,7 @@
 		F3332CAC1BC98DA3003DF922 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F3C40AB21BCAB09600A033FF /* RecordPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordPageViewController.swift; sourceTree = "<group>"; };
 		F3C40AB91BCAB44A00A033FF /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
+		F3F127221BCC823B00F15E21 /* GlobalColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalColors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,14 +110,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DB56642A1BC9B11A00568D8E /* Global Variables */ = {
-			isa = PBXGroup;
-			children = (
-				DB56642B1BC9B12600568D8E /* GlobalColors.swift */,
-			);
-			name = "Global Variables";
-			sourceTree = "<group>";
-		};
 		F3332C7E1BC98DA3003DF922 = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +135,7 @@
 		F3332C891BC98DA3003DF922 /* OutloudMVP */ = {
 			isa = PBXGroup;
 			children = (
+				F3F127221BCC823B00F15E21 /* GlobalColors.swift */,
 				F3C40AB41BCAB1C300A033FF /* Views */,
 				F3C40AB11BCAB02600A033FF /* ViewControllers */,
 				F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */,
@@ -374,12 +367,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB56642C1BC9B12600568D8E /* GlobalColors.swift in Sources */,
 				DB02F2081BCA25F800064CEB /* ArticleDetails.swift in Sources */,
 				DB02F20A1BCA28D300064CEB /* ArticleList.swift in Sources */,
 				F3C40ABA1BCAB44A00A033FF /* RecordButton.swift in Sources */,
 				F3C40AB31BCAB09600A033FF /* RecordPageViewController.swift in Sources */,
 				F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */,
+				F3F127231BCC823B00F15E21 /* GlobalColors.swift in Sources */,
 				F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
