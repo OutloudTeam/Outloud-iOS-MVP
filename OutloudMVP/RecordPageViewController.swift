@@ -47,20 +47,19 @@ class RecordPageViewController : UIViewController {
             make.height.top.left.equalTo(progressView);
         }
         
-        let progressLabel = UILabel();
-        progressLabel.text = "Section 1";
-        progressLabel.font = UIFont(name: "Avenir-Light", size: 10);
-        progressLabel.textColor = UIColor.blackColor();
-        progressView.addSubview(progressLabel);
         
-        progressLabel.snp_makeConstraints{ (make) -> Void in
-            make.left.equalTo(progressView).offset(5);
-            make.top.height.equalTo(progressView);
-            make.width.equalTo(progressView).offset(64);
-        };
+        // Text viewer
+        let scrollBar = UIScrollView()
+        scrollBar.backgroundColor = UIColor.redColor()
+        self.view.addSubview(scrollBar)
         
+        scrollBar.snp_makeConstraints{ (make)-> Void in
+            make.width.equalTo(self.view)
+            make.bottom.equalTo(progressView)
+            make.left.equalTo(self.view)
+            make.top.equalTo(self.view.snp_top).offset(20)
+        }
         
-        // Article Info Section
     }
     
 }

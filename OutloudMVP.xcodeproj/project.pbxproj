@@ -17,6 +17,7 @@
 		F3332C951BC98DA3003DF922 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3332C931BC98DA3003DF922 /* LaunchScreen.storyboard */; };
 		F3332CA01BC98DA3003DF922 /* OutloudMVPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C9F1BC98DA3003DF922 /* OutloudMVPTests.swift */; };
 		F3332CAB1BC98DA3003DF922 /* OutloudMVPUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332CAA1BC98DA3003DF922 /* OutloudMVPUITests.swift */; };
+		F35D5B311BCF2ED30019C2B9 /* GlobalFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35D5B301BCF2ED30019C2B9 /* GlobalFonts.swift */; settings = {ASSET_TAGS = (); }; };
 		F3C40AB31BCAB09600A033FF /* RecordPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C40AB21BCAB09600A033FF /* RecordPageViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F3C40ABA1BCAB44A00A033FF /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C40AB91BCAB44A00A033FF /* RecordButton.swift */; settings = {ASSET_TAGS = (); }; };
 		F3F127231BCC823B00F15E21 /* GlobalColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F127221BCC823B00F15E21 /* GlobalColors.swift */; settings = {ASSET_TAGS = (); }; };
@@ -60,6 +61,7 @@
 		F3332CA61BC98DA3003DF922 /* OutloudMVPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OutloudMVPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3332CAA1BC98DA3003DF922 /* OutloudMVPUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutloudMVPUITests.swift; sourceTree = "<group>"; };
 		F3332CAC1BC98DA3003DF922 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F35D5B301BCF2ED30019C2B9 /* GlobalFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFonts.swift; sourceTree = "<group>"; };
 		F3C40AB21BCAB09600A033FF /* RecordPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordPageViewController.swift; sourceTree = "<group>"; };
 		F3C40AB91BCAB44A00A033FF /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		F3F127221BCC823B00F15E21 /* GlobalColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalColors.swift; sourceTree = "<group>"; };
@@ -135,8 +137,8 @@
 		F3332C891BC98DA3003DF922 /* OutloudMVP */ = {
 			isa = PBXGroup;
 			children = (
+				F35D5B2F1BCF2EB70019C2B9 /* Global */,
 				F3F127251BCC867100F15E21 /* SupportFiles */,
-				F3F127221BCC823B00F15E21 /* GlobalColors.swift */,
 				F3C40AB41BCAB1C300A033FF /* Views */,
 				F3C40AB11BCAB02600A033FF /* ViewControllers */,
 				F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */,
@@ -167,6 +169,15 @@
 				F3332CAC1BC98DA3003DF922 /* Info.plist */,
 			);
 			path = OutloudMVPUITests;
+			sourceTree = "<group>";
+		};
+		F35D5B2F1BCF2EB70019C2B9 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				F3F127221BCC823B00F15E21 /* GlobalColors.swift */,
+				F35D5B301BCF2ED30019C2B9 /* GlobalFonts.swift */,
+			);
+			name = Global;
 			sourceTree = "<group>";
 		};
 		F3C40AB11BCAB02600A033FF /* ViewControllers */ = {
@@ -263,6 +274,7 @@
 				TargetAttributes = {
 					F3332C861BC98DA3003DF922 = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = 4WH4482LBV;
 					};
 					F3332C9A1BC98DA3003DF922 = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -382,6 +394,7 @@
 				F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */,
 				F3F127231BCC823B00F15E21 /* GlobalColors.swift in Sources */,
 				F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */,
+				F35D5B311BCF2ED30019C2B9 /* GlobalFonts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,10 +537,13 @@
 			baseConfigurationReference = 8960603C0EF526FA2406CA24 /* Pods-OutloudMVP.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OutloudMVP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Outloud.OutloudMVP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -536,10 +552,13 @@
 			baseConfigurationReference = 50056F4AFFE9C35607D4A4D0 /* Pods-OutloudMVP.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OutloudMVP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Outloud.OutloudMVP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
