@@ -19,7 +19,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
     var playOrPause = false
     var firstTime = true
     var backgroundMusic : AVAudioPlayer?
-    var indexToColor = 0
+    var indexToColor = -1
     func playSound()  {
         if firstTime == true {
             firstTime = false
@@ -28,7 +28,8 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
                 self.tableView.reloadData()
             })
             delay(6.4, closure: { () -> () in
-                print("seond")
+                self.indexToColor = 0
+                self.tableView.reloadData()
             })
         }
         if playOrPause == false {
