@@ -40,7 +40,6 @@ class ArticleDetail: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         let topBar = UIView()
         let articleBar = UIView()
