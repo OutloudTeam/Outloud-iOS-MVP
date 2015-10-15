@@ -117,10 +117,14 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
         let fontTest = UIFont(name: "Helvetica", size: 14.0)
         paragraph.font = fontTest
-        paragraph.textColor = UIColor(red: 0.92, green: 0.92, blue: 0.92, alpha: 1.0)
+        paragraph.textColor = UIColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.0)
         if(indexToColor == indexPath.row){
             paragraph.textColor = UIColor.blackColor()
+            let fontTest = UIFont(name: "Helvetica", size: 14.0)
+            paragraph.font = fontTest
         }
+        cell.userInteractionEnabled = false
+    
         return cell
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -130,6 +134,12 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         paragraph.font = fontTest
         var cellHeight = heightForView(paragraph.text!, font: fontTest!, width: (tableView.frame.width - 60))
         cellHeight = cellHeight + 10
+//        if(indexToColor == indexPath.row){
+//            let fontTest2 = UIFont(name: "Helvetica", size: 18.0)
+//            paragraph.font = fontTest2
+//            var cellHeight = heightForView(paragraph.text!, font: fontTest2!, width: (tableView.frame.width - 60))
+//            cellHeight = cellHeight + 10
+//        }
         return cellHeight
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -140,21 +150,14 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         articleTitle.text = "Backyard Beekeeping Approved In Los Angeles"
         articleTitle.font = UIFont(name: ".SFUIText-Light", size: 24)
         articleTitle.textAlignment = .Center
-        articleTitle.adjustsFontSizeToFitWidth = true
+        articleTitle.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        articleTitle.numberOfLines = 0
+//        articleTitle.adjustsFontSizeToFitWidth = true
         articleTitle.textColor = black
         articleBar.addSubview(articleTitle)
         articleTitle.snp_makeConstraints { (make) -> Void in
             make.left.equalTo(articleBar).offset(30)
             make.top.equalTo(articleBar).offset(5)
-            make.right.equalTo(articleBar.snp_right).offset(-30)
-        }
-        let separatorBar = UIView()
-        articleBar.addSubview(separatorBar)
-        separatorBar.backgroundColor = UIColor.greenColor()
-        separatorBar.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(1)
-            make.top.equalTo(articleTitle.snp_bottom)
-            make.left.equalTo(articleBar.snp_left).offset(30)
             make.right.equalTo(articleBar.snp_right).offset(-30)
         }
         let authorName = UILabel()
@@ -163,8 +166,8 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         authorName.font = UIFont(name: ".SFUIText-Light", size: 10)
         articleBar.addSubview(authorName)
         authorName.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(separatorBar.snp_bottom)
-            make.left.equalTo(separatorBar.snp_left)
+            make.top.equalTo(articleTitle.snp_bottom)
+            make.left.equalTo(articleTitle.snp_left).offset(5)
         }
         let articleLink = UILabel()
         articleLink.text = "npr.org/"
@@ -184,10 +187,28 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             make.right.equalTo(articleTitle.snp_rightMargin)
             make.top.equalTo(authorName.snp_top)
         }
+        let voiceRating = UIButton()
+        articleBar.addSubview(voiceRating)
+        voiceRating.setBackgroundImage(UIImage(named: "rating"), forState: UIControlState.Normal)
+        voiceRating.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(voiceName.snp_bottom)
+            make.left.equalTo(voiceName.snp_left)
+            make.height.equalTo(10)
+            make.width.equalTo(501)
+        }
+        let separatorBar = UIView()
+        articleBar.addSubview(separatorBar)
+        separatorBar.backgroundColor = UIColor.blackColor()
+        separatorBar.snp_makeConstraints { (make) -> Void in
+            make.height.equalTo(1)
+            make.top.equalTo(articleLink.snp_bottom).offset(3)
+            make.left.equalTo(articleBar.snp_left).offset(50)
+            make.right.equalTo(articleBar.snp_right).offset(-50)
+        }
         return articleBar
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 75
+        return 100
     }
 }
 func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {

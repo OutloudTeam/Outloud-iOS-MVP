@@ -10,8 +10,8 @@
 		B6857BD85E6B83BD1BAB2A61 /* Pods_OutloudMVP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C16C86DA9BCFCD78DB593ACA /* Pods_OutloudMVP.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DB02F2081BCA25F800064CEB /* ArticleDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02F2071BCA25F800064CEB /* ArticleDetails.swift */; };
 		DB02F20A1BCA28D300064CEB /* ArticleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02F2091BCA28D300064CEB /* ArticleList.swift */; };
-		DB0975D81BCF8A5100B9F77C /* backyardBees.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB0975D71BCF8A5100B9F77C /* backyardBees.mp3 */; settings = {ASSET_TAGS = (); }; };
 		DB0975DA1BCF8F7B00B9F77C /* GloablFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0975D91BCF8F7B00B9F77C /* GloablFunctions.swift */; settings = {ASSET_TAGS = (); }; };
+		DB7DF5CD1BD0323B0098CDA7 /* backyardBees.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB7DF5CC1BD0323B0098CDA7 /* backyardBees.mp3 */; settings = {ASSET_TAGS = (); }; };
 		DBC15B751BCF644600C4DCC6 /* ArticleHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC15B741BCF644600C4DCC6 /* ArticleHeader.swift */; };
 		F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */; };
 		F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8C1BC98DA3003DF922 /* ViewController.swift */; };
@@ -51,9 +51,9 @@
 		C16C86DA9BCFCD78DB593ACA /* Pods_OutloudMVP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OutloudMVP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB02F2071BCA25F800064CEB /* ArticleDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDetails.swift; sourceTree = "<group>"; };
 		DB02F2091BCA28D300064CEB /* ArticleList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleList.swift; sourceTree = "<group>"; };
-		DB0975D71BCF8A5100B9F77C /* backyardBees.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = backyardBees.mp3; path = ../../../../../Desktop/backyardBees.mp3; sourceTree = "<group>"; };
 		DB0975D91BCF8F7B00B9F77C /* GloablFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GloablFunctions.swift; sourceTree = "<group>"; };
 		DB5664241BC9994C00568D8E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		DB7DF5CC1BD0323B0098CDA7 /* backyardBees.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backyardBees.mp3; sourceTree = "<group>"; };
 		DBC15B741BCF644600C4DCC6 /* ArticleHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleHeader.swift; sourceTree = "<group>"; };
 		F3332C871BC98DA3003DF922 /* OutloudMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OutloudMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 		F35D5B2F1BCF2EB70019C2B9 /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				DB0975D71BCF8A5100B9F77C /* backyardBees.mp3 */,
+				DB7DF5CC1BD0323B0098CDA7 /* backyardBees.mp3 */,
 				F35D5B361BCF46D70019C2B9 /* GlobalViewFunctions.swift */,
 				DB0975D91BCF8F7B00B9F77C /* GloablFunctions.swift */,
 				F3F127221BCC823B00F15E21 /* GlobalColors.swift */,
@@ -333,7 +333,7 @@
 			files = (
 				F3332C951BC98DA3003DF922 /* LaunchScreen.storyboard in Resources */,
 				F3332C921BC98DA3003DF922 /* Assets.xcassets in Resources */,
-				DB0975D81BCF8A5100B9F77C /* backyardBees.mp3 in Resources */,
+				DB7DF5CD1BD0323B0098CDA7 /* backyardBees.mp3 in Resources */,
 				F35D5B331BCF42A70019C2B9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
