@@ -36,7 +36,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     override func viewDidAppear(animated: Bool) {
-        if let backgroundMusic = setupAudioPlayerWithFile("TestAudio", type:"mp3") {
+        if let backgroundMusic = setupAudioPlayerWithFile("backyardBees", type:"mp3") {
             self.backgroundMusic = backgroundMusic
         }
     }
@@ -62,7 +62,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         volumeSlider.maximumValue = 10
         volumeSlider.continuous = true
         volumeSlider.tintColor = UIColor.redColor()
-        volumeSlider.value = 7
+        volumeSlider.value = 8
         bottomBar.addSubview(volumeSlider)
         volumeSlider.addTarget(self, action: "sliderValueDidChange:", forControlEvents: .ValueChanged)
         volumeSlider.snp_makeConstraints { (make) -> Void in
@@ -70,13 +70,14 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             make.width.height.equalTo(80)
             make.right.equalTo(playButton.snp_left).offset(-20)
         }
+        volumeSlider.hidden = true
         
         self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
         tableView.snp_makeConstraints { (make) -> Void in
             make.left.right.top.equalTo(self.view)
             make.bottom.equalTo(bottomBar.snp_top)
@@ -86,25 +87,48 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return 1
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return holdingArray.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel!.text = "TEST"
+        let paragraph = UILabel()
+        cell.addSubview(paragraph)
+        paragraph.text = holdingArray[indexPath.row]
+        paragraph.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        paragraph.numberOfLines = 0
+        paragraph.snp_makeConstraints { (make) -> Void in
+            make.left.equalTo(cell.snp_left).offset(30)
+            make.right.equalTo(cell.snp_right).offset(-30)
+            make.top.equalTo(cell.snp_top).offset(5)
+        }
+        let fontTest = UIFont(name: "Helvetica", size: 14.0)
+        paragraph.font = fontTest
         return cell
+    }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let paragraph = UILabel()
+        paragraph.text = holdingArray[indexPath.row]
+        let fontTest = UIFont(name: "Helvetica", size: 14.0)
+        paragraph.font = fontTest
+        var cellHeight = heightForView(paragraph.text!, font: fontTest!, width: (tableView.frame.width - 60))
+        cellHeight = cellHeight + 10
+        return cellHeight
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let articleBar = UIView()
         self.view.addSubview(articleBar)
         articleBar.backgroundColor = UIColor.whiteColor()
         let articleTitle = UILabel()
-        articleTitle.text = "Article One"
+        articleTitle.text = "Backyard Beekeeping Approved In Los Angeles"
         articleTitle.font = UIFont(name: ".SFUIText-Light", size: 24)
+        articleTitle.textAlignment = .Center
+        articleTitle.adjustsFontSizeToFitWidth = true
         articleTitle.textColor = black
         articleBar.addSubview(articleTitle)
         articleTitle.snp_makeConstraints { (make) -> Void in
             make.left.equalTo(articleBar).offset(30)
             make.top.equalTo(articleBar).offset(5)
+            make.right.equalTo(articleBar.snp_right).offset(-30)
         }
         let separatorBar = UIView()
         articleBar.addSubview(separatorBar)
@@ -117,7 +141,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
         let authorName = UILabel()
         authorName.adjustsFontSizeToFitWidth = true
-        authorName.text = "Vahid Mazdeh"
+        authorName.text = "Laura Wagner"
         authorName.font = UIFont(name: ".SFUIText-Light", size: 10)
         articleBar.addSubview(authorName)
         authorName.snp_makeConstraints { (make) -> Void in
@@ -125,7 +149,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             make.left.equalTo(separatorBar.snp_left)
         }
         let articleLink = UILabel()
-        articleLink.text = "nytimes.com/articleone"
+        articleLink.text = "npr.org/"
         articleLink.textColor = transparentBlack
         articleLink.font = UIFont(name: ".SFUIText-Light", size: 10)
         articleBar.addSubview(articleLink)
@@ -135,11 +159,11 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
         let voiceName = UILabel()
         voiceName.adjustsFontSizeToFitWidth = true
-        voiceName.text = "@FredLohner"
+        voiceName.text = "@VahidGF"
         voiceName.font = UIFont(name: ".SFUIText-Light", size: 12)
         articleBar.addSubview(voiceName)
         voiceName.snp_makeConstraints { (make) -> Void in
-            make.right.equalTo(separatorBar.snp_rightMargin)
+            make.right.equalTo(articleTitle.snp_rightMargin)
             make.top.equalTo(authorName.snp_top)
         }
         return articleBar
@@ -161,3 +185,14 @@ func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
     }
     return audioPlayer
 }
+func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+    let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
+    label.numberOfLines = 0
+    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+    label.font = font
+    label.text = text
+    
+    label.sizeToFit()
+    return label.frame.height
+}
+
