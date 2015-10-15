@@ -17,9 +17,20 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
     var tableView = UITableView()
     var scrollView: UIScrollView!
     var playOrPause = false
-    
+    var firstTime = true
     var backgroundMusic : AVAudioPlayer?
+    var indexToColor = 0
     func playSound()  {
+        if firstTime == true {
+            firstTime = false
+            delay(14.6, closure: { () -> () in
+                self.indexToColor = 1
+                self.tableView.reloadData()
+            })
+            delay(6.4, closure: { () -> () in
+                print("seond")
+            })
+        }
         if playOrPause == false {
             playOrPause = true
             playButton.setBackgroundImage(UIImage(named: "play-button-clicked"), forState: .Normal)
@@ -105,6 +116,10 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
         let fontTest = UIFont(name: "Helvetica", size: 14.0)
         paragraph.font = fontTest
+        paragraph.textColor = UIColor(red: 0.92, green: 0.92, blue: 0.92, alpha: 1.0)
+        if(indexToColor == indexPath.row){
+            paragraph.textColor = UIColor.blackColor()
+        }
         return cell
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -173,7 +188,6 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 75
     }
-    
 }
 func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
     let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
