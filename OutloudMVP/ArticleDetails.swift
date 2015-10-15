@@ -13,6 +13,7 @@ import AVFoundation
 
 
 class ArticleDetail: UIViewController {
+    let playButton = UIButton(type: UIButtonType.System) as UIButton
 //    @IBOutlet var superView: UIView!
     var scrollView: UIScrollView!
     var playOrPause = false
@@ -21,8 +22,10 @@ class ArticleDetail: UIViewController {
     func playSound()  {
         if playOrPause == false {
             playOrPause = true
+            playButton.setBackgroundImage(UIImage(named: "play-button-clicked"), forState: .Normal)
             backgroundMusic?.play()
         } else {
+            playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
             playOrPause = false
             backgroundMusic?.pause()
         }
@@ -48,15 +51,14 @@ class ArticleDetail: UIViewController {
         let bottomBar = createBottomBar(self.view)
 
         //Bottom bar
-        let playButton = UIButton(type: UIButtonType.System) as UIButton
+        
         playButton.frame = CGRectMake(50, 50, 50, 50)
         playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
-        playButton.setBackgroundImage(UIImage(named: "play-button-clicked"), forState: .Selected)
         bottomBar.addSubview(playButton)
         playButton.addTarget(self, action: "playSound", forControlEvents: .TouchUpInside)
         playButton.snp_makeConstraints { (make) -> Void in
             make.centerY.equalTo(bottomBar)
-            make.width.height.equalTo(60)
+            make.width.height.equalTo(40)
             make.centerX.equalTo(bottomBar.snp_centerX)
         }
         let volumeSlider = UISlider(frame:CGRectMake(20, 260, 280, 20))
