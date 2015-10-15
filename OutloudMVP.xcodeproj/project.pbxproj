@@ -19,6 +19,7 @@
 		F35D5B311BCF2ED30019C2B9 /* GlobalFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35D5B301BCF2ED30019C2B9 /* GlobalFonts.swift */; settings = {ASSET_TAGS = (); }; };
 		F35D5B331BCF42A70019C2B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F35D5B321BCF42A70019C2B9 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
 		F35D5B351BCF43040019C2B9 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35D5B341BCF43040019C2B9 /* MainNavigationController.swift */; settings = {ASSET_TAGS = (); }; };
+		F35D5B371BCF46D70019C2B9 /* GlobalViewFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35D5B361BCF46D70019C2B9 /* GlobalViewFunctions.swift */; settings = {ASSET_TAGS = (); }; };
 		F3C40AB31BCAB09600A033FF /* RecordPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C40AB21BCAB09600A033FF /* RecordPageViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F3C40ABA1BCAB44A00A033FF /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C40AB91BCAB44A00A033FF /* RecordButton.swift */; settings = {ASSET_TAGS = (); }; };
 		F3F127231BCC823B00F15E21 /* GlobalColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F127221BCC823B00F15E21 /* GlobalColors.swift */; settings = {ASSET_TAGS = (); }; };
@@ -64,6 +65,7 @@
 		F35D5B301BCF2ED30019C2B9 /* GlobalFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFonts.swift; sourceTree = "<group>"; };
 		F35D5B321BCF42A70019C2B9 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		F35D5B341BCF43040019C2B9 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
+		F35D5B361BCF46D70019C2B9 /* GlobalViewFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalViewFunctions.swift; sourceTree = "<group>"; };
 		F3C40AB21BCAB09600A033FF /* RecordPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordPageViewController.swift; sourceTree = "<group>"; };
 		F3C40AB91BCAB44A00A033FF /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		F3F127221BCC823B00F15E21 /* GlobalColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalColors.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 		F35D5B2F1BCF2EB70019C2B9 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				F35D5B361BCF46D70019C2B9 /* GlobalViewFunctions.swift */,
 				F3F127221BCC823B00F15E21 /* GlobalColors.swift */,
 				F35D5B301BCF2ED30019C2B9 /* GlobalFonts.swift */,
 			);
@@ -397,6 +400,7 @@
 				F3C40AB31BCAB09600A033FF /* RecordPageViewController.swift in Sources */,
 				F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */,
 				F3F127231BCC823B00F15E21 /* GlobalColors.swift in Sources */,
+				F35D5B371BCF46D70019C2B9 /* GlobalViewFunctions.swift in Sources */,
 				F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */,
 				F35D5B311BCF2ED30019C2B9 /* GlobalFonts.swift in Sources */,
 			);
