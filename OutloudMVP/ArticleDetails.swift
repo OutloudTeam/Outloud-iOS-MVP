@@ -15,7 +15,6 @@ import AVFoundation
 class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let playButton = UIButton(type: UIButtonType.System) as UIButton
     var tableView = UITableView()
-//    @IBOutlet var superView: UIView!
     var scrollView: UIScrollView!
     var playOrPause = false
     
@@ -33,6 +32,9 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     func sliderValueDidChange(sender:UISlider) {
         backgroundMusic?.volume = sender.value
+    }
+    func playerItemDidReachEnd(note: NSNotification) {
+        playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -185,14 +187,3 @@ func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
     }
     return audioPlayer
 }
-func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
-    let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
-    label.numberOfLines = 0
-    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-    label.font = font
-    label.text = text
-    
-    label.sizeToFit()
-    return label.frame.height
-}
-

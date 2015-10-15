@@ -11,6 +11,7 @@
 		DB02F2081BCA25F800064CEB /* ArticleDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02F2071BCA25F800064CEB /* ArticleDetails.swift */; };
 		DB02F20A1BCA28D300064CEB /* ArticleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02F2091BCA28D300064CEB /* ArticleList.swift */; };
 		DB0975D81BCF8A5100B9F77C /* backyardBees.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB0975D71BCF8A5100B9F77C /* backyardBees.mp3 */; settings = {ASSET_TAGS = (); }; };
+		DB0975DA1BCF8F7B00B9F77C /* GloablFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0975D91BCF8F7B00B9F77C /* GloablFunctions.swift */; settings = {ASSET_TAGS = (); }; };
 		DBC15B751BCF644600C4DCC6 /* ArticleHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC15B741BCF644600C4DCC6 /* ArticleHeader.swift */; };
 		F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */; };
 		F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8C1BC98DA3003DF922 /* ViewController.swift */; };
@@ -51,6 +52,7 @@
 		DB02F2071BCA25F800064CEB /* ArticleDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDetails.swift; sourceTree = "<group>"; };
 		DB02F2091BCA28D300064CEB /* ArticleList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleList.swift; sourceTree = "<group>"; };
 		DB0975D71BCF8A5100B9F77C /* backyardBees.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = backyardBees.mp3; path = ../../../../../Desktop/backyardBees.mp3; sourceTree = "<group>"; };
+		DB0975D91BCF8F7B00B9F77C /* GloablFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GloablFunctions.swift; sourceTree = "<group>"; };
 		DB5664241BC9994C00568D8E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DBC15B741BCF644600C4DCC6 /* ArticleHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleHeader.swift; sourceTree = "<group>"; };
 		F3332C871BC98DA3003DF922 /* OutloudMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OutloudMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +194,7 @@
 			children = (
 				DB0975D71BCF8A5100B9F77C /* backyardBees.mp3 */,
 				F35D5B361BCF46D70019C2B9 /* GlobalViewFunctions.swift */,
+				DB0975D91BCF8F7B00B9F77C /* GloablFunctions.swift */,
 				F3F127221BCC823B00F15E21 /* GlobalColors.swift */,
 				F35D5B301BCF2ED30019C2B9 /* GlobalFonts.swift */,
 			);
@@ -406,6 +409,7 @@
 			files = (
 				F35D5B351BCF43040019C2B9 /* MainNavigationController.swift in Sources */,
 				DB02F2081BCA25F800064CEB /* ArticleDetails.swift in Sources */,
+				DB0975DA1BCF8F7B00B9F77C /* GloablFunctions.swift in Sources */,
 				DB02F20A1BCA28D300064CEB /* ArticleList.swift in Sources */,
 				F3C40ABA1BCAB44A00A033FF /* RecordButton.swift in Sources */,
 				F3C40AB31BCAB09600A033FF /* RecordPageViewController.swift in Sources */,
