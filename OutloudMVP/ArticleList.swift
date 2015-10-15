@@ -14,6 +14,6 @@ import AVFoundation
 class ArticleList: UIViewController {
     @IBOutlet var superView: UIView!
     override func viewDidLoad() {
-        createTopBar(superView)
+//        createTopBar(superView)
     }
 }
