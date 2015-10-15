@@ -13,7 +13,7 @@ import AVFoundation
 
 
 class ArticleDetail: UIViewController {
-    @IBOutlet var superView: UIView!
+//    @IBOutlet var superView: UIView!
     var scrollView: UIScrollView!
     var playOrPause = false
     
@@ -39,17 +39,13 @@ class ArticleDetail: UIViewController {
     }
     
     override func viewDidLoad() {
+
+        self.edgesForExtendedLayout = UIRectEdge.None
+        self.navigationItem.titleView = createNavigationTitleView("Listen", callback: { () -> Void in
+            NSLog("YO MAN")
+        })
         
-        let topBar = createTopBar(superView)
-        let articleBar = createTitleAuthorBarListen(superView)
-        let bottomBar = createBottomBar(superView)
-        scrollView = UIScrollView()
-        superView.addSubview(scrollView)
-        scrollView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(topBar.snp_bottom)
-            make.bottom.equalTo(bottomBar.snp_top)
-        }
-        scrollView.backgroundColor = UIColor.redColor()
+        let bottomBar = createBottomBar(self.view)
 
         //Bottom bar
         let playButton = UIButton(type: UIButtonType.System) as UIButton
@@ -75,6 +71,13 @@ class ArticleDetail: UIViewController {
             make.centerY.equalTo(bottomBar.snp_centerY)
             make.width.height.equalTo(80)
             make.right.equalTo(playButton.snp_left).offset(-20)
+        }
+        
+        let tableView = UITableView()
+        self.view.addSubview(tableView)
+        tableView.snp_makeConstraints { (make) -> Void in
+            make.left.right.top.equalTo(self.view);
+            make.bottom.equalTo(bottomBar.snp_top)
         }
         
     }

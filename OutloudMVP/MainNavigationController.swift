@@ -13,14 +13,20 @@ class MainNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
   
-        let mainViewController = RecordPageViewController()
+        let mainViewController = ArticleDetail() //RecordPageViewController()
         self.edgesForExtendedLayout = UIRectEdge.None
         self.setViewControllers([mainViewController], animated: false)
+        self.navigationBar.setBackgroundImage(UIImage(named: "background"), forBarMetrics: UIBarMetrics.Default)
+        self.navigationBar.translucent = false
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
     
 

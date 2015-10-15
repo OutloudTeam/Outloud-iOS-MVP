@@ -9,13 +9,44 @@
 import Foundation
 import UIKit
 import SnapKit
+
+func createNavigationTitleView(title: String, callback: ()->Void) -> UIView {
+    let container = UIButton()
+    let titleLabel = UILabel()
+    let imageView = UIImageView()
+    
+    container.frame = CGRect(x: 0, y: 0, width: 128, height: 32)
+    container.addSubview(titleLabel)
+    container.addSubview(imageView)
+    
+    titleLabel.text = title;
+    titleLabel.font = mediumTitleFont
+    titleLabel.textColor = UIColor.whiteColor()
+    titleLabel.textAlignment = .Center
+    
+    titleLabel.snp_makeConstraints { (make) -> Void in
+        make.center.equalTo(container.snp_center)
+    }
+    
+    imageView.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(titleLabel.snp_right).offset(5)
+        make.height.width.equalTo(16)
+        make.centerY.equalTo(container.snp_centerY)
+    }
+    
+    imageView.image = UIImage(named: "downArrow")
+    imageView.contentMode = .ScaleAspectFit
+    
+    return container
+}
+
 func createTopBar(superView: UIView)->UIView {
     let topBar = UIView()
     superView.addSubview(topBar)
     topBar.backgroundColor = topBarColor
     topBar.snp_makeConstraints { (make) -> Void in
         make.height.equalTo(30)
-        make.top.equalTo(superView).offset(20)
+        make.top.equalTo(superView.snp_top)
         make.left.equalTo(superView).offset(0)
         make.right.equalTo(superView).offset(0)
     }
