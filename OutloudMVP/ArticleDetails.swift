@@ -14,6 +14,8 @@ import AVFoundation
 
 class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let playButton = UIButton(type: UIButtonType.System) as UIButton
+    let skipBackButton = UIButton(type: UIButtonType.System) as UIButton
+    let skipForwardButton =  UIButton(type: UIButtonType.System) as UIButton
     var tableView = UITableView()
     var scrollView: UIScrollView!
     var playOrPause = false
@@ -70,6 +72,24 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             make.centerY.equalTo(bottomBar)
             make.width.height.equalTo(40)
             make.centerX.equalTo(bottomBar.snp_centerX)
+        }
+        bottomBar.addSubview(skipBackButton)
+        skipBackButton.frame = CGRectMake(50, 50, 50, 50)
+        skipBackButton.setBackgroundImage(UIImage(named: "skip-back"), forState: .Normal)
+        bottomBar.addSubview(playButton)
+        skipBackButton.snp_makeConstraints { (make) -> Void in
+            make.centerY.equalTo(bottomBar.snp_centerY)
+            make.width.height.equalTo(20)
+            make.right.equalTo(playButton.snp_left).offset(-8)
+        }
+        bottomBar.addSubview(skipForwardButton)
+        skipForwardButton.frame = CGRectMake(50, 50, 50, 50)
+        skipForwardButton.setBackgroundImage(UIImage(named: "skip-forward"), forState: .Normal)
+        bottomBar.addSubview(skipForwardButton)
+        skipForwardButton.snp_makeConstraints { (make) -> Void in
+            make.centerY.equalTo(bottomBar.snp_centerY)
+            make.width.height.equalTo(20)
+            make.left.equalTo(playButton.snp_right).offset(8)
         }
         let volumeSlider = UISlider(frame:CGRectMake(20, 260, 380, 20))
         volumeSlider.minimumValue = 0
@@ -194,7 +214,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             make.top.equalTo(voiceName.snp_bottom)
             make.left.equalTo(voiceName.snp_left)
             make.height.equalTo(10)
-            make.width.equalTo(501)
+            make.width.equalTo(50)
         }
         let separatorBar = UIView()
         articleBar.addSubview(separatorBar)
