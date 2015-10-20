@@ -57,6 +57,11 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
     }
     override func viewDidLoad() {
+        articleJSONGet { () -> () in
+            
+        }
+        
+        
         self.edgesForExtendedLayout = UIRectEdge.None
         self.navigationItem.titleView = createNavigationTitleView("Listen", callback: { () -> Void in
             NSLog("YO MAN")
