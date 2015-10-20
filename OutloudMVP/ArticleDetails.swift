@@ -13,9 +13,17 @@ import AVFoundation
 
 
 class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var articleDictionary :[String: AnyObject] = ["place":"Holder"]
+    //BUTTONS
     let playButton = UIButton(type: UIButtonType.System) as UIButton
     let skipBackButton = UIButton(type: UIButtonType.System) as UIButton
     let skipForwardButton =  UIButton(type: UIButtonType.System) as UIButton
+    let upvoteButton = UIButton(type: UIButtonType.System) as UIButton
+    let downvoteButton = UIButton(type: UIButtonType.System) as UIButton
+    let shareButton = UIButton(type: UIButtonType.System) as UIButton
+    
+    let voteCount = UILabel()
+    var intVoteCount = 1023
     var tableView = UITableView()
     var scrollView: UIScrollView!
     var playOrPause = false
@@ -44,6 +52,14 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             backgroundMusic?.pause()
         }
     }
+    func upVoteCast() {
+        intVoteCount += 1
+        voteCount.text = String(intVoteCount)
+    }
+    func downVoteCast() {
+        intVoteCount -= 1
+        voteCount.text = String(intVoteCount)
+    }
     func sliderValueDidChange(sender:UISlider) {
         backgroundMusic?.volume = sender.value
     }
@@ -57,14 +73,13 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
     }
     override func viewDidLoad() {
-        articleJSONGet { () -> () in
-            
+        articleJSONGet(&articleDictionary, articleID: "a0366586-fd4c-4582-90cc-6cd36462b3c8") { () -> () in
+            print(self.articleDictionary)
         }
         
         
         self.edgesForExtendedLayout = UIRectEdge.None
         self.navigationItem.titleView = createNavigationTitleView("Listen", callback: { () -> Void in
-            NSLog("YO MAN")
         })
         
         let bottomBar = createBottomBar(self.view)
@@ -84,7 +99,8 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         bottomBar.addSubview(playButton)
         skipBackButton.snp_makeConstraints { (make) -> Void in
             make.centerY.equalTo(bottomBar.snp_centerY)
-            make.width.height.equalTo(20)
+            make.height.equalTo(20)
+            make.width.equalTo(25)
             make.right.equalTo(playButton.snp_left).offset(-8)
         }
         bottomBar.addSubview(skipForwardButton)
@@ -93,9 +109,56 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         bottomBar.addSubview(skipForwardButton)
         skipForwardButton.snp_makeConstraints { (make) -> Void in
             make.centerY.equalTo(bottomBar.snp_centerY)
-            make.width.height.equalTo(20)
+            make.height.equalTo(20)
+            make.width.equalTo(25)
             make.left.equalTo(playButton.snp_right).offset(8)
         }
+        bottomBar.addSubview(upvoteButton)
+        bottomBar.addSubview(downvoteButton)
+        bottomBar.addSubview(shareButton)
+        upvoteButton.frame = CGRectMake(50, 50, 50, 50)
+        downvoteButton.frame = CGRectMake(50, 50, 50, 50)
+        shareButton.frame = CGRectMake(50, 50, 50, 50)
+        
+        upvoteButton.setBackgroundImage(UIImage(named: "upvote"), forState: .Normal)
+        downvoteButton.setBackgroundImage(UIImage(named: "downvote"), forState: .Normal)
+        shareButton.setBackgroundImage(UIImage(named: "share"), forState: .Normal)
+
+        upvoteButton.addTarget(self, action: "upVoteCast", forControlEvents: .TouchUpInside)
+        downvoteButton.addTarget(self, action: "downVoteCast", forControlEvents: .TouchUpInside)
+        
+        voteCount.text = String(intVoteCount)
+        
+        voteCount.textColor = UIColor.whiteColor()
+        bottomBar.addSubview(voteCount)
+        
+        bottomBar.addSubview(upvoteButton)
+        bottomBar.addSubview(downvoteButton)
+        bottomBar.addSubview(shareButton)
+        voteCount.snp_makeConstraints { (make) -> Void in
+            make.left.equalTo(bottomBar.snp_left).offset(2)
+            make.centerY.equalTo(bottomBar.snp_centerY)
+        }
+        
+        upvoteButton.snp_makeConstraints { (make) -> Void in
+            make.height.equalTo(12)
+            make.width.equalTo(18)
+            make.centerX.equalTo(voteCount.snp_centerX)
+            make.top.equalTo(bottomBar.snp_top).offset(10)
+        }
+        
+        downvoteButton.snp_makeConstraints { (make) -> Void in
+            make.height.equalTo(12)
+            make.width.equalTo(18)
+            make.centerX.equalTo(voteCount.snp_centerX)
+            make.bottom.equalTo(bottomBar.snp_bottom).offset(-10)
+        }
+        shareButton.snp_makeConstraints { (make) -> Void in
+            make.width.height.equalTo(20)
+            make.top.equalTo(upvoteButton.snp_bottom)
+            make.left.equalTo(upvoteButton.snp_right).offset(30)
+        }
+        
         let volumeSlider = UISlider(frame:CGRectMake(20, 260, 380, 20))
         volumeSlider.minimumValue = 0
         volumeSlider.maximumValue = 10
@@ -107,9 +170,8 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         volumeSlider.snp_makeConstraints { (make) -> Void in
             make.centerY.equalTo(bottomBar.snp_centerY)
             make.width.height.equalTo(80)
-            make.right.equalTo(playButton.snp_left).offset(-20)
+            make.left.equalTo(skipForwardButton.snp_right).offset(30)
         }
-        volumeSlider.hidden = true
         
         self.view.addSubview(tableView)
         tableView.delegate = self
