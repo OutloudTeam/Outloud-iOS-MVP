@@ -12,9 +12,8 @@ import SnapKit
 import AVFoundation
 
 class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var tableView = UITableView()
+    var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
-    var indexToColor = -1
     
     override func viewDidLoad() {
         articleListJSONGet { () -> () in
@@ -29,6 +28,7 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
         self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = UIColor.whiteColor()
         tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
@@ -45,51 +45,8 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
         return ArticleListArray.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        let articleTitle = UILabel()
-        let articleAbstract = UILabel()
-        let separatorBar = UIView()
-        
-        cell.addSubview(articleTitle)
-        cell.addSubview(articleAbstract)
-        cell.addSubview(separatorBar)
-        
-        articleTitle.text = ArticleListArray[indexPath.row].title
-        articleAbstract.text = ArticleListArray[indexPath.row].abstract
-        
-        articleTitle.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        articleAbstract.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        return generateArticleListCell(indexPath)
 
-        articleTitle.numberOfLines = 0
-        articleAbstract.numberOfLines = 0
-        
-        articleTitle.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(cell.snp_left).offset(30)
-            make.right.equalTo(cell.snp_right).offset(-30)
-            make.top.equalTo(cell.snp_top).offset(25)
-        }
-        articleAbstract.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(articleTitle.snp_left)
-            make.right.equalTo(articleTitle.snp_right)
-            make.top.equalTo(articleTitle.snp_bottom).offset(3)
-        }
-        let fontTest = UIFont(name: "Helvetica", size: 14.0)
-        articleTitle.font = fontTest
-        articleTitle.textColor = UIColor.redColor()
-        articleAbstract.font = articleAbstractFont
-        
-//        cell.userInteractionEnabled = false
-        
-        separatorBar.backgroundColor = UIColor.blackColor()
-        separatorBar.snp_makeConstraints { (make) -> Void in
-            make.centerX.equalTo(cell.snp_centerX)
-            make.left.equalTo(cell.snp_left).offset(90)
-            make.right.equalTo(cell.snp_right).offset(-90)
-            make.height.equalTo(1)
-            make.bottom.equalTo(cell.snp_bottom).offset(2)
-        }
-
-        return cell
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let articleTitle = UILabel()
@@ -101,19 +58,20 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
         articleTitle.font = fontTest
         articleAbstract.font = fontTest
         
-        var cellHeight = heightForView(articleTitle.text!, font: fontTest!, width: (tableView.frame.width - 60)) + heightForView(articleAbstract.text!, font: articleAbstractFont!, width: (tableView.frame.width - 60))
-        cellHeight = cellHeight + 35 + 15
+        var cellHeight = heightForView(articleTitle.text!, font: fontTest!, width: (tableView.frame.width - 45)) + heightForView(articleAbstract.text!, font: articleAbstractFont!, width: (tableView.frame.width - 45))
+        cellHeight = cellHeight + 35 + 15 + 10
         return cellHeight
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let articleBar = UIView()
         self.view.addSubview(articleBar)
         articleBar.backgroundColor = UIColor.whiteColor()
-        playAllButton.frame = CGRectMake(50, 50, 50, 50)
+        playAllButton.frame = CGRectMake(100, 50, 100, 50)
         playAllButton.backgroundColor = UIColor.blackColor()
         articleBar.addSubview(playAllButton)
         playAllButton.snp_makeConstraints { (make) -> Void in
-            make.width.height.equalTo(50)
+            make.height.equalTo(50)
+            make.width.equalTo(100)
             make.centerX.equalTo(articleBar.snp_centerX)
             make.centerY.equalTo(articleBar.snp_centerY)
         }
