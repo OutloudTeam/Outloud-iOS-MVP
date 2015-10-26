@@ -9,8 +9,13 @@
 import Foundation
 import UIKit
 
-let mediumTitleFont = UIFont(name: "Avenir-Light", size: 17)
+let largeTitleFont = UIFont(name: "Avenir-Light", size: 17)
+let mediumTitleFont = UIFont(name: "Avenir-Light", size: 13)
 let smallTitleFont  = UIFont(name: "Avenir-Light", size: 10)
+
+
+//Specific FONTS
+let articleAbstractFont = UIFont(name: "Avenir-Light", size: 12)
 
 //TEMPORARY ARRAY FOR PRESENTATION
 

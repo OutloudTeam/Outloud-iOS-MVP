@@ -20,7 +20,7 @@ func createNavigationTitleView(title: String, callback: ()->Void) -> UIView {
     container.addSubview(imageView)
     
     titleLabel.text = title;
-    titleLabel.font = mediumTitleFont
+    titleLabel.font = largeTitleFont
     titleLabel.textColor = UIColor.whiteColor()
     titleLabel.textAlignment = .Center
     
@@ -142,6 +142,9 @@ func createTitleAuthorBarListen(superView: UIView)->UIView {
     return articleBar
 }
 
+/*
+MARK: - Generates bottom article detail bar
+*/
 func createBottomBar(superView: UIView)->UIView{
     let bottomBar = UIView()
     superView.addSubview(bottomBar)
@@ -153,6 +156,67 @@ func createBottomBar(superView: UIView)->UIView{
         make.bottom.equalTo(superView).offset(0)
         make.left.equalTo(superView).offset(0)
         make.right.equalTo(superView).offset(0)
+    }
+    return bottomBar
+}
+/*
+MARK: - Generates bottom article list bar
+With QueueList button, queue instructions, playQueueButton and playQueueInstructions.
+*/
+func createBottomArticleListBar(view: UIView)->UIView{
+    let bottomBar = UIView()
+    view.addSubview(bottomBar)
+    bottomBar.backgroundColor = black
+    bottomBar.snp_makeConstraints { (make) -> Void in
+        make.height.equalTo(40)
+        make.bottom.equalTo(view).offset(0)
+        make.left.equalTo(view).offset(0)
+        make.right.equalTo(view).offset(0)
+    }
+    
+    let queueListButton = UIButton(type: UIButtonType.System) as UIButton
+    queueListButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
+    bottomBar.addSubview(queueListButton)
+    queueListButton.snp_makeConstraints { (make) -> Void in
+        make.height.width.equalTo(33)
+        make.left.equalTo(bottomBar.snp_left).offset(10)
+        make.centerY.equalTo(bottomBar.snp_centerY)
+    }
+    
+    let queueInstructions = UILabel()
+    queueInstructions.text = "Edit Queue"
+    queueInstructions.font = UIFont(name: "Helvetica-Light", size: 12)
+    queueInstructions.textColor = UIColor(red:0.72, green:0.72, blue:0.72, alpha:0.3)
+    queueInstructions.adjustsFontSizeToFitWidth = true
+    bottomBar.addSubview(queueInstructions)
+    
+    queueInstructions.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(queueListButton.snp_right).offset(5)
+        make.centerY.equalTo(queueListButton.snp_centerY)
+        make.width.equalTo(75)
+    }
+    
+    let playQueueButton = UIButton(type: UIButtonType.System) as UIButton
+    playQueueButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+    bottomBar.addSubview(playQueueButton)
+    //    queueButton.backgroundColor = UIColor.whiteColor()
+    playQueueButton.snp_makeConstraints { (make) -> Void in
+        make.height.width.equalTo(33)
+        make.right.equalTo(bottomBar.snp_right).offset(-5)
+        make.centerY.equalTo(bottomBar.snp_centerY)
+    }
+    let playQueueInstructions = UILabel()
+    playQueueInstructions.text = "3 items in your queue"
+    playQueueInstructions.textAlignment = .Right
+    playQueueInstructions.font = UIFont(name: "Helvetica-Light", size: 12)
+    playQueueInstructions.textColor = UIColor(red:0.72, green:0.72, blue:0.72, alpha:1.0)
+    playQueueInstructions.adjustsFontSizeToFitWidth = true
+    bottomBar.addSubview(playQueueInstructions)
+    
+    playQueueInstructions.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(queueInstructions.snp_right)
+        make.right.equalTo(playQueueButton.snp_left).offset(-5)
+        make.centerY.equalTo(queueListButton.snp_centerY)
     }
     return bottomBar
 }

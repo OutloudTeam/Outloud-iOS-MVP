@@ -73,11 +73,6 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
     }
     override func viewDidLoad() {
-        articleJSONGet(&articleDictionary, articleID: "a0366586-fd4c-4582-90cc-6cd36462b3c8") { () -> () in
-            print(self.articleDictionary)
-        }
-        
-        
         self.edgesForExtendedLayout = UIRectEdge.None
         self.navigationItem.titleView = createNavigationTitleView("Listen", callback: { () -> Void in
         })

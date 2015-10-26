@@ -6,6 +6,7 @@ use_frameworks!
 target 'OutloudMVP' do
     pod 'SnapKit', '~> 0.15.0'
     #pod 'AudioKit', '~> 2.1.1'
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 end
 
 target 'OutloudMVPTests' do
