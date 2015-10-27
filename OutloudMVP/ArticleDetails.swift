@@ -225,7 +225,14 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let articleBar = UIView()
+        let voiceName = UILabel()
+        let authorName = UILabel()
+        
         self.view.addSubview(articleBar)
+        articleBar.addSubview(voiceName)
+        articleBar.addSubview(authorName)
+        
+        
         articleBar.backgroundColor = UIColor.whiteColor()
         let articleTitle = UILabel()
         articleTitle.text = ArticleDetailArray[0].title
@@ -241,17 +248,23 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             make.top.equalTo(articleBar).offset(5)
             make.right.equalTo(articleBar.snp_right).offset(-30)
         }
-        let authorName = UILabel()
+        
         authorName.adjustsFontSizeToFitWidth = true
         authorName.text = ArticleDetailArray[0].author
         authorName.font = UIFont(name: ".SFUIText-Light", size: 10)
-        articleBar.addSubview(authorName)
+        
         authorName.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(articleTitle.snp_bottom)
             make.left.equalTo(articleTitle.snp_left).offset(5)
+            make.right.equalTo(voiceName.snp_left)
         }
         let articleLink = UILabel()
-        articleLink.text = "npr.org/"
+        guard let fullURL = ArticleDetailArray[0].url else {
+            articleLink.text = "Not Found"
+            return articleBar
+        }
+        let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
+        articleLink.text = fullURLArray[1]
         articleLink.textColor = transparentBlack
         articleLink.font = UIFont(name: ".SFUIText-Light", size: 10)
         articleBar.addSubview(articleLink)
@@ -259,14 +272,14 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             make.left.equalTo(authorName.snp_left)
             make.top.equalTo(authorName.snp_bottom).offset(2)
         }
-        let voiceName = UILabel()
+       
         voiceName.adjustsFontSizeToFitWidth = true
-        voiceName.text = "@VahidGF"
+        voiceName.text = "@NoneFNow"
         voiceName.font = UIFont(name: ".SFUIText-Light", size: 12)
-        articleBar.addSubview(voiceName)
+        
         voiceName.snp_makeConstraints { (make) -> Void in
             make.right.equalTo(articleTitle.snp_rightMargin)
-            make.top.equalTo(authorName.snp_top)
+            make.centerY.equalTo(authorName.snp_centerY)
         }
         let voiceRating = UIButton()
         articleBar.addSubview(voiceRating)
