@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-func createNavigationTitleView(title: String, callback: ()->Void) -> UIView {
+func createNavigationTitleViewArticleList(title: String, callback: ()->Void) -> UIView {
     let container = UIButton()
     let titleLabel = UILabel()
     let imageView = UIImageView()
@@ -37,7 +37,7 @@ func createNavigationTitleView(title: String, callback: ()->Void) -> UIView {
     subtitleLabel.textAlignment = .Center
     
     separatorLabel.text = "/"
-    separatorLabel.font = largeTitleFont
+    separatorLabel.font = separatorTitleFont
     separatorLabel.textColor = UIColor.whiteColor()
     separatorLabel.textAlignment = .Center
 
@@ -74,6 +74,40 @@ func createNavigationTitleView(title: String, callback: ()->Void) -> UIView {
     
     return container
 }
+
+func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -> UIView {
+    let container = UIButton()
+    let titleLabel = UILabel()
+    let imageView = UIImageView()
+    
+    
+    container.frame = CGRect(x: 0, y: 0, width: 128, height: 32)
+    container.addSubview(titleLabel)
+    container.addSubview(imageView)
+
+    
+    titleLabel.text = title
+    titleLabel.font = largeTitleFont
+    titleLabel.textColor = UIColor.whiteColor()
+    titleLabel.textAlignment = .Center
+    
+    titleLabel.snp_makeConstraints { (make) -> Void in
+//        make.left.equalTo(container.snp_left)
+        make.center.equalTo(container.snp_center)
+    }
+    
+    imageView.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(titleLabel.snp_right).offset(5)
+        make.height.width.equalTo(16)
+        make.centerY.equalTo(container.snp_centerY)
+    }
+    
+    imageView.image = UIImage(named: "downArrow")
+    imageView.contentMode = .ScaleAspectFit
+    
+    return container
+}
+
 
 func createTopBar(superView: UIView)->UIView {
     let topBar = UIView()
@@ -180,10 +214,10 @@ func createTitleAuthorBarListen(superView: UIView)->UIView {
 /*
 MARK: - Generates bottom article detail bar
 */
-func createBottomBar(superView: UIView)->UIView{
+func createBottomArticleDetailBar(superView: UIView)->UIView{
     let bottomBar = UIView()
     superView.addSubview(bottomBar)
-    bottomBar.backgroundColor = darkRed
+    bottomBar.backgroundColor = UIColor(red:0.07, green:0.09, blue:0.16, alpha:1.0)
     
     
     bottomBar.snp_makeConstraints { (make) -> Void in

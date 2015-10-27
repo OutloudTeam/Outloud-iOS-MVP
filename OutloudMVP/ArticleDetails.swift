@@ -80,10 +80,10 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.tableFooterView = UIView(frame: CGRect.zero)
 
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationItem.titleView = createNavigationTitleView("Listen", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Listen", callback: { () -> Void in
         })
         
-        let bottomBar = createBottomBar(self.view)
+        let bottomBar = createBottomArticleDetailBar(self.view)
         //Bottom bar
         playButton.frame = CGRectMake(50, 50, 50, 50)
         playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)

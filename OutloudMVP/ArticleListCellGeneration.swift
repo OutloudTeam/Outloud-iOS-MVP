@@ -124,11 +124,11 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     }
     addQueueButton.snp_makeConstraints { (make) -> Void in
         make.right.equalTo(articleCell.snp_right).offset(-5)
-        make.height.width.equalTo(25)
+        make.height.width.equalTo(22)
         make.centerY.equalTo(timeEstimate.snp_centerY)
     }
     timeEstimate.snp_makeConstraints { (make) -> Void in
-        make.top.equalTo(articleTitle.snp_top).offset(5)
+        make.top.equalTo(articleTitle.snp_top)
 //        make.left.equalTo(articleTitle.snp_right).offset(-5)
         make.right.equalTo(addQueueButton.snp_left).offset(-5)
         make.width.equalTo(40)

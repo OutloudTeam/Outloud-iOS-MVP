@@ -17,13 +17,14 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
     override func viewDidLoad() {
+        self.title = ""
         articleListJSONGet { () -> () in
             dispatch_async(dispatch_get_main_queue()) { [unowned self] in
                 self.tableView.reloadData()
             }
         }
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationItem.titleView = createNavigationTitleView("Listen", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleList("Listen", callback: { () -> Void in
         })
         let bottomBar = createBottomArticleListBar(self.view)
         self.view.addSubview(tableView)

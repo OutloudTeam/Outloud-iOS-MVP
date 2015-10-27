@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+let separatorTitleFont = UIFont(name: "Avenir-Light", size: 20)
 let largeTitleFont = UIFont(name: "Avenir-Light", size: 17)
 let mediumTitleFont = UIFont(name: "Avenir-Light", size: 13)
 let smallTitleFont  = UIFont(name: "Avenir-Light", size: 10)
