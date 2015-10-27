@@ -48,7 +48,6 @@ func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, artic
 //                    let readings = articleDetailJSONDict["full_content"][i]["readings"]
                     
                     let newContent = FullArticleContent(text: text, readings: nil)
-                    print(newContent)
                     FullArticleContentArray.append(newContent)
                 }
                 ArticleDetailMediaArray.removeAll()
@@ -75,7 +74,6 @@ func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, artic
                 }
                 let newArticleDetail = ArticleDetailStruct(uuid: uuid, source: source, popularity: popularity, section: section, title: title, author: author, abstract: abstract, fullContent: FullArticleContentArray, url: url, byline: byline, updated_date: updated_date, created_date: created_date, published_date: published_date, media: ArticleDetailMediaArray)
                 ArticleDetailArray.append(newArticleDetail)
-                print(ArticleDetailArray)
                 success()
             } catch let error as NSError {
                 print(error)

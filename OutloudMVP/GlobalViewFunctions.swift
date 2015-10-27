@@ -14,18 +14,37 @@ func createNavigationTitleView(title: String, callback: ()->Void) -> UIView {
     let container = UIButton()
     let titleLabel = UILabel()
     let imageView = UIImageView()
+    let separatorLabel = UILabel()
+    let subtitleLabel = UILabel()
+    let subtitleImageView = UIImageView()
     
-    container.frame = CGRect(x: 0, y: 0, width: 128, height: 32)
+    
+    container.frame = CGRect(x: 0, y: 0, width: 180, height: 32)
     container.addSubview(titleLabel)
     container.addSubview(imageView)
+    container.addSubview(subtitleLabel)
+    container.addSubview(subtitleImageView)
+    container.addSubview(separatorLabel)
     
-    titleLabel.text = title;
+    titleLabel.text = title
     titleLabel.font = largeTitleFont
     titleLabel.textColor = UIColor.whiteColor()
     titleLabel.textAlignment = .Center
     
+    subtitleLabel.text = "Popular"
+    subtitleLabel.font = largeTitleFont
+    subtitleLabel.textColor = UIColor.whiteColor()
+    subtitleLabel.textAlignment = .Center
+    
+    separatorLabel.text = "/"
+    separatorLabel.font = largeTitleFont
+    separatorLabel.textColor = UIColor.whiteColor()
+    separatorLabel.textAlignment = .Center
+
+    
     titleLabel.snp_makeConstraints { (make) -> Void in
-        make.center.equalTo(container.snp_center)
+        make.left.equalTo(container.snp_left)
+        make.centerY.equalTo(container.snp_centerY)
     }
     
     imageView.snp_makeConstraints { (make) -> Void in
@@ -33,9 +52,25 @@ func createNavigationTitleView(title: String, callback: ()->Void) -> UIView {
         make.height.width.equalTo(16)
         make.centerY.equalTo(container.snp_centerY)
     }
+    separatorLabel.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(imageView.snp_right).offset(5)
+        make.centerY.equalTo(container.snp_centerY)
+    }
+    subtitleLabel.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(separatorLabel.snp_right).offset(5)
+        make.centerY.equalTo(container.snp_centerY)
+    }
+    
+    subtitleImageView.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(subtitleLabel.snp_right).offset(5)
+        make.height.width.equalTo(16)
+        make.centerY.equalTo(container.snp_centerY)
+    }
     
     imageView.image = UIImage(named: "downArrow")
+    subtitleImageView.image = UIImage(named: "downArrow")
     imageView.contentMode = .ScaleAspectFit
+    subtitleImageView.contentMode = .ScaleAspectFit
     
     return container
 }
@@ -205,6 +240,7 @@ func createBottomArticleListBar(view: UIView)->UIView{
         make.right.equalTo(bottomBar.snp_right).offset(-5)
         make.centerY.equalTo(bottomBar.snp_centerY)
     }
+    playQueueButton.contentMode = .ScaleAspectFit
     let playQueueInstructions = UILabel()
     playQueueInstructions.text = "3 items in your queue"
     playQueueInstructions.textAlignment = .Right

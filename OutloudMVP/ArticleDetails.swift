@@ -23,7 +23,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     let voteCount = UILabel()
     var intVoteCount = 1023
-    var tableView = UITableView()
+    var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     var scrollView: UIScrollView!
     var playOrPause = false
     var firstTime = true
@@ -72,6 +72,13 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
     }
     override func viewDidLoad() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = UIColor.whiteColor()
+        tableView.separatorStyle = .None
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+
         self.edgesForExtendedLayout = UIRectEdge.None
         self.navigationItem.titleView = createNavigationTitleView("Listen", callback: { () -> Void in
         })
@@ -273,7 +280,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             make.top.equalTo(authorName.snp_bottom).offset(2)
         }
        
-        voiceName.adjustsFontSizeToFitWidth = true
+//        voiceName.adjustsFontSizeToFitWidth = true
         voiceName.text = "@NoneFNow"
         voiceName.font = UIFont(name: ".SFUIText-Light", size: 12)
         

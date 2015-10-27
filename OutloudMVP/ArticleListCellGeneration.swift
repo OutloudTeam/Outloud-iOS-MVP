@@ -64,8 +64,14 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     playCountImage.image = UIImage(named: "playCount")
     shareCountImage.image = UIImage(named: "sharedCount")
     
-    playCount.text = String(arc4random_uniform(100000))
-    shareCount.text = String(arc4random_uniform(324562))
+    
+    let numberFormatter = NSNumberFormatter()
+    numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+    let unitedStatesLocale = NSLocale(localeIdentifier: "en_US")
+    numberFormatter.locale = unitedStatesLocale
+    
+    playCount.text = numberFormatter.stringFromNumber(NSNumber(unsignedInt: arc4random_uniform(456789)))
+    shareCount.text = numberFormatter.stringFromNumber(NSNumber(unsignedInt: arc4random_uniform(212356)))
     playCount.adjustsFontSizeToFitWidth = true
     shareCount.adjustsFontSizeToFitWidth = true
     articleOrigin.adjustsFontSizeToFitWidth = true
@@ -93,7 +99,7 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     }
     playCountImage.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(articleRating.snp_right).offset(10)
-        make.width.height.equalTo(15)
+        make.width.height.equalTo(10)
         make.centerY.equalTo(articleRating.snp_centerY)
     }
     playCount.snp_makeConstraints { (make) -> Void in

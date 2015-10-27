@@ -28,4 +28,3 @@ func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
     label.sizeToFit()
     return label.frame.height
 }
-

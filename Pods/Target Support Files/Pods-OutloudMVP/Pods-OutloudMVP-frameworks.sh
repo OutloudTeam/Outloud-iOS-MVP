@@ -85,9 +85,11 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-OutloudMVP/SnapKit.framework"
+  install_framework "Pods-OutloudMVP/SwiftOverlays.framework"
   install_framework "Pods-OutloudMVP/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-OutloudMVP/SnapKit.framework"
+  install_framework "Pods-OutloudMVP/SwiftOverlays.framework"
   install_framework "Pods-OutloudMVP/SwiftyJSON.framework"
 fi

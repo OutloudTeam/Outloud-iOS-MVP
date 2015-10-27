@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 import AVFoundation
+import SwiftOverlays
 
 class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
@@ -83,8 +84,10 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
         articleJSONGet(&articleDetailDictionary, articleID: ArticleListArray[indexPath.row].uuid!) { () -> () in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                SwiftOverlays.removeAllBlockingOverlays()
                 self.navigationController?.pushViewController(ArticleDetail(), animated: true)
             })
         }
