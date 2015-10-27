@@ -230,6 +230,26 @@ func createBottomArticleDetailBar(superView: UIView)->UIView{
     }
     return bottomBar
 }
+
+/*
+MARK: - Generates bottom record detail bar
+*/
+func createBottomRecordDetailBar(superView: UIView)->UIView{
+    let bottomBar = UIView()
+    superView.addSubview(bottomBar)
+    bottomBar.backgroundColor = UIColor(red:0.07, green:0.09, blue:0.16, alpha:1.0)
+    
+    
+    bottomBar.snp_makeConstraints { (make) -> Void in
+        make.height.equalTo(75)
+        make.bottom.equalTo(superView).offset(0)
+        make.left.equalTo(superView).offset(0)
+        make.right.equalTo(superView).offset(0)
+    }
+    return bottomBar
+}
+
+
 /*
 MARK: - Generates bottom article list bar
 With QueueList button, queue instructions, playQueueButton and playQueueInstructions.

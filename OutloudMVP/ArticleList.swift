@@ -13,10 +13,24 @@ import AVFoundation
 import SwiftOverlays
 
 class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    var refreshControl:UIRefreshControl!
+    func refresh(sender:AnyObject)
+    {
+        articleListJSONGet { () -> () in
+            self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
+        }
+    }
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
     override func viewDidLoad() {
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refreshControl)
+        
         self.title = ""
         articleListJSONGet { () -> () in
             dispatch_async(dispatch_get_main_queue()) { [unowned self] in

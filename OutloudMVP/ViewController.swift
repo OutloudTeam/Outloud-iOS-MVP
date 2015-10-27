@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController {
-
+    
     var backgroundMusic : AVAudioPlayer?
     
     
@@ -35,23 +35,23 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-//    func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
-//        //1
-//        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
-//        let url = NSURL.fileURLWithPath(path!)
-//        
-//        //2
-//        var audioPlayer:AVAudioPlayer?
-//        
-//        // 3
-//        do {
-//            try audioPlayer = AVAudioPlayer(contentsOfURL: url)
-//        } catch {
-//            print("Player not available")
-//        }
-//        
-//        return audioPlayer
-//    }
+    //    func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
+    //        //1
+    //        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
+    //        let url = NSURL.fileURLWithPath(path!)
+    //
+    //        //2
+    //        var audioPlayer:AVAudioPlayer?
+    //
+    //        // 3
+    //        do {
+    //            try audioPlayer = AVAudioPlayer(contentsOfURL: url)
+    //        } catch {
+    //            print("Player not available")
+    //        }
+    //        
+    //        return audioPlayer
+    //    }
     
     
 }

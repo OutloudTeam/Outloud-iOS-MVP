@@ -11,7 +11,7 @@ import SwiftyJSON
 import Haneke
 
 // MARK: - Generates Article JSON from article ID
-// TODO: - Implement cacheing
+// TODO: - Implement cache refresh after a while
 func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, articleID: String, success:()->()) {
     let urlString = "http://www.outloud.io:8080/api/article/" + articleID
     let cache = Shared.dataCache

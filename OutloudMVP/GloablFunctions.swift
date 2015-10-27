@@ -17,7 +17,9 @@ func delay(delay:Double, closure:()->()) {
         dispatch_get_main_queue(), closure)
 }
 
-
+/* Give the text, font and width of the label returns height for view,
+used for dynamically allocating height for cells.
+*/
 func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
     let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
     label.numberOfLines = 0

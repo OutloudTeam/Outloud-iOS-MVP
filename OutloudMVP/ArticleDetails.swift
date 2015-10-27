@@ -78,7 +78,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-
+        
         self.edgesForExtendedLayout = UIRectEdge.None
         self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Listen", callback: { () -> Void in
         })
@@ -124,7 +124,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         upvoteButton.setBackgroundImage(UIImage(named: "upvote"), forState: .Normal)
         downvoteButton.setBackgroundImage(UIImage(named: "downvote"), forState: .Normal)
         shareButton.setBackgroundImage(UIImage(named: "share"), forState: .Normal)
-
+        
         upvoteButton.addTarget(self, action: "upVoteCast", forControlEvents: .TouchUpInside)
         downvoteButton.addTarget(self, action: "downVoteCast", forControlEvents: .TouchUpInside)
         
@@ -212,7 +212,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             paragraph.font = fontTest
         }
         cell.userInteractionEnabled = false
-    
+        
         return cell
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -222,12 +222,12 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         paragraph.font = fontTest
         var cellHeight = heightForView(paragraph.text!, font: fontTest!, width: (tableView.frame.width - 60))
         cellHeight = cellHeight + 10
-//        if(indexToColor == indexPath.row){
-//            let fontTest2 = UIFont(name: "Helvetica", size: 18.0)
-//            paragraph.font = fontTest2
-//            var cellHeight = heightForView(paragraph.text!, font: fontTest2!, width: (tableView.frame.width - 60))
-//            cellHeight = cellHeight + 10
-//        }
+        //        if(indexToColor == indexPath.row){
+        //            let fontTest2 = UIFont(name: "Helvetica", size: 18.0)
+        //            paragraph.font = fontTest2
+        //            var cellHeight = heightForView(paragraph.text!, font: fontTest2!, width: (tableView.frame.width - 60))
+        //            cellHeight = cellHeight + 10
+        //        }
         return cellHeight
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -247,7 +247,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         articleTitle.textAlignment = .Center
         articleTitle.lineBreakMode = NSLineBreakMode.ByWordWrapping
         articleTitle.numberOfLines = 0
-//        articleTitle.adjustsFontSizeToFitWidth = true
+        //        articleTitle.adjustsFontSizeToFitWidth = true
         articleTitle.textColor = black
         articleBar.addSubview(articleTitle)
         articleTitle.snp_makeConstraints { (make) -> Void in
@@ -279,8 +279,8 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             make.left.equalTo(authorName.snp_left)
             make.top.equalTo(authorName.snp_bottom).offset(2)
         }
-       
-//        voiceName.adjustsFontSizeToFitWidth = true
+        
+        //        voiceName.adjustsFontSizeToFitWidth = true
         voiceName.text = "@NoneFNow"
         voiceName.font = UIFont(name: ".SFUIText-Light", size: 12)
         
@@ -316,7 +316,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
 func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
     let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
     let url = NSURL.fileURLWithPath(path!)
-
+    
     var audioPlayer:AVAudioPlayer?
     do {
         try audioPlayer = AVAudioPlayer(contentsOfURL: url)
