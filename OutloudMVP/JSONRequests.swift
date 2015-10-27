@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 
 func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, articleID: String, success:()->()) {
-    let urlString = "http://imgonnahaveahouse.party:8080/api/article/" + articleID
+    let urlString = "http://www.outloud.io:8080/api/article/" + articleID
     
     let getURL = NSURL(string: urlString)
     let session = NSURLSession.sharedSession()
@@ -20,15 +20,62 @@ func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, artic
         if error != nil {
             print(error?.localizedDescription)
         } else {
-            guard let data = data, dataString = NSString(data: data, encoding: NSISOLatin1StringEncoding) else {
-                return
-            }
-            guard let dataFromStringUTF = dataString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) else {
+            guard let JSONData = data else {
                 return
             }
             do {
-                let decoded = try NSJSONSerialization.JSONObjectWithData(dataFromStringUTF, options: []) as? [String:AnyObject]
-                articleDictionary = decoded!
+                _ = try NSJSONSerialization.JSONObjectWithData(JSONData, options: [])
+                let articleDetailJSONDict = JSON(data: JSONData)
+//                print(articleDetailJSONDict)
+                ArticleDetailArray.removeAll()
+                let uuid = articleDetailJSONDict["uuid"].string
+                let source = articleDetailJSONDict["source"].string
+                let popularity = articleDetailJSONDict["popularity"].string
+                let section = articleDetailJSONDict["section"].string
+                let title = articleDetailJSONDict["title"].string
+                let author = articleDetailJSONDict["author"].string
+                let abstract = articleDetailJSONDict["abstract"].string
+                let fullContent = articleDetailJSONDict["full_content"]
+                let url = articleDetailJSONDict["url"].string
+                let byline = articleDetailJSONDict["byline"].string
+                let updated_date = articleDetailJSONDict["updated_date"].string
+                let created_date = articleDetailJSONDict["created_date"].string
+                let published_date = articleDetailJSONDict["published_date"].string
+                let media = articleDetailJSONDict["media"]
+                FullArticleContentArray.removeAll()
+                for var i = 0; i < fullContent.count; i++ {
+                    let text = articleDetailJSONDict["full_content"][i]["text"].string
+//                    let readings = articleDetailJSONDict["full_content"][i]["readings"]
+                    
+                    let newContent = FullArticleContent(text: text, readings: nil)
+                    print(newContent)
+                    FullArticleContentArray.append(newContent)
+                }
+                ArticleDetailMediaArray.removeAll()
+                ArticleDetailMediaMetadataArray.removeAll()
+                for var i = 0; i < articleDetailJSONDict["media"].count; i++ {
+                    let type = media[i]["type"].string
+                    let subtype = media[i]["subtype"].string
+                    let caption = media[i]["caption"].string
+                    let copyright = media[i]["copyright"].string
+                    let mediaMetadata = articleDetailJSONDict["media"][i]["media-metadata"]
+                    for var z = 0; z < mediaMetadata.count; z++ {
+                        let url = media[i]["media-metadata"][z]["url"].string
+                        let format = media[i]["media-metadata"][z]["format"].string
+                        let height = media[i]["media-metadata"][z]["height"].int
+                        let width  = media[i]["media-metadata"][z]["width"].int
+                        
+                        let newMediaMetadata = ArticleDetailMediaMetadata(url: url, format: format, height: height, width: width)
+                        ArticleDetailMediaMetadataArray.append(newMediaMetadata)
+                        
+                    }
+                    let newMedia = ArticleDetailMedia(type: type, subtype: subtype, caption: caption, copyright: copyright, mediaMetadata: ArticleDetailMediaMetadataArray)
+                    ArticleDetailMediaArray.append(newMedia)
+                    
+                }
+                let newArticleDetail = ArticleDetailStruct(uuid: uuid, source: source, popularity: popularity, section: section, title: title, author: author, abstract: abstract, fullContent: FullArticleContentArray, url: url, byline: byline, updated_date: updated_date, created_date: created_date, published_date: published_date, media: ArticleDetailMediaArray)
+                ArticleDetailArray.append(newArticleDetail)
+                print(ArticleDetailArray)
                 success()
             } catch let error as NSError {
                 print(error)

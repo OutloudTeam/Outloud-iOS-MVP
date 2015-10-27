@@ -137,8 +137,8 @@
 		DBC15B731BCF640700C4DCC6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				DBB683F91BDED947002ED471 /* CellGeneration */,
 				DBC15B741BCF644600C4DCC6 /* ArticleHeader.swift */,
+				DBB683F91BDED947002ED471 /* CellGeneration */,
 			);
 			name = Cells;
 			sourceTree = "<group>";

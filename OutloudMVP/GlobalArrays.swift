@@ -22,5 +22,43 @@ struct ArticleListStruct {
     var created_date : String?
     var published_date : String?
 }
+struct ArticleDetailStruct {
+    var uuid : String?
+    var source : String?
+    var popularity : String?
+    var section : String?
+    var title : String?
+    var author : String?
+    var abstract : String?
+    var fullContent = [FullArticleContent]()
+    var url : String?
+    var byline : String?
+    var updated_date : String?
+    var created_date : String?
+    var published_date : String?
+    var media = [ArticleDetailMedia]()
+}
+struct ArticleDetailMedia {
+    var type : String?
+    var subtype : String?
+    var caption : String?
+    var copyright : String?
+    var mediaMetadata = [ArticleDetailMediaMetadata]()
+}
+struct ArticleDetailMediaMetadata {
+    var url : String?
+    var format : String?
+    var height : Int?
+    var width : Int?
+}
 
+struct FullArticleContent {
+    var text : String?
+    var readings : String?
+}
 var ArticleListArray = [ArticleListStruct]()
+var ArticleDetailArray = [ArticleDetailStruct]()
+var FullArticleContentArray = [FullArticleContent]()
+var ArticleDetailMediaArray = [ArticleDetailMedia]()
+var ArticleDetailMediaMetadataArray = [ArticleDetailMediaMetadata]()
+var articleDetailDictionary :[String: AnyObject] = ["place":"holder"]

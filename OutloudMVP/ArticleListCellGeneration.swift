@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import SnapKit
 
-func generateArticleListCell(indexPath: NSIndexPath)->UITableViewCell {
-    let articleCell = UITableViewCell()
+func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UITableViewCell {
+    let articleCell = UITableViewCell(style: .Default, reuseIdentifier: "articleCell")
     let articleTitle = UILabel()
     let articleAbstract = UILabel()
     let articleSeparatorBar = UIView()
@@ -21,6 +21,8 @@ func generateArticleListCell(indexPath: NSIndexPath)->UITableViewCell {
     let shareCountImage = UIImageView()
     let shareCount = UILabel()
     let articleOrigin = UILabel()
+    let timeEstimate = UILabel()
+    let addQueueButton = UIButton()
     
     articleCell.addSubview(articleTitle)
     articleCell.addSubview(articleAbstract)
@@ -31,9 +33,19 @@ func generateArticleListCell(indexPath: NSIndexPath)->UITableViewCell {
     articleCell.addSubview(shareCountImage)
     articleCell.addSubview(shareCount)
     articleCell.addSubview(articleOrigin)
+    articleCell.addSubview(timeEstimate)
+    articleCell.addSubview(addQueueButton)
     
     articleTitle.text = ArticleListArray[indexPath.row].title
     articleAbstract.text = ArticleListArray[indexPath.row].abstract
+    var time = "5"
+    let randomVar = arc4random_uniform(10)
+    if(randomVar < 4) {
+        time = "4"
+    } else {
+        time = String(randomVar)
+    }
+    timeEstimate.text = "\(time) min"
     
 
 
@@ -49,23 +61,28 @@ func generateArticleListCell(indexPath: NSIndexPath)->UITableViewCell {
     articleAbstract.numberOfLines = 0
     
     articleRating.image = UIImage(named: "rating")
-    playCountImage.image = UIImage(named: "rating")
-    shareCountImage.image = UIImage(named: "rating")
+    playCountImage.image = UIImage(named: "playCount")
+    shareCountImage.image = UIImage(named: "sharedCount")
     
-    playCount.text = "100,000"
-    shareCount.text = "200,000"
+    playCount.text = String(arc4random_uniform(100000))
+    shareCount.text = String(arc4random_uniform(324562))
     playCount.adjustsFontSizeToFitWidth = true
     shareCount.adjustsFontSizeToFitWidth = true
     articleOrigin.adjustsFontSizeToFitWidth = true
+    timeEstimate.adjustsFontSizeToFitWidth = true
+    
+    addQueueButton.frame = CGRectMake(50, 50, 50, 50)
+    addQueueButton.setBackgroundImage(UIImage(named: "plus"), forState: .Normal)
+    addQueueButton.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0)
     
     articleTitle.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(articleCell.snp_left).offset(15)
-        make.right.equalTo(articleCell.snp_right).offset(-30)
+        make.right.equalTo(articleCell.snp_right).offset(-60)
         make.top.equalTo(articleCell.snp_top).offset(25)
     }
     articleAbstract.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(articleTitle.snp_left)
-        make.right.equalTo(articleTitle.snp_right)
+        make.right.equalTo(articleCell.snp_right).offset(-30)
         make.top.equalTo(articleTitle.snp_bottom).offset(3)
     }
     articleRating.snp_makeConstraints { (make) -> Void in
@@ -99,6 +116,18 @@ func generateArticleListCell(indexPath: NSIndexPath)->UITableViewCell {
         make.left.equalTo(shareCount.snp_right).offset(10)
         make.width.equalTo(40)
     }
+    addQueueButton.snp_makeConstraints { (make) -> Void in
+        make.right.equalTo(articleCell.snp_right).offset(-5)
+        make.height.width.equalTo(25)
+        make.centerY.equalTo(timeEstimate.snp_centerY)
+    }
+    timeEstimate.snp_makeConstraints { (make) -> Void in
+        make.top.equalTo(articleTitle.snp_top).offset(5)
+//        make.left.equalTo(articleTitle.snp_right).offset(-5)
+        make.right.equalTo(addQueueButton.snp_left).offset(-5)
+        make.width.equalTo(40)
+    }
+    
     
     articleSeparatorBar.backgroundColor = UIColor.blackColor()
     articleSeparatorBar.snp_makeConstraints { (make) -> Void in

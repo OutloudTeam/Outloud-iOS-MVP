@@ -45,8 +45,7 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
         return ArticleListArray.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return generateArticleListCell(indexPath)
-
+        return generateArticleListCell(tableView, indexPath: indexPath)
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let articleTitle = UILabel()
@@ -58,8 +57,8 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
         articleTitle.font = fontTest
         articleAbstract.font = fontTest
         
-        var cellHeight = heightForView(articleTitle.text!, font: fontTest!, width: (tableView.frame.width - 45)) + heightForView(articleAbstract.text!, font: articleAbstractFont!, width: (tableView.frame.width - 45))
-        cellHeight = cellHeight + 35 + 15 + 10
+        var cellHeight = heightForView(articleTitle.text!, font: fontTest!, width: (tableView.frame.width - 75)) + heightForView(articleAbstract.text!, font: articleAbstractFont!, width: (tableView.frame.width - 45))
+        cellHeight = cellHeight + 35 + 15 + 20
         return cellHeight
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -67,19 +66,28 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
         self.view.addSubview(articleBar)
         articleBar.backgroundColor = UIColor.whiteColor()
         playAllButton.frame = CGRectMake(100, 50, 100, 50)
-        playAllButton.backgroundColor = UIColor.blackColor()
+        playAllButton.setBackgroundImage(UIImage(named: "play-all"), forState: .Normal)
+        playAllButton.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0)
         articleBar.addSubview(playAllButton)
         playAllButton.snp_makeConstraints { (make) -> Void in
             make.height.equalTo(50)
-            make.width.equalTo(100)
+            make.width.equalTo(150)
             make.centerX.equalTo(articleBar.snp_centerX)
             make.centerY.equalTo(articleBar.snp_centerY)
         }
-
+        
         return articleBar
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 75
+        return 60
     }
-
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        articleJSONGet(&articleDetailDictionary, articleID: ArticleListArray[indexPath.row].uuid!) { () -> () in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
+            })
+        }
+    }
+    
 }

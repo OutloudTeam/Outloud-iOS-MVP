@@ -13,7 +13,6 @@ import AVFoundation
 
 
 class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var articleDictionary :[String: AnyObject] = ["place":"Holder"]
     //BUTTONS
     let playButton = UIButton(type: UIButtonType.System) as UIButton
     let skipBackButton = UIButton(type: UIButtonType.System) as UIButton
@@ -183,13 +182,13 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return 1
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return holdingArray.count
+        return FullArticleContentArray.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let paragraph = UILabel()
         cell.addSubview(paragraph)
-        paragraph.text = holdingArray[indexPath.row]
+        paragraph.text = FullArticleContentArray[indexPath.row].text
         paragraph.lineBreakMode = NSLineBreakMode.ByWordWrapping
         paragraph.numberOfLines = 0
         paragraph.snp_makeConstraints { (make) -> Void in
@@ -211,7 +210,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let paragraph = UILabel()
-        paragraph.text = holdingArray[indexPath.row]
+        paragraph.text = ArticleDetailArray[0].fullContent[indexPath.row].text
         let fontTest = UIFont(name: "Helvetica", size: 14.0)
         paragraph.font = fontTest
         var cellHeight = heightForView(paragraph.text!, font: fontTest!, width: (tableView.frame.width - 60))
@@ -229,7 +228,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         self.view.addSubview(articleBar)
         articleBar.backgroundColor = UIColor.whiteColor()
         let articleTitle = UILabel()
-        articleTitle.text = "Backyard Beekeeping Approved In Los Angeles"
+        articleTitle.text = ArticleDetailArray[0].title
         articleTitle.font = UIFont(name: ".SFUIText-Light", size: 24)
         articleTitle.textAlignment = .Center
         articleTitle.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -244,7 +243,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
         let authorName = UILabel()
         authorName.adjustsFontSizeToFitWidth = true
-        authorName.text = "Laura Wagner"
+        authorName.text = ArticleDetailArray[0].author
         authorName.font = UIFont(name: ".SFUIText-Light", size: 10)
         articleBar.addSubview(authorName)
         authorName.snp_makeConstraints { (make) -> Void in
@@ -290,7 +289,8 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return articleBar
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 100
+        let cellHeight = heightForView(ArticleDetailArray[0].title!, font: UIFont(name: ".SFUIText-Light", size: 24)!, width: (tableView.frame.width - 60))
+        return cellHeight + 40
     }
 }
 func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {

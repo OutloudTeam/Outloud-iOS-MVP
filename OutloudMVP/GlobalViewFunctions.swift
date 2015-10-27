@@ -166,7 +166,7 @@ With QueueList button, queue instructions, playQueueButton and playQueueInstruct
 func createBottomArticleListBar(view: UIView)->UIView{
     let bottomBar = UIView()
     view.addSubview(bottomBar)
-    bottomBar.backgroundColor = black
+    bottomBar.backgroundColor = UIColor(red:0.07, green:0.09, blue:0.16, alpha:1.0)
     bottomBar.snp_makeConstraints { (make) -> Void in
         make.height.equalTo(40)
         make.bottom.equalTo(view).offset(0)
@@ -175,7 +175,7 @@ func createBottomArticleListBar(view: UIView)->UIView{
     }
     
     let queueListButton = UIButton(type: UIButtonType.System) as UIButton
-    queueListButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
+    queueListButton.setBackgroundImage(UIImage(named: "edit-queue"), forState: .Normal)
     bottomBar.addSubview(queueListButton)
     queueListButton.snp_makeConstraints { (make) -> Void in
         make.height.width.equalTo(33)
