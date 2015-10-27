@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
+// MARK: - Generates Navigation Top Bar for Article List
 func createNavigationTitleViewArticleList(title: String, callback: ()->Void) -> UIView {
     let container = UIButton()
     let titleLabel = UILabel()
@@ -74,7 +75,7 @@ func createNavigationTitleViewArticleList(title: String, callback: ()->Void) -> 
     
     return container
 }
-
+// MARK: - Generates Navigation Top Bar for Article Detail
 func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -> UIView {
     let container = UIButton()
     let titleLabel = UILabel()
@@ -108,7 +109,7 @@ func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -
     return container
 }
 
-
+// MARK: - Generates Top Bar, now deprecated
 func createTopBar(superView: UIView)->UIView {
     let topBar = UIView()
     superView.addSubview(topBar)
@@ -153,6 +154,7 @@ func createTopBar(superView: UIView)->UIView {
     return topBar
 }
 
+//MARK: - Creates Title Author bar, now deprecated
 func createTitleAuthorBarListen(superView: UIView)->UIView {
     let articleBar = UIView()
     superView.addSubview(articleBar)

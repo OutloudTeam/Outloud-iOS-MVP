@@ -8,6 +8,7 @@ target 'OutloudMVP' do
     #pod 'AudioKit', '~> 2.1.1'
     pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
     pod 'SwiftOverlays', '~> 1.0'
+    pod 'HanekeSwift'
 end
 
 target 'OutloudMVPTests' do

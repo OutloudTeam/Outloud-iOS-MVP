@@ -8,7 +8,8 @@
 
 import Foundation
 import SwiftyJSON
-
+// MARK: - Generates Article JSON from article ID
+// TODO: - Implement cacheing
 func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, articleID: String, success:()->()) {
     let urlString = "http://www.outloud.io:8080/api/article/" + articleID
     
@@ -26,7 +27,6 @@ func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, artic
             do {
                 _ = try NSJSONSerialization.JSONObjectWithData(JSONData, options: [])
                 let articleDetailJSONDict = JSON(data: JSONData)
-//                print(articleDetailJSONDict)
                 ArticleDetailArray.removeAll()
                 let uuid = articleDetailJSONDict["uuid"].string
                 let source = articleDetailJSONDict["source"].string
@@ -82,7 +82,8 @@ func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, artic
     }
     task.resume()
 }
-
+// MARK: - Generate article list from API
+// TODO: - Implement cacheing
 func articleListJSONGet(success:()->()){
     let urlString = "http://www.outloud.io:8080/api/feed"
     

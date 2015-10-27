@@ -1,9 +1,11 @@
 PODS:
+  - HanekeSwift (0.10.0)
   - SnapKit (0.15.0)
   - SwiftOverlays (1.0)
   - SwiftyJSON (2.3.1)
 
 DEPENDENCIES:
+  - HanekeSwift
   - SnapKit (~> 0.15.0)
   - SwiftOverlays (~> 1.0)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
@@ -18,6 +20,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
+  HanekeSwift: d6f5bdf9dbdbbc09d59623b2c1d533e46463dd4d
   SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87
   SwiftOverlays: 6a47bab3ed2784c378f07b275269f9e8231526e6
   SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
