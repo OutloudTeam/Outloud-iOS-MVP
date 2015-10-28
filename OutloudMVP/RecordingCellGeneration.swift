@@ -73,7 +73,7 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
     //
     authorName.adjustsFontSizeToFitWidth = true
     authorName.text = ArticleDetailArray[0].author
-//    authorName.font = authorNameFont
+    //    authorName.font = authorNameFont
     
     authorName.snp_makeConstraints { (make) -> Void in
         make.top.equalTo(articleTitle.snp_bottom).offset(10)
@@ -81,13 +81,7 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
         make.right.equalTo(articleTitle.snp_right)
     }
     let articleLink = UILabel()
-    //        guard let fullURL = ArticleDetailArray[0].url else {
-    //            articleLink.text = "Not Found"
-    //            return articleBar
-    //        }
-    //        let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
-    //        articleLink.text = fullURLArray[1]
-    articleLink.text = "Placeholder.com"
+    
     articleLink.textColor = transparentBlack
     articleLink.font = UIFont(name: ".SFUIText-Light", size: 10)
     headerView.addSubview(articleLink)
@@ -104,5 +98,12 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
         make.left.equalTo(headerView.snp_left).offset(50)
         make.right.equalTo(headerView.snp_right).offset(-50)
     }
+    guard let fullURL = ArticleDetailArray[0].url else {
+        articleLink.text = "Not Found"
+        return headerView
+    }
+    let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
+    articleLink.text = fullURLArray[1]
+    
     return headerView
 }

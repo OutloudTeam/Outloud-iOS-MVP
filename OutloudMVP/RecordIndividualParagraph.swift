@@ -12,13 +12,17 @@ import UIKit
 class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     let completionBar = UIView()
-    
+    var completionWidth : CGFloat!
     func forwardParagraph() {
         if(ParagraphCount < FullArticleContentArray.count-1) {
             ParagraphCount++
             self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1)/\(FullArticleContentArray.count)", callback: { () -> Void in
             })
             tableView.reloadData()
+            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
+            completionBar.snp_updateConstraints(closure: { (make) -> Void in
+                make.width.equalTo(completionWidth)
+            })
         }
     }
     func backwardParagraph() {
@@ -27,9 +31,11 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1)/\(FullArticleContentArray.count)", callback: { () -> Void in
             })
             tableView.reloadData()
+            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
         }
     }
     override func viewDidLoad() {
+        completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
         
         self.edgesForExtendedLayout = UIRectEdge.None
         self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1)/\(FullArticleContentArray.count)", callback: { () -> Void in
@@ -38,7 +44,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         completionBar.backgroundColor = recordProgressColor
         completionBar.snp_makeConstraints { (make) -> Void in
             make.height.equalTo(4)
-            make.width.equalTo(30)
+            make.width.greaterThanOrEqualTo(completionWidth)
             make.left.top.equalTo(self.view)
         }
         let bottomBar = createBottomParagraphRecordingBar(self.view)
