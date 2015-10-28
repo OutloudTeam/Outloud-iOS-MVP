@@ -20,6 +20,10 @@ let articleAbstractFont = UIFont(name: "Avenir-Light", size: 12)
 
 
 //NEW FONTS
-let recordArticleTitleFont = UIFont(name: ".SFUIText-Semibold ", size: 16)
-let recordArticleParagraphFont = UIFont(name: ".SFUIText-Regular", size: 16)
-let authorNameFont = UIFont(name: ".SFUIText-Bold", size: 12)
+let recordArticleTitleFont = UIFont.systemFontOfSize(16, weight: UIFontWeightSemibold)
+let recordArticleParagraphFont = UIFont.systemFontOfSize(16, weight: UIFontWeightRegular)
+let authorNameFont = UIFont.systemFontOfSize(12, weight: UIFontWeightBold)
+let articleLinkFont = UIFont.systemFontOfSize(12, weight: UIFontWeightLight)
+//let recordArticleTitleFont = UIFont(name: ".SFUIText-Semibold ", size: 16)
+//let recordArticleParagraphFont = UIFont(name: ".SFUIText-Regular", size: 16)
+//let authorNameFont = UIFont(name: ".SFUIText-Bold", size: 12)

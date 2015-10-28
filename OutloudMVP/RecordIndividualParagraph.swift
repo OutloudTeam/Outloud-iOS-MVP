@@ -123,10 +123,9 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         return 1    
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let cellHeight = heightForJustifiedView(FullArticleContentArray[ParagraphCount].text!, font: recordArticleParagraphFont!, width: (tableView.frame.width - 60))
-//        let cellHeight = heightForView(FullArticleContentArray[ParagraphCount].text!, font: recordArticleParagraphFont!, width: (tableView.frame.width - 60))
-        print(cellHeight)
-        return self.view.frame.height
+        let cellHeight = heightForJustifiedView(FullArticleContentArray[ParagraphCount].text!, font: recordArticleParagraphFont, width: (tableView.frame.width - 60))
+        //cell height is dynamically generated then constraint values are added
+        return cellHeight + 30
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return generateRecordingParagraphCell(tableView, indexPath: indexPath)
@@ -135,8 +134,10 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         return generateRecordingHeaderCell(tableView)
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        let cellHeight = heightForView(ArticleDetailArray[0].title!, font: largeTitleFont!, width: (tableView.frame.width - 60))
-//        return cellHeight + 60
-        return 140
+        let titleHeight = heightForJustifiedView(ArticleDetailArray[0].title!, font: recordArticleTitleFont, width: (tableView.frame.width - 60))
+        let authorHeight = heightForJustifiedView(ArticleDetailArray[0].author!, font: authorNameFont, width: (tableView.frame.width-60))
+        let articleHeight = heightForView("Placeholder.com", font: articleLinkFont, width: (tableView.frame.width - 60))
+        //cell height is dynamically genrated then the constraint values are added to it
+        return titleHeight + authorHeight + articleHeight + 67
     }
 }
