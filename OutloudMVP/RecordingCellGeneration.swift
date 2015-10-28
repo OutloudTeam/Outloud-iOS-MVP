@@ -21,8 +21,7 @@ func generateRecordingParagraphCell(tableView: UITableView, indexPath: NSIndexPa
     paragraph.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(paragraphCell.snp_left).offset(30)
         make.right.equalTo(paragraphCell.snp_right).offset(-30)
-        make.top.equalTo(paragraphCell.snp_top).offset(30)
-        make.bottom.equalTo(paragraphCell.snp_bottom).offset(-30)
+        make.top.equalTo(paragraphCell.snp_top).offset(10)
     }
     
     let paragraphStyle = NSMutableParagraphStyle()
@@ -36,7 +35,7 @@ func generateRecordingParagraphCell(tableView: UITableView, indexPath: NSIndexPa
     paragraph.font = recordArticleParagraphFont
     
     paragraphCell.selectionStyle = .None
-    
+
     return paragraphCell
 }
 
@@ -91,12 +90,12 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
     }
     let separatorBar = UIView()
     headerView.addSubview(separatorBar)
-    separatorBar.backgroundColor = darkRed
+    separatorBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
     separatorBar.snp_makeConstraints { (make) -> Void in
         make.height.equalTo(1)
         make.top.equalTo(articleLink.snp_bottom).offset(10)
-        make.left.equalTo(headerView.snp_left).offset(50)
-        make.right.equalTo(headerView.snp_right).offset(-50)
+        make.left.equalTo(articleTitle.snp_left)
+        make.right.equalTo(articleTitle.snp_right)
     }
     guard let fullURL = ArticleDetailArray[0].url else {
         articleLink.text = "Not Found"
@@ -104,6 +103,6 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
     }
     let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
     articleLink.text = fullURLArray[1]
-    
+
     return headerView
 }

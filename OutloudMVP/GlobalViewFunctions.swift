@@ -22,7 +22,7 @@ func createNavigationTitleViewArticleRecordParagraph(title: String, callback: ()
     
     
     titleLabel.text = title
-    titleLabel.font = largeTitleFont
+    titleLabel.font = recordArticleTitleFont
     titleLabel.textColor = UIColor.whiteColor()
     titleLabel.textAlignment = .Center
     

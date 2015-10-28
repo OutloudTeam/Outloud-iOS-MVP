@@ -31,6 +31,20 @@ func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
     return label.frame.height
 }
 
+func heightForJustifiedView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+    let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
+    label.numberOfLines = 0
+    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+    label.font = font
+    label.text = text
+    label.textAlignment = .Justified
+    
+    label.sizeToFit()
+    print(label.frame.height)
+    return label.frame.height
+}
+
+
 func roundUp(value: Int, divisor: Int) -> Int {
     let rem = value % divisor
     return rem == 0 ? value : value + divisor - rem
@@ -56,7 +70,6 @@ func currentYearDayHourMinute()->Int {
     let calendar = NSCalendar.currentCalendar()
     let date = NSDate()
     let components = calendar.components([.Minute, .Hour, .Day, .Year], fromDate: date)
-    print(roundUp(components.minute, divisor: 10) + (components.hour * 100) + (components.day * 10000) + (components.year * 1000000))
     return roundUp(components.minute, divisor: 10) + (components.hour * 100) + (components.day * 10000) + (components.year * 1000000)
 }
 
