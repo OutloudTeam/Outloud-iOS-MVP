@@ -18,6 +18,7 @@ class MainNavigationController: UINavigationController {
         self.edgesForExtendedLayout = UIRectEdge.None
         self.setViewControllers([mainViewController], animated: false)
         self.navigationBar.setBackgroundImage(UIImage(named: "background"), forBarMetrics: UIBarMetrics.Default)
+        self.navigationBar.backgroundColor = barColor
         self.navigationBar.translucent = false
     }
     

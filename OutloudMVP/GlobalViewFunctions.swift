@@ -10,6 +10,30 @@ import Foundation
 import UIKit
 import SnapKit
 
+
+// MARK: - Generates Navigation Top Bar for Article Detail
+func createNavigationTitleViewArticleRecordParagraph(title: String, callback: ()->Void) -> UIView {
+    let container = UIButton()
+    let titleLabel = UILabel()
+    
+    
+    container.frame = CGRect(x: 0, y: 0, width: 128, height: 32)
+    container.addSubview(titleLabel)
+    
+    
+    titleLabel.text = title
+    titleLabel.font = largeTitleFont
+    titleLabel.textColor = UIColor.whiteColor()
+    titleLabel.textAlignment = .Center
+    
+    titleLabel.snp_makeConstraints { (make) -> Void in
+        //        make.left.equalTo(container.snp_left)
+        make.center.equalTo(container.snp_center)
+    }
+    
+    return container
+}
+
 // MARK: - Generates Navigation Top Bar for Article List
 func createNavigationTitleViewArticleList(title: String, callback: ()->Void) -> UIView {
     let container = UIButton()
@@ -236,15 +260,24 @@ MARK: - Generates bottom record detail bar
 */
 func createBottomRecordDetailBar(superView: UIView)->UIView{
     let bottomBar = UIView()
+    let recordInstructions = UILabel()
     superView.addSubview(bottomBar)
-    bottomBar.backgroundColor = UIColor(red:0.07, green:0.09, blue:0.16, alpha:1.0)
+    superView.addSubview(recordInstructions)
     
+    bottomBar.backgroundColor = barColor
+    recordInstructions.text = "Hold a paragraph to record!"
+    recordInstructions.font = mediumTitleFont
+    recordInstructions.textColor = UIColor.whiteColor()
     
     bottomBar.snp_makeConstraints { (make) -> Void in
-        make.height.equalTo(75)
+        make.height.equalTo(30)
         make.bottom.equalTo(superView).offset(0)
         make.left.equalTo(superView).offset(0)
         make.right.equalTo(superView).offset(0)
+    }
+    recordInstructions.snp_makeConstraints { (make) -> Void in
+        make.centerX.equalTo(bottomBar.snp_centerX)
+        make.centerY.equalTo(bottomBar.snp_centerY)
     }
     return bottomBar
 }
@@ -257,7 +290,7 @@ With QueueList button, queue instructions, playQueueButton and playQueueInstruct
 func createBottomArticleListBar(view: UIView)->UIView{
     let bottomBar = UIView()
     view.addSubview(bottomBar)
-    bottomBar.backgroundColor = UIColor(red:0.07, green:0.09, blue:0.16, alpha:1.0)
+    bottomBar.backgroundColor = barColor
     bottomBar.snp_makeConstraints { (make) -> Void in
         make.height.equalTo(40)
         make.bottom.equalTo(view).offset(0)
@@ -309,6 +342,22 @@ func createBottomArticleListBar(view: UIView)->UIView{
         make.left.equalTo(queueInstructions.snp_right)
         make.right.equalTo(playQueueButton.snp_left).offset(-5)
         make.centerY.equalTo(queueListButton.snp_centerY)
+    }
+    return bottomBar
+}
+/*
+MARK: - Generates bottom bar for recording paragraphs
+*/
+func createBottomParagraphRecordingBar(superView: UIView)->UIView{
+    let bottomBar = UIView()
+    superView.addSubview(bottomBar)
+    bottomBar.backgroundColor = barColor
+    
+    bottomBar.snp_makeConstraints { (make) -> Void in
+        make.height.equalTo(50)
+        make.bottom.equalTo(superView).offset(0)
+        make.left.equalTo(superView).offset(0)
+        make.right.equalTo(superView).offset(0)
     }
     return bottomBar
 }

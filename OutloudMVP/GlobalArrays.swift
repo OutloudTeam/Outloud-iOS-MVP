@@ -75,3 +75,5 @@ var FullArticleContentArray = [FullArticleContent]()
 var ArticleDetailMediaArray = [ArticleDetailMedia]()
 var ArticleDetailMediaMetadataArray = [ArticleDetailMediaMetadata]()
 var articleDetailDictionary :[String: AnyObject] = ["place":"holder"]
+
+var ParagraphCount = 0

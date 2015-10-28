@@ -30,10 +30,12 @@ func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
     label.sizeToFit()
     return label.frame.height
 }
+
 func roundUp(value: Int, divisor: Int) -> Int {
     let rem = value % divisor
     return rem == 0 ? value : value + divisor - rem
 }
+
 func writeTime(time: Int) {
     let file = "cacheCheck.plist"
     if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
@@ -57,6 +59,7 @@ func currentYearDayHourMinute()->Int {
     print(roundUp(components.minute, divisor: 10) + (components.hour * 100) + (components.day * 10000) + (components.year * 1000000))
     return roundUp(components.minute, divisor: 10) + (components.hour * 100) + (components.day * 10000) + (components.year * 1000000)
 }
+
 func readCacheTime()->Int {
     let file = "cacheCheck.plist"
     if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {

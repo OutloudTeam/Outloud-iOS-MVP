@@ -13,6 +13,7 @@ import AVFoundation
 
 
 class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     //BUTTONS
     let playButton = UIButton(type: UIButtonType.System) as UIButton
     let skipBackButton = UIButton(type: UIButtonType.System) as UIButton
@@ -29,22 +30,12 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     override func viewDidAppear(animated: Bool) {
     }
-    func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
-        let longPress = gestureRecognizer as! UILongPressGestureRecognizer
-        let state = longPress.state
-        let locationInView = longPress.locationInView(tableView)
-        let indexPath = tableView.indexPathForRowAtPoint(locationInView)
-        if let cellToRecordAtProtector = indexPath?.row {
-            print(state)
-            cellToRecordAt = cellToRecordAtProtector
-            tableView.reloadData()
-        }
-        
-    }
     override func viewDidLoad() {
+        self.title = ""
+        
         let longpress = UILongPressGestureRecognizer(target: self, action: "longPressGestureRecognized:")
         tableView.addGestureRecognizer(longpress)
-        longpress.minimumPressDuration = 0.5
+        longpress.minimumPressDuration = 0.25
         
         
         self.edgesForExtendedLayout = UIRectEdge.None
@@ -169,5 +160,27 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let cellHeight = heightForView("A Placebo Can Make You Run Faster", font: UIFont(name: ".SFUIText-Light", size: 24)!, width: (tableView.frame.width - 60))
         return cellHeight + 40
         //        return 20
+    }
+    
+    //MARK: - Gesture recognizer for long press, will display a alert
+    func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
+        let longPress = gestureRecognizer as! UILongPressGestureRecognizer
+        let locationInView = longPress.locationInView(tableView)
+        let indexPath = tableView.indexPathForRowAtPoint(locationInView)
+        if let cellToRecordAtProtector = indexPath?.row {
+            if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
+                print(cellToRecordAtProtector)
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    ParagraphCount = cellToRecordAtProtector
+                    self.navigationController?.pushViewController(RecordIndividualParagraph(), animated: true)
+                })
+            } else if (gestureRecognizer.state == UIGestureRecognizerState.Changed) {
+                cellToRecordAt = cellToRecordAtProtector
+                tableView.reloadData()
+            } else if (gestureRecognizer.state == UIGestureRecognizerState.Began) {
+                cellToRecordAt = cellToRecordAtProtector
+                tableView.reloadData()
+            }
+        }
     }
 }

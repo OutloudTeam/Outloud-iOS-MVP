@@ -13,11 +13,8 @@ import Haneke
 // MARK: - Generates Article JSON from article ID
 // TODO: - Implement cache refresh after a while
 func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, articleID: String, success:()->()) {
-    
-    
     let urlString = "http://www.outloud.io:8080/api/article/" + articleID
-    print(urlString)
-    let cache = Shared.dataCache
+    let cache = Cache<NSData>(name: "articleCache")
     let URL = NSURL(string: urlString)!
     
     cache.fetch(URL: URL).onSuccess { (Data) -> () in
