@@ -8,6 +8,11 @@
 
 import Foundation
 
+struct CacheValidation {
+    var type : String?
+    var time : Int?
+}
+
 struct ArticleListStruct {
     var uuid : String?
     var source : String?
@@ -22,6 +27,7 @@ struct ArticleListStruct {
     var created_date : String?
     var published_date : String?
 }
+
 struct ArticleDetailStruct {
     var uuid : String?
     var source : String?
@@ -38,6 +44,7 @@ struct ArticleDetailStruct {
     var published_date : String?
     var media = [ArticleDetailMedia]()
 }
+
 struct ArticleDetailMedia {
     var type : String?
     var subtype : String?
@@ -45,6 +52,7 @@ struct ArticleDetailMedia {
     var copyright : String?
     var mediaMetadata = [ArticleDetailMediaMetadata]()
 }
+
 struct ArticleDetailMediaMetadata {
     var url : String?
     var format : String?
@@ -56,6 +64,11 @@ struct FullArticleContent {
     var text : String?
     var readings : String?
 }
+//var CacheValidationArray = [CacheValidation]()
+
+var CacheValidationArray : NSMutableArray = []
+var CacheValidationNSArray : NSArray = []
+
 var ArticleListArray = [ArticleListStruct]()
 var ArticleDetailArray = [ArticleDetailStruct]()
 var FullArticleContentArray = [FullArticleContent]()

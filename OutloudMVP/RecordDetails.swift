@@ -35,6 +35,7 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let locationInView = longPress.locationInView(tableView)
         let indexPath = tableView.indexPathForRowAtPoint(locationInView)
         if let cellToRecordAtProtector = indexPath?.row {
+            print(state)
             cellToRecordAt = cellToRecordAtProtector
             tableView.reloadData()
         }
@@ -43,7 +44,7 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
     override func viewDidLoad() {
         let longpress = UILongPressGestureRecognizer(target: self, action: "longPressGestureRecognized:")
         tableView.addGestureRecognizer(longpress)
-        longpress.minimumPressDuration = 2
+        longpress.minimumPressDuration = 0.5
         
         
         self.edgesForExtendedLayout = UIRectEdge.None
@@ -68,13 +69,13 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //         return FullArticleContentArray.count
-        return 10
+        return FullArticleContentArray.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let paragraph = UILabel()
         cell.addSubview(paragraph)
-        paragraph.text = "PLACE HOLDINGSGKLSDGJ :SLKDFJ S:LDFJ :LSUIOEJF :LSKJF (EIL:SKFJ IOEJ"
+        paragraph.text = FullArticleContentArray[indexPath.row].text
         //        paragraph.text = FullArticleContentArray[indexPath.row].text
         paragraph.lineBreakMode = NSLineBreakMode.ByWordWrapping
         paragraph.numberOfLines = 0
@@ -99,7 +100,7 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let paragraph = UILabel()
         //        paragraph.text = ArticleDetailArray[0].fullContent[indexPath.row].text
-        paragraph.text = "PLACE HOLDINGSGKLSDGJ :SLKDFJ S:LDFJ :LSUIOEJF :LSKJF (EIL:SKFJ IOEJ"
+        paragraph.text = FullArticleContentArray[indexPath.row].text
         let fontTest = UIFont(name: "Helvetica", size: 14.0)
         paragraph.font = fontTest
         var cellHeight = heightForView(paragraph.text!, font: fontTest!, width: (tableView.frame.width - 60))

@@ -30,3 +30,61 @@ func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
     label.sizeToFit()
     return label.frame.height
 }
+func roundUp(value: Int, divisor: Int) -> Int {
+    let rem = value % divisor
+    return rem == 0 ? value : value + divisor - rem
+}
+func writeTime(time: Int) {
+    let file = "cacheCheck.plist"
+    if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+        let path = dir.stringByAppendingPathComponent(file)
+        do {
+            CacheValidationArray.addObject(time)
+            CacheValidationNSArray = CacheValidationArray
+            CacheValidationNSArray.writeToFile(path, atomically: true)
+        }
+    }
+}
+func removeTime(index: Int) {
+    CacheValidationArray.removeObjectAtIndex(index)
+}
+
+func currentMinute()->Int {
+    let calendar = NSCalendar.currentCalendar()
+    let date = NSDate()
+    let components = calendar.components([.Minute], fromDate: date)
+    return roundUp(components.minute, divisor: 10)
+}
+func readCacheTime()->Int {
+    let file = "cacheCheck.plist"
+    if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+        let path = dir.stringByAppendingPathComponent(file)
+        do {
+            if let CacheValidationNSArray = NSArray(contentsOfFile: path) {
+                CacheValidationArray = CacheValidationNSArray as! NSMutableArray
+                if(CacheValidationArray[0] as! NSNumber == -20) {
+                    removeTime(0)
+                    writeTime(currentMinute())
+                }
+            } else {
+                writeTime(-20)
+                cacheCheck()
+            }
+        }
+    }
+    return Int(CacheValidationArray[0] as! NSNumber)
+}
+
+func cacheCheck()->Bool {
+    let calendar = NSCalendar.currentCalendar()
+    let date = NSDate()
+    let components = calendar.components([.Minute], fromDate: date)
+    print(roundUp(components.minute, divisor: 10))
+    if(readCacheTime() != currentMinute()) {
+        print("False")
+        return false
+    } else {
+        print("True")
+        return true
+    }
+}
