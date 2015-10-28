@@ -14,6 +14,7 @@
 		DB6AE4701BD6DF5A00BCBD95 /* JSONRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6AE46F1BD6DF5A00BCBD95 /* JSONRequests.swift */; };
 		DB6AE4721BD6FCD100BCBD95 /* GlobalArrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6AE4711BD6FCD100BCBD95 /* GlobalArrays.swift */; };
 		DB7B3B9D1BE0794300A392DD /* RecordIndividualParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7B3B9C1BE0794300A392DD /* RecordIndividualParagraph.swift */; };
+		DB7B3B9F1BE08EC900A392DD /* RecordingCellGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7B3B9E1BE08EC900A392DD /* RecordingCellGeneration.swift */; };
 		DB7DF5CD1BD0323B0098CDA7 /* backyardBees.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB7DF5CC1BD0323B0098CDA7 /* backyardBees.mp3 */; };
 		DBB683FB1BDED962002ED471 /* ArticleListCellGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB683FA1BDED962002ED471 /* ArticleListCellGeneration.swift */; };
 		DBB683FF1BE02BD6002ED471 /* RecordDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB683FE1BE02BD6002ED471 /* RecordDetails.swift */; };
@@ -61,6 +62,7 @@
 		DB6AE46F1BD6DF5A00BCBD95 /* JSONRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRequests.swift; sourceTree = "<group>"; };
 		DB6AE4711BD6FCD100BCBD95 /* GlobalArrays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalArrays.swift; sourceTree = "<group>"; };
 		DB7B3B9C1BE0794300A392DD /* RecordIndividualParagraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordIndividualParagraph.swift; sourceTree = "<group>"; };
+		DB7B3B9E1BE08EC900A392DD /* RecordingCellGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingCellGeneration.swift; sourceTree = "<group>"; };
 		DB7DF5CC1BD0323B0098CDA7 /* backyardBees.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backyardBees.mp3; sourceTree = "<group>"; };
 		DBB683FA1BDED962002ED471 /* ArticleListCellGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleListCellGeneration.swift; sourceTree = "<group>"; };
 		DBB683FE1BE02BD6002ED471 /* RecordDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordDetails.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				DBB683FA1BDED962002ED471 /* ArticleListCellGeneration.swift */,
+				DB7B3B9E1BE08EC900A392DD /* RecordingCellGeneration.swift */,
 			);
 			name = CellGeneration;
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB6AE4721BD6FCD100BCBD95 /* GlobalArrays.swift in Sources */,
+				DB7B3B9F1BE08EC900A392DD /* RecordingCellGeneration.swift in Sources */,
 				F35D5B351BCF43040019C2B9 /* MainNavigationController.swift in Sources */,
 				DB02F2081BCA25F800064CEB /* ArticleDetails.swift in Sources */,
 				DBB683FF1BE02BD6002ED471 /* RecordDetails.swift in Sources */,

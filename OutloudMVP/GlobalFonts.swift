@@ -17,3 +17,9 @@ let smallTitleFont  = UIFont(name: "Avenir-Light", size: 10)
 
 //Specific FONTS
 let articleAbstractFont = UIFont(name: "Avenir-Light", size: 12)
+
+
+//NEW FONTS
+let recordArticleTitleFont = UIFont(name: ".SFUIText-Semibold ", size: 16)
+let recordArticleParagraphFont = UIFont(name: ".SFUIText-Regular", size: 14)
+let authorNameFont = UIFont(name: ".SFUIText-Bold", size: 12)

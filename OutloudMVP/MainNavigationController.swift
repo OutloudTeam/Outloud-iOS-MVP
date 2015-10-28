@@ -17,8 +17,8 @@ class MainNavigationController: UINavigationController {
 //                let mainViewController = ArticleDetail() //RecordPageViewController()
         self.edgesForExtendedLayout = UIRectEdge.None
         self.setViewControllers([mainViewController], animated: false)
-        self.navigationBar.setBackgroundImage(UIImage(named: "background"), forBarMetrics: UIBarMetrics.Default)
-        self.navigationBar.backgroundColor = barColor
+//        self.navigationBar.setBackgroundImage(UIImage(named: "background"), forBarMetrics: UIBarMetrics.Default)
+        self.navigationBar.barTintColor = barColor
         self.navigationBar.translucent = false
     }
     
