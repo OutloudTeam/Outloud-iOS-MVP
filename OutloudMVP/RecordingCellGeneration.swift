@@ -21,12 +21,12 @@ func generateRecordingParagraphCell(tableView: UITableView, indexPath: NSIndexPa
     paragraph.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(paragraphCell.snp_left).offset(30)
         make.right.equalTo(paragraphCell.snp_right).offset(-30)
-        make.top.equalTo(paragraphCell.snp_top).offset(10)
+        make.top.equalTo(paragraphCell.snp_top).offset(30)
     }
     
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.alignment = .Justified
-    paragraphStyle.lineSpacing = 3
+    paragraphStyle.lineSpacing = 5
     paragraphStyle.firstLineHeadIndent = 0.001
     
     let mutableAttrStr = NSMutableAttributedString(attributedString: paragraph.attributedText!)
@@ -66,7 +66,7 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
     
     articleTitle.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(headerView).offset(30)
-        make.top.equalTo(headerView).offset(5)
+        make.top.equalTo(headerView).offset(40)
         make.right.equalTo(headerView.snp_right).offset(-30)
     }
     //
@@ -93,7 +93,7 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
     separatorBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
     separatorBar.snp_makeConstraints { (make) -> Void in
         make.height.equalTo(1)
-        make.top.equalTo(articleLink.snp_bottom).offset(10)
+        make.top.equalTo(articleLink.snp_bottom).offset(15)
         make.left.equalTo(articleTitle.snp_left)
         make.right.equalTo(articleTitle.snp_right)
     }

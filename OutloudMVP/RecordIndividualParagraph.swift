@@ -59,7 +59,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        tableView.scrollEnabled = false
+//        tableView.scrollEnabled = false
         tableView.snp_makeConstraints { (make) -> Void in
             make.left.right.equalTo(self.view)
             make.top.equalTo(completionBar.snp_bottom)
@@ -123,9 +123,10 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         return 1    
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        let cellHeight = heightForJustifiedView(FullArticleContentArray[ParagraphCount].text!, font: recordArticleParagraphFont!, width: (tableView.frame.width - 60))
+        let cellHeight = heightForJustifiedView(FullArticleContentArray[ParagraphCount].text!, font: recordArticleParagraphFont!, width: (tableView.frame.width - 60))
 //        let cellHeight = heightForView(FullArticleContentArray[ParagraphCount].text!, font: recordArticleParagraphFont!, width: (tableView.frame.width - 60))
-        return self.view.frame.height - 140 - 50
+        print(cellHeight)
+        return self.view.frame.height
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return generateRecordingParagraphCell(tableView, indexPath: indexPath)
