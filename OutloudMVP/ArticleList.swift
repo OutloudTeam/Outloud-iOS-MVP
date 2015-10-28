@@ -26,6 +26,7 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
     override func viewDidLoad() {
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)

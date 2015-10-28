@@ -80,7 +80,7 @@ func articleListJSONGet(success:()->()) {
     if(cacheCheck() == false){
         cache.removeAll()
         removeTime(0)
-        writeTime(currentMinute())
+        writeTime(currentHourMinute())
     }
     let URL = NSURL(string: urlString)!
     cache.fetch(URL: URL).onSuccess { (Data) -> () in

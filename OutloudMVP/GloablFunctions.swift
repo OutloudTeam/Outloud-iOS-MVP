@@ -49,11 +49,12 @@ func removeTime(index: Int) {
     CacheValidationArray.removeObjectAtIndex(index)
 }
 
-func currentMinute()->Int {
+
+func currentHourMinute()->Int {
     let calendar = NSCalendar.currentCalendar()
     let date = NSDate()
-    let components = calendar.components([.Minute], fromDate: date)
-    return roundUp(components.minute, divisor: 10)
+    let components = calendar.components([.Minute, .Hour], fromDate: date)
+    return roundUp(components.minute, divisor: 10) + (components.hour * 100)
 }
 func readCacheTime()->Int {
     let file = "cacheCheck.plist"
@@ -64,7 +65,7 @@ func readCacheTime()->Int {
                 CacheValidationArray = CacheValidationNSArray as! NSMutableArray
                 if(CacheValidationArray[0] as! NSNumber == -20) {
                     removeTime(0)
-                    writeTime(currentMinute())
+                    writeTime(currentHourMinute())
                 }
             } else {
                 writeTime(-20)
@@ -76,11 +77,7 @@ func readCacheTime()->Int {
 }
 
 func cacheCheck()->Bool {
-    let calendar = NSCalendar.currentCalendar()
-    let date = NSDate()
-    let components = calendar.components([.Minute], fromDate: date)
-    print(roundUp(components.minute, divisor: 10))
-    if(readCacheTime() != currentMinute()) {
+    if(readCacheTime() != currentHourMinute()) {
         print("False")
         return false
     } else {
