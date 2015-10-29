@@ -66,12 +66,9 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
     
     headerView.backgroundColor = backgroundColorAll
     
-    
-    
     articleTitle.text = ArticleDetailArray[0].title
     transformIntoJustified(articleTitle, lineSpace: 3)
     articleTitle.font = recordArticleTitleFont
-    
     articleTitle.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(headerView).offset(30)
         make.top.equalTo(headerView).offset(40)
@@ -82,6 +79,7 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
     authorName.text = ArticleDetailArray[0].author
     transformIntoJustified(authorName, lineSpace: 3)
     authorName.font = authorNameFont
+    authorName.textColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
     
     
     authorName.snp_makeConstraints { (make) -> Void in
