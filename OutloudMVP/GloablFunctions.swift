@@ -31,13 +31,13 @@ func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
     return label.frame.height
 }
 
-func transformIntoJustified(label: UILabel) {
+func transformIntoJustified(label: UILabel, lineSpace: Int) {
     label.lineBreakMode = NSLineBreakMode.ByWordWrapping
     label.numberOfLines = 0
     
     let paragraphStyle = NSMutableParagraphStyle()
     paragraphStyle.alignment = .Justified
-    paragraphStyle.lineSpacing = 3
+    paragraphStyle.lineSpacing = CGFloat(lineSpace)
     paragraphStyle.firstLineHeadIndent = 0.001
     
     let mutableAttrStr = NSMutableAttributedString(attributedString: label.attributedText!)
@@ -45,20 +45,11 @@ func transformIntoJustified(label: UILabel) {
     label.attributedText = mutableAttrStr
 }
 
-func heightForJustifiedView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+func heightForJustifiedView(text:String, font:UIFont, width:CGFloat, lineSpace: Int) -> CGFloat{
     let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
-    label.numberOfLines = 0
-    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-
     label.text = text
-    let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.alignment = .Justified
-    paragraphStyle.lineSpacing = 5
-    paragraphStyle.firstLineHeadIndent = 0.001
+    transformIntoJustified(label,lineSpace: lineSpace)
     
-    let mutableAttrStr = NSMutableAttributedString(attributedString: label.attributedText!)
-    mutableAttrStr.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, mutableAttrStr.length))
-    label.attributedText = mutableAttrStr
     label.font = font
     
     

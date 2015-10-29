@@ -26,6 +26,7 @@ struct ArticleListStruct {
     var updated_date : String?
     var created_date : String?
     var published_date : String?
+    var media = [ArticleDetailMedia]()
 }
 
 struct ArticleDetailStruct {
@@ -74,6 +75,10 @@ var ArticleDetailArray = [ArticleDetailStruct]()
 var FullArticleContentArray = [FullArticleContent]()
 var ArticleDetailMediaArray = [ArticleDetailMedia]()
 var ArticleDetailMediaMetadataArray = [ArticleDetailMediaMetadata]()
+
+var ArticleListMediaArray = [ArticleDetailMedia]()
+var ArticleListMediaMetadataArray = [ArticleDetailMediaMetadata]()
+
 var articleDetailDictionary :[String: AnyObject] = ["place":"holder"]
 
 var ParagraphCount = 0

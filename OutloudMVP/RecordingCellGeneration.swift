@@ -9,6 +9,29 @@
 import Foundation
 import UIKit
 import SnapKit
+func generateRecordingArticleCell(tableView: UITableView, indexPath: NSIndexPath, cellToRecordAt: Int) -> UITableViewCell {
+    let paragraphCell = UITableViewCell(style: .Default, reuseIdentifier: "articleCell")
+    paragraphCell.backgroundColor = backgroundColorAll
+    let paragraph = UILabel()
+    paragraphCell.addSubview(paragraph)
+    paragraph.text = FullArticleContentArray[indexPath.row].text
+    transformIntoJustified(paragraph, lineSpace: 1)
+    paragraph.textColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+    paragraph.font = recordArticleParagraphFont
+    paragraph.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(paragraphCell.snp_left).offset(30)
+        make.right.equalTo(paragraphCell.snp_right).offset(-30)
+        make.top.equalTo(paragraphCell.snp_top).offset(10)
+    }
+    
+    if(cellToRecordAt == indexPath.row){
+        paragraph.textColor = UIColor.blackColor()
+    }
+    paragraphCell.selectionStyle = .None
+    return paragraphCell
+}
+
+
 
 func generateRecordingParagraphCell(tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell {
     let paragraphCell = UITableViewCell(style: .Default, reuseIdentifier: "articleCell")
@@ -16,23 +39,15 @@ func generateRecordingParagraphCell(tableView: UITableView, indexPath: NSIndexPa
     let paragraph = UILabel()
     paragraphCell.addSubview(paragraph)
     paragraph.text = FullArticleContentArray[ParagraphCount].text
-    paragraph.lineBreakMode = NSLineBreakMode.ByWordWrapping
-    paragraph.numberOfLines = 0
+    transformIntoJustified(paragraph, lineSpace: 5)
+    paragraph.font = recordArticleParagraphFont
+    
+    
     paragraph.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(paragraphCell.snp_left).offset(30)
         make.right.equalTo(paragraphCell.snp_right).offset(-30)
         make.top.equalTo(paragraphCell.snp_top).offset(30)
     }
-    
-    let paragraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.alignment = .Justified
-    paragraphStyle.lineSpacing = 5
-    paragraphStyle.firstLineHeadIndent = 0.001
-    
-    let mutableAttrStr = NSMutableAttributedString(attributedString: paragraph.attributedText!)
-    mutableAttrStr.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, mutableAttrStr.length))
-    paragraph.attributedText = mutableAttrStr
-    paragraph.font = recordArticleParagraphFont
     
     //    paragraphCell.selectionStyle = .None
     
@@ -54,7 +69,7 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
     
     
     articleTitle.text = ArticleDetailArray[0].title
-    transformIntoJustified(articleTitle)
+    transformIntoJustified(articleTitle, lineSpace: 3)
     articleTitle.font = recordArticleTitleFont
     
     articleTitle.snp_makeConstraints { (make) -> Void in
@@ -65,7 +80,7 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
     //
     
     authorName.text = ArticleDetailArray[0].author
-    transformIntoJustified(authorName)
+    transformIntoJustified(authorName, lineSpace: 3)
     authorName.font = authorNameFont
     
     

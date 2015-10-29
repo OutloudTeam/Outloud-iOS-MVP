@@ -64,39 +64,32 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return generateArticleListCell(tableView, indexPath: indexPath)
     }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let articleTitle = UILabel()
-        let articleAbstract = UILabel()
-        articleTitle.text = ArticleListArray[indexPath.row].title
-        articleAbstract.text = ArticleListArray[indexPath.row].abstract
-        
-        let fontTest = UIFont(name: "Helvetica", size: 14.0)
-        articleTitle.font = fontTest
-        articleAbstract.font = fontTest
-        
-        var cellHeight = heightForView(articleTitle.text!, font: fontTest!, width: (tableView.frame.width - 75)) + heightForView(articleAbstract.text!, font: articleAbstractFont!, width: (tableView.frame.width - 45))
-        cellHeight = cellHeight + 35 + 15 + 20
-        return cellHeight
+        let cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
+        //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating +
+        return cellHeight + 25 + 5 + 25 + 20
     }
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let articleBar = UIView()
-        self.view.addSubview(articleBar)
-        articleBar.backgroundColor = UIColor.whiteColor()
-        playAllButton.frame = CGRectMake(100, 50, 100, 50)
-        playAllButton.setBackgroundImage(UIImage(named: "play-all"), forState: .Normal)
-        playAllButton.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0)
-        articleBar.addSubview(playAllButton)
-        playAllButton.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(50)
-            make.width.equalTo(150)
-            make.centerX.equalTo(articleBar.snp_centerX)
-            make.centerY.equalTo(articleBar.snp_centerY)
-        }
-        
-        return articleBar
-    }
+    
+//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let articleBar = UIView()
+//        self.view.addSubview(articleBar)
+//        articleBar.backgroundColor = UIColor.whiteColor()
+//        playAllButton.frame = CGRectMake(100, 50, 100, 50)
+//        playAllButton.setBackgroundImage(UIImage(named: "play-all"), forState: .Normal)
+//        playAllButton.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0)
+//        articleBar.addSubview(playAllButton)
+//        playAllButton.snp_makeConstraints { (make) -> Void in
+//            make.height.equalTo(50)
+//            make.width.equalTo(150)
+//            make.centerX.equalTo(articleBar.snp_centerX)
+//            make.centerY.equalTo(articleBar.snp_centerY)
+//        }
+//        
+//        return articleBar
+//    }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+        return 1
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -104,8 +97,8 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
         articleJSONGet(&articleDetailDictionary, articleID: ArticleListArray[indexPath.row].uuid!) { () -> () in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 SwiftOverlays.removeAllBlockingOverlays()
-//                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
-                                self.navigationController?.pushViewController(RecordDetails(), animated: true)
+                //                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
+                self.navigationController?.pushViewController(RecordDetails(), animated: true)
             })
         }
     }
