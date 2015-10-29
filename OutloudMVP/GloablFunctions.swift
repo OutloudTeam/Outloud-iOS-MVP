@@ -31,16 +31,29 @@ func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
     return label.frame.height
 }
 
-func heightForJustifiedView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
-    let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
-    label.numberOfLines = 0
+func transformIntoJustified(label: UILabel, lineSpace: Int) {
     label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-    label.font = font
+    label.numberOfLines = 0
+    
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.alignment = .Justified
+    paragraphStyle.lineSpacing = CGFloat(lineSpace)
+    paragraphStyle.firstLineHeadIndent = 0.001
+    
+    let mutableAttrStr = NSMutableAttributedString(attributedString: label.attributedText!)
+    mutableAttrStr.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, mutableAttrStr.length))
+    label.attributedText = mutableAttrStr
+}
+
+func heightForJustifiedView(text:String, font:UIFont, width:CGFloat, lineSpace: Int) -> CGFloat{
+    let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
     label.text = text
-    label.textAlignment = .Justified
+    transformIntoJustified(label,lineSpace: lineSpace)
+    
+    label.font = font
+    
     
     label.sizeToFit()
-    print(label.frame.height)
     return label.frame.height
 }
 
@@ -95,10 +108,10 @@ func readCacheTime()->Int {
 
 func cacheCheck()->Bool {
     if(readCacheTime() != currentYearDayHourMinute()) {
-        print("False")
+        print("Cache is invalid")
         return false
     } else {
-        print("True")
+        print("Cache is still valid")
         return true
     }
 }

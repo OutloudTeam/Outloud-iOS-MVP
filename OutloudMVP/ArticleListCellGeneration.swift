@@ -21,8 +21,9 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     let shareCountImage = UIImageView()
     let shareCount = UILabel()
     let articleOrigin = UILabel()
-    let timeEstimate = UILabel()
-    let addQueueButton = UIButton()
+    let articleIcon = UIImageView()
+    
+    articleIcon.frame = CGRectMake(0, 0, 85, 85)
     
     articleCell.addSubview(articleTitle)
     articleCell.addSubview(articleAbstract)
@@ -33,32 +34,20 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     articleCell.addSubview(shareCountImage)
     articleCell.addSubview(shareCount)
     articleCell.addSubview(articleOrigin)
-    articleCell.addSubview(timeEstimate)
-    articleCell.addSubview(addQueueButton)
+    articleCell.addSubview(articleIcon)
+
     
     articleTitle.text = ArticleListArray[indexPath.row].title
     articleAbstract.text = ArticleListArray[indexPath.row].abstract
-    var time = "5"
-    let randomVar = arc4random_uniform(10)
-    if(randomVar < 4) {
-        time = "4"
-    } else {
-        time = String(randomVar)
-    }
-    timeEstimate.text = "\(time) min"
-    
 
 
-    let fontTest = UIFont(name: "Helvetica", size: 14.0)
-    articleTitle.font = fontTest
-    articleTitle.textColor = UIColor.redColor()
-    articleAbstract.font = articleAbstractFont
+    articleTitle.font = articleListTileFont
+    articleTitle.textColor = UIColor.blackColor()
+    articleAbstract.font = articleListAbstractFont
+    articleAbstract.textColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
     
-    articleTitle.lineBreakMode = NSLineBreakMode.ByWordWrapping
-    articleAbstract.lineBreakMode = NSLineBreakMode.ByWordWrapping
-    
-    articleTitle.numberOfLines = 0
-    articleAbstract.numberOfLines = 0
+    transformIntoJustified(articleTitle, lineSpace: 0)
+    transformIntoJustified(articleAbstract, lineSpace: 0)
     
     articleRating.image = UIImage(named: "rating")
     playCountImage.image = UIImage(named: "playCount")
@@ -75,27 +64,22 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     playCount.adjustsFontSizeToFitWidth = true
     shareCount.adjustsFontSizeToFitWidth = true
     articleOrigin.adjustsFontSizeToFitWidth = true
-    timeEstimate.adjustsFontSizeToFitWidth = true
-    
-    addQueueButton.frame = CGRectMake(50, 50, 50, 50)
-    addQueueButton.setBackgroundImage(UIImage(named: "plus"), forState: .Normal)
-    addQueueButton.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0)
     
     articleTitle.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(articleCell.snp_left).offset(15)
-        make.right.equalTo(articleCell.snp_right).offset(-60)
+        make.right.equalTo(articleCell.snp_right).offset(-100)
         make.top.equalTo(articleCell.snp_top).offset(25)
     }
     articleAbstract.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(articleTitle.snp_left)
-        make.right.equalTo(articleCell.snp_right).offset(-30)
-        make.top.equalTo(articleTitle.snp_bottom).offset(3)
+        make.right.equalTo(articleTitle.snp_right)
+        make.top.equalTo(articleTitle.snp_bottom).offset(5)
     }
     articleRating.snp_makeConstraints { (make) -> Void in
         make.width.equalTo(50)
         make.height.equalTo(10)
         make.left.equalTo(articleTitle.snp_left)
-        make.top.equalTo(articleAbstract.snp_bottom).offset(5)
+        make.top.equalTo(articleAbstract.snp_bottom).offset(15)
     }
     playCountImage.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(articleRating.snp_right).offset(10)
@@ -122,26 +106,14 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
         make.left.equalTo(shareCount.snp_right).offset(10)
         make.width.equalTo(40)
     }
-    addQueueButton.snp_makeConstraints { (make) -> Void in
-        make.right.equalTo(articleCell.snp_right).offset(-5)
-        make.height.width.equalTo(22)
-        make.centerY.equalTo(timeEstimate.snp_centerY)
-    }
-    timeEstimate.snp_makeConstraints { (make) -> Void in
-        make.top.equalTo(articleTitle.snp_top)
-//        make.left.equalTo(articleTitle.snp_right).offset(-5)
-        make.right.equalTo(addQueueButton.snp_left).offset(-5)
-        make.width.equalTo(40)
-    }
     
     
-    articleSeparatorBar.backgroundColor = UIColor.blackColor()
+    articleSeparatorBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
     articleSeparatorBar.snp_makeConstraints { (make) -> Void in
-        make.centerX.equalTo(articleCell.snp_centerX)
-        make.left.equalTo(articleCell.snp_left).offset(30)
-        make.right.equalTo(articleCell.snp_right).offset(-30)
+        make.left.equalTo(articleTitle.snp_left)
+        make.right.equalTo(articleIcon.snp_right)
         make.height.equalTo(1)
-        make.bottom.equalTo(articleCell.snp_bottom).offset(2)
+        make.top.equalTo(articleRating.snp_bottom).offset(20)
     }
     
     guard let fullURL = ArticleListArray[indexPath.row].url else {
@@ -150,7 +122,20 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     }
     let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
     articleOrigin.text = fullURLArray[1]
-
+    
+    downloadAndCacheImage(articleIcon, indexPath: indexPath)
+    
+    
+    articleIcon.snp_makeConstraints { (make) -> Void in
+        
+        make.left.equalTo(articleTitle.snp_right).offset(10)
+        make.top.equalTo(articleTitle.snp_top)
+//        make.right.equalTo(articleCell.snp_right).offset(-10).priorityLow()
+//        make.height.width.equalTo(90)
+    }
+    articleIcon.layer.cornerRadius = articleIcon.frame.size.height/2
+    articleIcon.clipsToBounds = true
+    
     
     return articleCell
 }

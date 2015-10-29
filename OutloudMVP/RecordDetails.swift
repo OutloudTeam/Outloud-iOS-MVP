@@ -30,6 +30,7 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     override func viewDidAppear(animated: Bool) {
     }
+    
     override func viewDidLoad() {
         self.title = ""
         
@@ -44,7 +45,7 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         let bottomBar = createBottomRecordDetailBar(self.view)
         self.view.addSubview(tableView)
-        tableView.backgroundColor = UIColor.whiteColor()
+        tableView.backgroundColor = backgroundColorAll
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .None
@@ -58,108 +59,27 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //         return FullArticleContentArray.count
         return FullArticleContentArray.count
     }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        let paragraph = UILabel()
-        cell.addSubview(paragraph)
-        paragraph.text = FullArticleContentArray[indexPath.row].text
-        //        paragraph.text = FullArticleContentArray[indexPath.row].text
-        paragraph.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        paragraph.numberOfLines = 0
-        paragraph.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(cell.snp_left).offset(30)
-            make.right.equalTo(cell.snp_right).offset(-30)
-            make.top.equalTo(cell.snp_top).offset(5)
-        }
-        let fontTest = UIFont(name: "Helvetica", size: 14.0)
-        paragraph.font = fontTest
-        paragraph.textColor = UIColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.0)
-        
-        if(cellToRecordAt == indexPath.row){
-            paragraph.textColor = UIColor.blackColor()
-            let fontTest = UIFont(name: "Helvetica", size: 14.0)
-            paragraph.font = fontTest
-        }
-        //        cell.selectionStyle = .None
-        
-        return cell
+        return generateRecordingArticleCell(tableView, indexPath: indexPath, cellToRecordAt: cellToRecordAt)
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let paragraph = UILabel()
-        //        paragraph.text = ArticleDetailArray[0].fullContent[indexPath.row].text
-        paragraph.text = FullArticleContentArray[indexPath.row].text
-        let fontTest = UIFont(name: "Helvetica", size: 14.0)
-        paragraph.font = fontTest
-        var cellHeight = heightForView(paragraph.text!, font: fontTest!, width: (tableView.frame.width - 60))
-        cellHeight = cellHeight + 10
-        return cellHeight
+        let cellHeight = heightForJustifiedView(FullArticleContentArray[indexPath.row].text!, font: recordArticleParagraphFont, width: (tableView.frame.width-60), lineSpace: 1)
+        return cellHeight + 20
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        let authorName = UILabel()
-        
-        self.view.addSubview(headerView)
-        headerView.addSubview(authorName)
-        
-        headerView.backgroundColor = UIColor.whiteColor()
-        let articleTitle = UILabel()
-        articleTitle.text = "A Placebo Can Make You Run Faster"
-        articleTitle.font = UIFont(name: ".SFUIText-Light", size: 24)
-        articleTitle.textAlignment = .Center
-        articleTitle.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        articleTitle.numberOfLines = 0
-        
-        articleTitle.textColor = black
-        headerView.addSubview(articleTitle)
-        articleTitle.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(headerView).offset(30)
-            make.top.equalTo(headerView).offset(5)
-            make.right.equalTo(headerView.snp_right).offset(-30)
-        }
-        //
-        authorName.adjustsFontSizeToFitWidth = true
-        authorName.text = "by PlaceHolder"
-        authorName.font = UIFont(name: ".SFUIText-Light", size: 12)
-        
-        authorName.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(articleTitle.snp_bottom).offset(5)
-            make.left.equalTo(articleTitle.snp_left).offset(5)
-            make.right.equalTo(articleTitle.snp_right).offset(-5)
-        }
-        let articleLink = UILabel()
-        articleLink.textColor = transparentBlack
-        articleLink.font = UIFont(name: ".SFUIText-Light", size: 10)
-        headerView.addSubview(articleLink)
-        articleLink.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(authorName.snp_left)
-            make.top.equalTo(authorName.snp_bottom).offset(2)
-        }
-        let separatorBar = UIView()
-        headerView.addSubview(separatorBar)
-        separatorBar.backgroundColor = darkRed
-        separatorBar.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(1)
-            make.bottom.equalTo(headerView.snp_bottom)
-            make.left.equalTo(headerView.snp_left).offset(50)
-            make.right.equalTo(headerView.snp_right).offset(-50)
-        }
-        guard let fullURL = ArticleDetailArray[0].url else {
-            articleLink.text = "Not Found"
-            return headerView
-        }
-        let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
-        articleLink.text = fullURLArray[1]
-        
-        return headerView
+        return generateRecordingHeaderCell(tableView)
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let cellHeight = heightForView("A Placebo Can Make You Run Faster", font: UIFont(name: ".SFUIText-Light", size: 24)!, width: (tableView.frame.width - 60))
-        return cellHeight + 40
-        //        return 20
+        let titleHeight = heightForJustifiedView(ArticleDetailArray[0].title!, font: recordArticleTitleFont, width: (tableView.frame.width - 60), lineSpace: 3)
+        let authorHeight = heightForJustifiedView(ArticleDetailArray[0].author!, font: authorNameFont, width: (tableView.frame.width-60), lineSpace: 3)
+        let articleHeight = heightForView("Placeholder.com", font: articleLinkFont, width: (tableView.frame.width - 60))
+        //cell height is dynamically genrated then the constraint values are added to it
+        return titleHeight + authorHeight + articleHeight + 67
     }
     
     //MARK: - Gesture recognizer for long press, will display a alert
@@ -172,6 +92,7 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
                 print(cellToRecordAtProtector)
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     ParagraphCount = cellToRecordAtProtector
+                    self.cellToRecordAt = -1
                     self.navigationController?.pushViewController(RecordIndividualParagraph(), animated: true)
                 })
             } else if (gestureRecognizer.state == UIGestureRecognizerState.Changed) {
