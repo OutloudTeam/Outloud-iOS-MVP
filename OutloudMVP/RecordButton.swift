@@ -9,15 +9,20 @@
 import UIKit
 import SnapKit
 
-class RecordButton: UIView {
+class RecordButton: UIButton {
     
     var innerView: UIView = UIView();
     var isRecording: Bool = false;
  
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
+    }
+    
+    init() {
+        super.init(frame: CGRectZero)
         
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("handleSingleTap")));
+        innerView.userInteractionEnabled = false
+        self.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.layer.borderColor = UIColor.whiteColor().CGColor;
         self.backgroundColor = UIColor.blackColor();
@@ -29,7 +34,7 @@ class RecordButton: UIView {
     
     override func layoutSubviews() {
         innerView.layer.cornerRadius = self.bounds.width/10;
-        if(isRecording){
+        if(isRecording) {
             innerView.frame = self.bounds.insetBy(dx: self.bounds.width/4, dy: self.bounds.width/4);
         }else{
             innerView.frame = self.bounds.insetBy(dx: -1, dy: -1);
@@ -49,7 +54,8 @@ class RecordButton: UIView {
         }
     }
     
-    func handleSingleTap() {
+    func handleSingleTap(sender: UIButton) {
+        print("Here")
         setRecording(!isRecording, animate: true);
     }
 

@@ -32,6 +32,13 @@ class Recorder {
         return false
     }
     
+    func isPlaying() -> Bool {
+        if self.player != nil {
+            return self.player.playing
+        }
+        return false
+    }
+    
     func startRecording() {
         
         // First stop the player
@@ -68,6 +75,7 @@ class Recorder {
             do {
                 
                 let session:AVAudioSession = AVAudioSession.sharedInstance()
+                try! session.setCategory(AVAudioSessionCategoryPlayAndRecord)
                 // ios 8 and later
                 if (session.respondsToSelector("requestRecordPermission:")) {
                     AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
@@ -96,17 +104,28 @@ class Recorder {
     }
     
     func stopRecording() {
-        if(self.recorder != nil){
+        if (self.recorder != nil) {
             self.recorder.stop()
         }
     }
     
     func startPlaying() {
+        if (self.player == nil) {
+            print("player is null")
+            self.player = try! AVAudioPlayer(contentsOfURL: self.soundFileURL)
+            print("now it's not")
+        }
         
+        if(!self.player.playing) {
+            if(self.recorder.recording) {
+                self.recorder.stop()
+            }
+            self.player.play()
+        }
     }
     
     func stopPlaying() {
-        
+        // to be implemented
     }
     
 }
@@ -153,6 +172,9 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             })
         }
     }
+    
+    var recordButton : RecordButton!
+    var checkButton : UIButton!
     override func viewDidLoad() {
         completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
         
@@ -187,11 +209,12 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             make.bottom.equalTo(bottomBar.snp_top)
         }
         //Bottom bar buttons
-        let recordButton = UIButton(type: UIButtonType.System) as UIButton
-        let checkButton = UIButton(type: UIButtonType.System) as UIButton
+        recordButton = RecordButton()//UIButton(type: UIButtonType.System) as UIButton
+        checkButton = UIButton(type: UIButtonType.System) as UIButton
         let trashButton = UIButton(type: UIButtonType.System) as UIButton
         
         recordButton.addTarget(self, action: "record_tapped:", forControlEvents: UIControlEvents.TouchUpInside)
+        checkButton.addTarget(self, action: "check_tapped:", forControlEvents: UIControlEvents.TouchUpInside)
         
         forwardButton.frame = CGRectMake(50, 50, 70, 50)
         recordButton.frame = CGRectMake(100,100,100,100)
@@ -206,7 +229,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         
         backwardButton.setBackgroundImage(UIImage(named: "back"), forState: .Normal)
         forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
-        recordButton.setBackgroundImage(UIImage(named: "record-start"), forState: .Normal)
+//        recordButton.setBackgroundImage(UIImage(named: "record-start"), forState: .Normal)
         checkButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
         trashButton.setBackgroundImage(UIImage(named: "trash"), forState: .Normal)
         
@@ -264,12 +287,25 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     
     let recorder = Recorder()
     func record_tapped(sender: UIButton) {
-        if(recorder.isRecording()){
+        if(recorder.isRecording()) {
             recorder.stopRecording()
+            checkButton.enabled = true
             print(recorder.isRecording())
         } else {
             recorder.startRecording()
+            checkButton.enabled = false
             print(recorder.isRecording())
+        }
+    }
+    
+    func check_tapped(sender: UIButton) {
+        if(recorder.isPlaying()){
+            recorder.stopPlaying()
+            print(recorder.isPlaying())
+        } else {
+            recordButton.setRecording(false, animate: true);
+            recorder.startPlaying()
+            print(recorder.isPlaying())
         }
     }
 }
