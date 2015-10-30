@@ -8,6 +8,108 @@
 
 import Foundation
 import UIKit
+import AVFoundation
+
+class Recorder {
+    
+    var recorder: AVAudioRecorder!
+    var player: AVAudioPlayer!
+    
+    var meterTimer:NSTimer!
+    
+    var soundFileURL:NSURL!
+    
+    var recordingTime:String!
+    
+    init() {
+    }
+    
+    func isRecording() -> Bool {
+        
+        if self.recorder != nil {
+            return self.recorder.recording
+        }
+        return false
+    }
+    
+    func startRecording() {
+        
+        // First stop the player
+        if player != nil && player.playing {
+            player.stop()
+        }
+        
+        if(recorder != nil && recorder.recording){
+            print("already, do not call startRecording() it would't do anything")
+            return
+        }
+        
+        // Create the recorder is it's not initialized yet.
+        if recorder == nil {
+            // Recorder settings
+            var recordSettings = [
+                AVFormatIDKey: NSNumber(unsignedInt:kAudioFormatAppleLossless),
+                AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
+                AVEncoderBitRateKey : 320000,
+                AVNumberOfChannelsKey: 2,
+                AVSampleRateKey : 44100.0
+            ]
+            // URL for the audio file
+            let format = NSDateFormatter()
+            format.dateFormat="yyyy-MM-dd-HH-mm-ss"
+            let currentFileName = "recording-\(format.stringFromDate(NSDate())).m4a"
+            print(currentFileName)
+            
+            let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+            self.soundFileURL = documentsDirectory.URLByAppendingPathComponent(currentFileName)
+            
+            
+            // Record with permission
+            do {
+                
+                let session:AVAudioSession = AVAudioSession.sharedInstance()
+                // ios 8 and later
+                if (session.respondsToSelector("requestRecordPermission:")) {
+                    AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
+                        if granted {
+                            print("Permission to record granted")
+                            self.recorder = try! AVAudioRecorder(URL: self.soundFileURL, settings: recordSettings)
+                            self.recorder.record()
+                            print("recording now")
+//                            self.meterTimer = NSTimer.scheduledTimerWithTimeInterval(0.1,
+//                                target:self,
+//                                selector:"updateAudioMeter:",
+//                                userInfo:nil,
+//                                repeats:true)
+                        } else {
+                            print("Permission to record not granted")
+                        }
+                    })
+                } else {
+                    print("requestRecordPermission unrecognized")
+                }
+            } catch {
+                print("Could not initialize AVAudioRecorder")
+            }
+        }
+        
+    }
+    
+    func stopRecording() {
+        if(self.recorder != nil){
+            self.recorder.stop()
+        }
+    }
+    
+    func startPlaying() {
+        
+    }
+    
+    func stopPlaying() {
+        
+    }
+    
+}
 
 class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let backwardButton = UIButton(type: UIButtonType.System) as UIButton
@@ -89,6 +191,8 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         let checkButton = UIButton(type: UIButtonType.System) as UIButton
         let trashButton = UIButton(type: UIButtonType.System) as UIButton
         
+        recordButton.addTarget(self, action: "record_tapped:", forControlEvents: UIControlEvents.TouchUpInside)
+        
         forwardButton.frame = CGRectMake(50, 50, 70, 50)
         recordButton.frame = CGRectMake(100,100,100,100)
         bottomBar.addSubview(backwardButton)
@@ -156,5 +260,16 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         let articleHeight = heightForView("Placeholder.com", font: articleLinkFont, width: (tableView.frame.width - 60))
         //cell height is dynamically genrated then the constraint values are added to it
         return titleHeight + authorHeight + articleHeight + 67
+    }
+    
+    let recorder = Recorder()
+    func record_tapped(sender: UIButton) {
+        if(recorder.isRecording()){
+            recorder.stopRecording()
+            print(recorder.isRecording())
+        } else {
+            recorder.startRecording()
+            print(recorder.isRecording())
+        }
     }
 }
