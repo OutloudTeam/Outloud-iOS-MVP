@@ -1,5 +1,5 @@
 %PDF-1.5%‚„œ”
-1 0 obj<</Metadata 2 0 R/Pages 3 0 R/Type/Catalog>>endobj2 0 obj<</Length 41369/Subtype/XML/Type/Metadata>>stream
+1 0 obj<</Metadata 2 0 R/Pages 3 0 R/Type/Catalog>>endobj2 0 obj<</Length 41804/Subtype/XML/Type/Metadata>>stream
 <?xpacket begin="Ôªø" id="W5M0MpCehiHzreSzNTczkc9d"?>
 <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.3-c011 66.145661, 2012/02/06-14:56:27        ">
    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -15,9 +15,9 @@
       <rdf:Description rdf:about=""
             xmlns:xmp="http://ns.adobe.com/xap/1.0/"
             xmlns:xmpGImg="http://ns.adobe.com/xap/1.0/g/img/">
-         <xmp:MetadataDate>2015-10-27T21:47:38-06:00</xmp:MetadataDate>
-         <xmp:ModifyDate>2015-10-27T21:47:38-06:00</xmp:ModifyDate>
-         <xmp:CreateDate>2015-10-27T21:47:38-06:00</xmp:CreateDate>
+         <xmp:MetadataDate>2015-11-01T12:33:37-07:00</xmp:MetadataDate>
+         <xmp:ModifyDate>2015-11-01T12:33:37-07:00</xmp:ModifyDate>
+         <xmp:CreateDate>2015-11-01T12:33:37-06:00</xmp:CreateDate>
          <xmp:CreatorTool>Adobe Illustrator CS6 (Macintosh)</xmp:CreatorTool>
          <xmp:Thumbnails>
             <rdf:Alt>
@@ -34,13 +34,13 @@
             xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/"
             xmlns:stRef="http://ns.adobe.com/xap/1.0/sType/ResourceRef#"
             xmlns:stEvt="http://ns.adobe.com/xap/1.0/sType/ResourceEvent#">
-         <xmpMM:InstanceID>uuid:bca2179c-bf3c-f245-9850-4be52b7319cd</xmpMM:InstanceID>
-         <xmpMM:DocumentID>xmp.did:43DC89BAA9206811822ADC6D7F6A9560</xmpMM:DocumentID>
+         <xmpMM:InstanceID>uuid:e1b91f78-deaf-f041-b71a-a796a75cc9f0</xmpMM:InstanceID>
+         <xmpMM:DocumentID>xmp.did:82171A994C206811822AEF01F38B5257</xmpMM:DocumentID>
          <xmpMM:OriginalDocumentID>uuid:5D20892493BFDB11914A8590D31508C8</xmpMM:OriginalDocumentID>
          <xmpMM:RenditionClass>proof:pdf</xmpMM:RenditionClass>
          <xmpMM:DerivedFrom rdf:parseType="Resource">
-            <stRef:instanceID>uuid:1e9fe3cf-bac1-48ac-8341-771a4bda1c27</stRef:instanceID>
-            <stRef:documentID>xmp.did:0980117407206811822A897E387FE54C</stRef:documentID>
+            <stRef:instanceID>xmp.iid:0A80117407206811822AEF01F38B5257</stRef:instanceID>
+            <stRef:documentID>xmp.did:0A80117407206811822AEF01F38B5257</stRef:documentID>
             <stRef:originalDocumentID>uuid:5D20892493BFDB11914A8590D31508C8</stRef:originalDocumentID>
             <stRef:renditionClass>proof:pdf</stRef:renditionClass>
          </xmpMM:DerivedFrom>
@@ -48,8 +48,15 @@
             <rdf:Seq>
                <rdf:li rdf:parseType="Resource">
                   <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:43DC89BAA9206811822ADC6D7F6A9560</stEvt:instanceID>
-                  <stEvt:when>2015-10-27T21:47:31-06:00</stEvt:when>
+                  <stEvt:instanceID>xmp.iid:0880117407206811822AEF01F38B5257</stEvt:instanceID>
+                  <stEvt:when>2015-11-01T12:30:56-07:00</stEvt:when>
+                  <stEvt:softwareAgent>Adobe Illustrator CS6 (Macintosh)</stEvt:softwareAgent>
+                  <stEvt:changed>/</stEvt:changed>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>saved</stEvt:action>
+                  <stEvt:instanceID>xmp.iid:82171A994C206811822AEF01F38B5257</stEvt:instanceID>
+                  <stEvt:when>2015-11-01T12:33:34-07:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Illustrator CS6 (Macintosh)</stEvt:softwareAgent>
                   <stEvt:changed>/</stEvt:changed>
                </rdf:li>
@@ -68,9 +75,9 @@
          <xmpTPg:HasVisibleTransparency>False</xmpTPg:HasVisibleTransparency>
          <xmpTPg:NPages>1</xmpTPg:NPages>
          <xmpTPg:MaxPageSize rdf:parseType="Resource">
-            <stDim:w>128.000000</stDim:w>
-            <stDim:h>128.000000</stDim:h>
-            <stDim:unit>Pixels</stDim:unit>
+            <stDim:w>30.000000</stDim:w>
+            <stDim:h>30.000000</stDim:h>
+            <stDim:unit>Points</stDim:unit>
          </xmpTPg:MaxPageSize>
          <xmpTPg:SwatchGroups>
             <rdf:Seq>
@@ -641,17 +648,17 @@
                                                                                                     
                                                                                                     
                            
-<?xpacket end="w"?>endstreamendobj3 0 obj<</Count 1/Kids[5 0 R]/Type/Pages>>endobj5 0 obj<</ArtBox[3.25 3.25 124.75 124.75]/BleedBox[0.0 0.0 128.0 128.0]/Contents 6 0 R/MediaBox[0.0 0.0 128.0 128.0]/Parent 3 0 R/Resources<</ExtGState<</GS0 7 0 R>>/Properties<</MC0 8 0 R/MC1 9 0 R>>>>/TrimBox[0.0 0.0 128.0 128.0]/Type/Page>>endobj6 0 obj<</Filter/FlateDecode/Length 197>>stream
-HâÑè…
-¬0ÜÔÛÛÕ2iíˆj⁄CÈ¡≥î™‡≠ ¯ˆfikÇôÃ˙Áﬂﬂmèº,Æ÷B%e·$ﬁı-·™—Æ¿∑µ¿Û:î°"Qì⁄(¥õ{òÙ>!É7Hb@äôÃ:E5ﬂéˆÇT∞)üòdd™˛RÌ~PIJi4ÈJ)F6ıL,∑#¸–ÚrXπbzVó$ò˛.«T¯¡ÜÜ÷jìÊdÃ≈∏#ÇŒÍÒ˚| ‘YOÑendstreamendobj8 0 obj<</Color[20224 32768 65535]/Dimmed false/Editable true/Preview true/Printed true/Title(Layer 1)/Visible true>>endobj9 0 obj<</Color[65535 20224 20224]/Dimmed false/Editable true/Preview true/Printed true/Title(Layer 2)/Visible true>>endobj7 0 obj<</AIS false/BM/Normal/CA 1.0/OP false/OPM 1/SA true/SMask/None/Type/ExtGState/ca 1.0/op false>>endobj10 0 obj<</CreationDate(D:20151027214738-06'00')/Creator(Adobe Illustrator CS6 \(Macintosh\))/ModDate(D:20151027214738-06'00')/Producer(Adobe PDF library 10.01)/Title(play)>>endobjxref0 110000000000 65535 f
+<?xpacket end="w"?>endstreamendobj3 0 obj<</Count 1/Kids[5 0 R]/Type/Pages>>endobj5 0 obj<</ArtBox[2.63574 2.57324 27.4277 27.3647]/BleedBox[0.0 0.0 30.0 30.0]/Contents 6 0 R/MediaBox[0.0 0.0 30.0 30.0]/Parent 3 0 R/Resources<</ExtGState<</GS0 7 0 R>>/Properties<</MC0 8 0 R/MC1 9 0 R>>>>/TrimBox[0.0 0.0 30.0 30.0]/Type/Page>>endobj6 0 obj<</Filter/FlateDecode/Length 199>>stream
+HâdPπ¬0›˝˛Å∏±”ÊX9ƒ *fÑ8$
+e‚ÔIìR.%±„g˚Yœ≈j˚ÿwX‘SçìŸa^GSå(gÙM∫*ænºF(ü%ãµ∆„n»	aKAúC.)XÔpwIÂΩUñ*á™"#3˘Ôw†ÿSi?2b»yµëÓ+áNm?|o⁄<wàun“âÁkhFUÁ5là%äÒdºò/1él°"&ná‚Ï4i	±§ÖC§L;m‡)¿ ÂGæendstreamendobj8 0 obj<</Color[65535 20224 20224]/Dimmed false/Editable true/Preview true/Printed true/Title(Layer 2)/Visible true>>endobj9 0 obj<</Color[20224 32768 65535]/Dimmed false/Editable true/Preview true/Printed true/Title(Layer 1)/Visible true>>endobj7 0 obj<</AIS false/BM/Normal/CA 1.0/OP false/OPM 1/SA true/SMask/None/Type/ExtGState/ca 1.0/op false>>endobj10 0 obj<</CreationDate(D:20151101123337-06'00')/Creator(Adobe Illustrator CS6 \(Macintosh\))/ModDate(D:20151101123337-07'00')/Producer(Adobe PDF library 10.01)/Title(play)>>endobjxref0 110000000000 65535 f
 0000000016 00000 n
 0000000076 00000 n
-0000041522 00000 n
+0000041957 00000 n
 0000000000 00000 f
-0000041573 00000 n
-0000041825 00000 n
-0000042342 00000 n
-0000042090 00000 n
-0000042216 00000 n
-0000042454 00000 n
-trailer<</Size 11/Root 1 0 R/Info 10 0 R/ID[<8D54C43588BD4072BD73172ED559E4CF><F1BB363CEE6D40C383F25649A7861EE3>]>>startxref42637%%EOF
+0000042008 00000 n
+0000042262 00000 n
+0000042781 00000 n
+0000042529 00000 n
+0000042655 00000 n
+0000042893 00000 n
+trailer<</Size 11/Root 1 0 R/Info 10 0 R/ID[<427D5174E5614A96AF55FB162E7235F5><A7916534572E44219CD324059EF8B1CD>]>>startxref43076%%EOF
