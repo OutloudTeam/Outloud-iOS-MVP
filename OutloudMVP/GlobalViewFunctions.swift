@@ -35,7 +35,8 @@ func createNavigationTitleViewArticleRecordParagraph(title: String, callback: ()
 }
 
 // MARK: - Generates Navigation Top Bar for Article List
-func createNavigationTitleViewArticleList(title: String, callback: ()->Void) -> UIView {
+func createNavigationTitleViewArticleList(title: String, category: String, callback: ()->Void) -> UIView {
+    
     let topFrame = UIView()
     let listenContainer = ListenRecordButton()
     let categoryContainer = UIButton()
@@ -64,7 +65,7 @@ func createNavigationTitleViewArticleList(title: String, callback: ()->Void) -> 
     listenRecordLabel.textColor = UIColor.whiteColor()
     listenRecordLabel.textAlignment = .Center
     
-    subtitleLabel.text = "Popular"
+    subtitleLabel.text = category
     subtitleLabel.font = largeTitleFont
     subtitleLabel.textColor = UIColor.whiteColor()
     subtitleLabel.textAlignment = .Center

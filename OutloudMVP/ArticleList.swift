@@ -39,7 +39,7 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
             }
         }
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationItem.titleView = createNavigationTitleViewArticleList("Listen", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleList("Listen", category: "Popular", callback: { () -> Void in
         })
         let bottomBar = createBottomArticleListBar(self.view)
         self.view.addSubview(tableView)

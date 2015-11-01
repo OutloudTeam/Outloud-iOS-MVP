@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (3.1.0)
+  - Alamofire (3.1.1)
   - HanekeSwift (0.10.0)
   - SnapKit (0.15.0)
   - SwiftOverlays (1.0)
@@ -18,11 +18,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwiftyJSON:
-    :commit: 5f5d00dbdcd256600a250765d9f674964080ceee
+    :commit: ece271ab33839d11c2153d71fb59c53545132cf9
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
-  Alamofire: 415bd7f56197722978759078486689f7ef913dce
+  Alamofire: 9b0a7188b961a03914a99304488bd226b0e46c0e
   HanekeSwift: d6f5bdf9dbdbbc09d59623b2c1d533e46463dd4d
   SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87
   SwiftOverlays: 6a47bab3ed2784c378f07b275269f9e8231526e6
