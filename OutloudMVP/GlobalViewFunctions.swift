@@ -36,25 +36,33 @@ func createNavigationTitleViewArticleRecordParagraph(title: String, callback: ()
 
 // MARK: - Generates Navigation Top Bar for Article List
 func createNavigationTitleViewArticleList(title: String, callback: ()->Void) -> UIView {
-    let container = UIButton()
-    let titleLabel = UILabel()
-    let imageView = UIImageView()
+    let topFrame = UIView()
+    let listenContainer = ListenRecordButton()
+    let categoryContainer = UIButton()
+    let listenRecordLabel = UILabel()
+    let listenRecordImageView = UIImageView()
     let separatorLabel = UILabel()
     let subtitleLabel = UILabel()
     let subtitleImageView = UIImageView()
     
+    topFrame.addSubview(listenContainer)
+    topFrame.addSubview(categoryContainer)
+    topFrame.frame = CGRect(x: 0, y: 0, width: 200, height: 32)
+
+    listenContainer.frame = CGRect(x: 0, y: 0, width: 100, height: 32)
+    listenContainer.addSubview(listenRecordLabel)
+    listenContainer.addSubview(listenRecordImageView)
     
-    container.frame = CGRect(x: 0, y: 0, width: 180, height: 32)
-    container.addSubview(titleLabel)
-    container.addSubview(imageView)
-    container.addSubview(subtitleLabel)
-    container.addSubview(subtitleImageView)
-    container.addSubview(separatorLabel)
+    categoryContainer.frame = CGRect(x: 0, y: 0, width: 100, height: 32)
+    categoryContainer.addSubview(subtitleLabel)
+    categoryContainer.addSubview(subtitleImageView)
     
-    titleLabel.text = title
-    titleLabel.font = largeTitleFont
-    titleLabel.textColor = UIColor.whiteColor()
-    titleLabel.textAlignment = .Center
+    topFrame.addSubview(separatorLabel)
+    
+    listenRecordLabel.text = title
+    listenRecordLabel.font = largeTitleFont
+    listenRecordLabel.textColor = UIColor.whiteColor()
+    listenRecordLabel.textAlignment = .Center
     
     subtitleLabel.text = "Popular"
     subtitleLabel.font = largeTitleFont
@@ -66,38 +74,50 @@ func createNavigationTitleViewArticleList(title: String, callback: ()->Void) -> 
     separatorLabel.textColor = UIColor.whiteColor()
     separatorLabel.textAlignment = .Center
 
-    
-    titleLabel.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(container.snp_left)
-        make.centerY.equalTo(container.snp_centerY)
-    }
-    
-    imageView.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(titleLabel.snp_right).offset(5)
-        make.height.width.equalTo(16)
-        make.centerY.equalTo(container.snp_centerY)
-    }
     separatorLabel.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(imageView.snp_right).offset(5)
-        make.centerY.equalTo(container.snp_centerY)
+        make.centerX.equalTo(topFrame)
+        make.centerY.equalTo(topFrame)
+    }
+    listenContainer.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(topFrame.snp_left)
+        make.right.equalTo(separatorLabel.snp_left)
+        make.centerY.equalTo(topFrame)
+        make.top.bottom.equalTo(topFrame)
+    }
+    listenRecordImageView.snp_makeConstraints { (make) -> Void in
+        make.right.equalTo(listenContainer).offset(-3)
+        make.height.width.equalTo(16)
+        make.centerY.equalTo(listenContainer)
+    }
+    listenRecordLabel.snp_makeConstraints { (make) -> Void in
+        make.right.equalTo(listenRecordImageView.snp_left).offset(-3)
+        make.centerY.equalTo(listenContainer)
+    }
+    
+    categoryContainer.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(separatorLabel.snp_right).offset(3)
+        make.right.equalTo(topFrame)
+        make.centerY.equalTo(topFrame)
+        make.top.bottom.equalTo(topFrame)
+        
     }
     subtitleLabel.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(separatorLabel.snp_right).offset(5)
-        make.centerY.equalTo(container.snp_centerY)
+        make.left.equalTo(categoryContainer.snp_left).offset(5)
+        make.centerY.equalTo(categoryContainer)
     }
     
     subtitleImageView.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(subtitleLabel.snp_right).offset(5)
         make.height.width.equalTo(16)
-        make.centerY.equalTo(container.snp_centerY)
+        make.centerY.equalTo(categoryContainer)
     }
     
-    imageView.image = UIImage(named: "downArrow")
+    listenRecordImageView.image = UIImage(named: "downArrow")
     subtitleImageView.image = UIImage(named: "downArrow")
-    imageView.contentMode = .ScaleAspectFit
+    listenRecordImageView.contentMode = .ScaleAspectFit
     subtitleImageView.contentMode = .ScaleAspectFit
     
-    return container
+    return topFrame
 }
 // MARK: - Generates Navigation Top Bar for Article Detail
 func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -> UIView {

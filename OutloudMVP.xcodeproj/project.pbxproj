@@ -20,6 +20,7 @@
 		DBB683FB1BDED962002ED471 /* ArticleListCellGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB683FA1BDED962002ED471 /* ArticleListCellGeneration.swift */; };
 		DBB683FF1BE02BD6002ED471 /* RecordDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB683FE1BE02BD6002ED471 /* RecordDetails.swift */; };
 		DBC15B751BCF644600C4DCC6 /* ArticleHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC15B741BCF644600C4DCC6 /* ArticleHeader.swift */; };
+		DBDCD1911BE6BAF800984608 /* ListenRecordNavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCD1901BE6BAF800984608 /* ListenRecordNavButton.swift */; };
 		F3332C8B1BC98DA3003DF922 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */; };
 		F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3332C8C1BC98DA3003DF922 /* ViewController.swift */; };
 		F3332C921BC98DA3003DF922 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3332C911BC98DA3003DF922 /* Assets.xcassets */; };
@@ -69,6 +70,7 @@
 		DBB683FA1BDED962002ED471 /* ArticleListCellGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleListCellGeneration.swift; sourceTree = "<group>"; };
 		DBB683FE1BE02BD6002ED471 /* RecordDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordDetails.swift; sourceTree = "<group>"; };
 		DBC15B741BCF644600C4DCC6 /* ArticleHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleHeader.swift; sourceTree = "<group>"; };
+		DBDCD1901BE6BAF800984608 /* ListenRecordNavButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenRecordNavButton.swift; sourceTree = "<group>"; };
 		F3332C871BC98DA3003DF922 /* OutloudMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OutloudMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3332C8A1BC98DA3003DF922 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3332C8C1BC98DA3003DF922 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				F3C40AB91BCAB44A00A033FF /* RecordButton.swift */,
+				DBDCD1901BE6BAF800984608 /* ListenRecordNavButton.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				F35D5B351BCF43040019C2B9 /* MainNavigationController.swift in Sources */,
 				DB02F2081BCA25F800064CEB /* ArticleDetails.swift in Sources */,
 				DBB683FF1BE02BD6002ED471 /* RecordDetails.swift in Sources */,
+				DBDCD1911BE6BAF800984608 /* ListenRecordNavButton.swift in Sources */,
 				DB0975DA1BCF8F7B00B9F77C /* GloablFunctions.swift in Sources */,
 				DB7B3B9D1BE0794300A392DD /* RecordIndividualParagraph.swift in Sources */,
 				DB02F20A1BCA28D300064CEB /* ArticleList.swift in Sources */,
