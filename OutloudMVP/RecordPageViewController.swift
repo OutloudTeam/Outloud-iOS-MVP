@@ -24,7 +24,7 @@ class RecordPageViewController : UIViewController {
             make.width.equalTo(self.view);
             make.height.equalTo(80);
             make.bottom.equalTo(self.view);
-        };
+        };  
         
         
         // Progress View

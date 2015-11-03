@@ -29,76 +29,98 @@ func createNavigationTitleViewArticleRecordParagraph(title: String, callback: ()
     titleLabel.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(container.snp_left)
         make.centerY.equalTo(container.snp_centerY)
-//        make.center.equalTo(container.snp_center)
+        //        make.center.equalTo(container.snp_center)
     }
     
     return container
 }
 
 // MARK: - Generates Navigation Top Bar for Article List
-func createNavigationTitleViewArticleList(title: String, callback: ()->Void) -> UIView {
-    let container = UIButton()
-    let titleLabel = UILabel()
-    let imageView = UIImageView()
+func createNavigationTitleViewArticleList(title: String, category: String, callback: ()->Void) -> UIView {
+    
+    let topFrame = UIView()
+    let listenContainer = ListenRecordButton()
+    let categoryContainer = UIButton()
+    let listenRecordLabel = UILabel()
+    let listenRecordImageView = UIImageView()
     let separatorLabel = UILabel()
     let subtitleLabel = UILabel()
     let subtitleImageView = UIImageView()
     
+    topFrame.addSubview(listenContainer)
+    topFrame.addSubview(categoryContainer)
+    topFrame.frame = CGRect(x: 0, y: 0, width: 200, height: 32)
     
-    container.frame = CGRect(x: 0, y: 0, width: 180, height: 32)
-    container.addSubview(titleLabel)
-    container.addSubview(imageView)
-    container.addSubview(subtitleLabel)
-    container.addSubview(subtitleImageView)
-    container.addSubview(separatorLabel)
+    listenContainer.frame = CGRect(x: 0, y: 0, width: 100, height: 32)
+    listenContainer.addSubview(listenRecordLabel)
+    listenContainer.addSubview(listenRecordImageView)
     
-    titleLabel.text = title
-    titleLabel.font = largeTitleFont
-    titleLabel.textColor = UIColor.whiteColor()
-    titleLabel.textAlignment = .Center
+    categoryContainer.frame = CGRect(x: 0, y: 0, width: 100, height: 32)
+    categoryContainer.addSubview(subtitleLabel)
+    categoryContainer.addSubview(subtitleImageView)
     
-    subtitleLabel.text = "Popular"
-    subtitleLabel.font = largeTitleFont
-    subtitleLabel.textColor = UIColor.whiteColor()
+    topFrame.addSubview(separatorLabel)
+    
+    listenRecordLabel.text = title
+    listenRecordLabel.font = ListenRecordFont
+    listenRecordLabel.textColor = yellowColor
+    listenRecordLabel.textAlignment = .Center
+    
+    subtitleLabel.text = category
+    subtitleLabel.font = CategoryTopBarFont
+    subtitleLabel.textColor = blackColor
     subtitleLabel.textAlignment = .Center
     
-    separatorLabel.text = "/"
+    separatorLabel.text = "|"
     separatorLabel.font = separatorTitleFont
-    separatorLabel.textColor = UIColor.whiteColor()
+    separatorLabel.textColor = blackColor.colorWithAlphaComponent(0.7   )
     separatorLabel.textAlignment = .Center
-
     
-    titleLabel.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(container.snp_left)
-        make.centerY.equalTo(container.snp_centerY)
-    }
-    
-    imageView.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(titleLabel.snp_right).offset(5)
-        make.height.width.equalTo(16)
-        make.centerY.equalTo(container.snp_centerY)
-    }
     separatorLabel.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(imageView.snp_right).offset(5)
-        make.centerY.equalTo(container.snp_centerY)
+        make.centerX.equalTo(topFrame)
+        make.centerY.equalTo(topFrame)
+    }
+    listenContainer.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(topFrame)
+        make.right.equalTo(separatorLabel.snp_left)
+        make.centerY.equalTo(topFrame)
+        make.top.bottom.equalTo(topFrame)
+    }
+    listenRecordLabel.snp_makeConstraints { (make) -> Void in
+        make.right.equalTo(listenContainer.snp_centerX)
+        make.centerY.equalTo(listenContainer)
+    }
+    listenRecordImageView.snp_makeConstraints { (make) -> Void in
+        make.right.equalTo(listenContainer).offset(-3)
+        make.height.width.equalTo(16)
+        make.centerY.equalTo(listenContainer)
+    }
+    
+    
+    categoryContainer.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(separatorLabel.snp_right).offset(3)
+        make.right.equalTo(topFrame)
+        make.centerY.equalTo(topFrame)
+        make.top.bottom.equalTo(topFrame)
+        
     }
     subtitleLabel.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(separatorLabel.snp_right).offset(5)
-        make.centerY.equalTo(container.snp_centerY)
+        make.right.equalTo(categoryContainer.snp_centerX)
+        make.centerY.equalTo(categoryContainer)
     }
     
     subtitleImageView.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(subtitleLabel.snp_right).offset(5)
         make.height.width.equalTo(16)
-        make.centerY.equalTo(container.snp_centerY)
+        make.centerY.equalTo(categoryContainer)
     }
     
-    imageView.image = UIImage(named: "downArrow")
+    listenRecordImageView.image = UIImage(named: "downArrow")
     subtitleImageView.image = UIImage(named: "downArrow")
-    imageView.contentMode = .ScaleAspectFit
+    listenRecordImageView.contentMode = .ScaleAspectFit
     subtitleImageView.contentMode = .ScaleAspectFit
     
-    return container
+    return topFrame
 }
 // MARK: - Generates Navigation Top Bar for Article Detail
 func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -> UIView {
@@ -110,7 +132,7 @@ func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -
     container.frame = CGRect(x: 0, y: 0, width: 128, height: 32)
     container.addSubview(titleLabel)
     container.addSubview(imageView)
-
+    
     
     titleLabel.text = title
     titleLabel.font = largeTitleFont
@@ -118,7 +140,7 @@ func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -
     titleLabel.textAlignment = .Center
     
     titleLabel.snp_makeConstraints { (make) -> Void in
-//        make.left.equalTo(container.snp_left)
+        //        make.left.equalTo(container.snp_left)
         make.center.equalTo(container.snp_center)
     }
     

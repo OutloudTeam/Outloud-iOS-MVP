@@ -25,6 +25,16 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
+    override func viewDidAppear(animated: Bool) {
+        self.navigationItem.titleView = createNavigationTitleViewArticleList("Listen", category: "Popular", callback: { () -> Void in
+        })
+        self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
+            make.width.equalTo(tableView.frame.width)
+            make.top.equalTo((self.navigationController?.view)!).offset(20)
+            
+        })
+    }
+    
     override func viewDidLoad() {
         
         self.refreshControl = UIRefreshControl()
@@ -39,8 +49,10 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
             }
         }
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationItem.titleView = createNavigationTitleViewArticleList("Listen", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleList("Listen", category: "Popular", callback: { () -> Void in
         })
+        
+        
         let bottomBar = createBottomArticleListBar(self.view)
         self.view.addSubview(tableView)
         tableView.delegate = self
@@ -89,7 +101,7 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
 //        return articleBar
 //    }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 1
+        return 0
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

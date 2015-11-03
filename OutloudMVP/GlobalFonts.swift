@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-let separatorTitleFont = UIFont(name: "Avenir-Light", size: 20)
+let separatorTitleFont = UIFont(name: "Avenir-Light", size: 28)
 let largeTitleFont = UIFont(name: "Avenir-Light", size: 17)
 let mediumTitleFont = UIFont(name: "Avenir-Light", size: 13)
 let smallTitleFont  = UIFont(name: "Avenir-Light", size: 10)
@@ -26,6 +26,9 @@ let articleLinkFont = UIFont.systemFontOfSize(12, weight: UIFontWeightLight)
 
 let articleListAbstractFont = UIFont.systemFontOfSize(10, weight: UIFontWeightLight)
 let articleListTileFont = UIFont.systemFontOfSize(16, weight: UIFontWeightSemibold)
+
+let ListenRecordFont = UIFont.systemFontOfSize(18, weight: UIFontWeightThin)
+let CategoryTopBarFont = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
 //let recordArticleTitleFont = UIFont(name: ".SFUIText-Semibold ", size: 16)
 //let recordArticleParagraphFont = UIFont(name: ".SFUIText-Regular", size: 16)
 //let authorNameFont = UIFont(name: ".SFUIText-Bold", size: 12)
