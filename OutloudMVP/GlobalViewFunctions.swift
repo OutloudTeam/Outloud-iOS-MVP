@@ -17,18 +17,19 @@ func createNavigationTitleViewArticleRecordParagraph(title: String, callback: ()
     let titleLabel = UILabel()
     
     
-    container.frame = CGRect(x: 0, y: 0, width: 128, height: 32)
+    container.frame = CGRect(x: 0, y: 0, width: 300, height: 32)
     container.addSubview(titleLabel)
     
     
     titleLabel.text = title
     titleLabel.font = recordArticleTitleFont
     titleLabel.textColor = UIColor.whiteColor()
-    titleLabel.textAlignment = .Center
+    titleLabel.textAlignment = .Left
     
     titleLabel.snp_makeConstraints { (make) -> Void in
-        //        make.left.equalTo(container.snp_left)
-        make.center.equalTo(container.snp_center)
+        make.left.equalTo(container.snp_left)
+        make.centerY.equalTo(container.snp_centerY)
+//        make.center.equalTo(container.snp_center)
     }
     
     return container
