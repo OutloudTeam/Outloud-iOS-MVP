@@ -99,6 +99,8 @@ class Recorder {
             } catch {
                 print("Could not initialize AVAudioRecorder")
             }
+        } else {
+            self.recorder.record()
         }
         
     }
@@ -111,9 +113,7 @@ class Recorder {
     
     func startPlaying() {
         if (self.player == nil) {
-            print("player is null")
             self.player = try! AVAudioPlayer(contentsOfURL: self.soundFileURL)
-            print("now it's not")
         }
         
         if(!self.player.playing) {
@@ -175,7 +175,46 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     
     var recordButton : RecordButton!
     var checkButton : UIButton!
+    var playbackButton : UIButton!
+    var timeLabel : UILabel!
+    var timer : NSTimer!
     override func viewDidLoad() {
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.1,
+            target:self,
+            selector:"updateAudioMeter",
+            userInfo:nil,
+            repeats:true)
+        
+        let playbackToolbar = UIView(frame: CGRect(x: 0, y: 0, width: 128, height: 32))
+        
+        // play button
+        playbackButton = UIButton()
+        playbackButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
+        playbackToolbar.addSubview(playbackButton)
+        playbackButton.snp_makeConstraints { (make) -> Void in
+            make.right.equalTo(playbackToolbar)
+            make.centerY.equalTo(playbackToolbar.snp_centerY)
+            make.width.height.equalTo(32)
+        }
+        playbackButton.addTarget(self, action: "playback_tapped", forControlEvents: .TouchUpInside)
+        
+        // time label
+        timeLabel = UILabel()
+        timeLabel.font = mediumTitleFont
+        timeLabel.text = "00:00"
+        timeLabel.textColor = UIColor.whiteColor()
+        timeLabel.textAlignment = .Right
+        playbackToolbar.addSubview(timeLabel)
+        timeLabel.snp_makeConstraints { (make) -> Void in
+            make.right.equalTo(playbackButton.snp_leftMargin).inset(-20)
+            make.centerY.equalTo(playbackToolbar.snp_centerY)
+            make.left.equalTo(playbackToolbar.snp_leftMargin)
+        }
+        
+//        playbackToolbar.backgroundColor = UIColor.redColor()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: playbackToolbar)
+        
         completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
         
         self.edgesForExtendedLayout = UIRectEdge.None
@@ -229,7 +268,6 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         
         backwardButton.setBackgroundImage(UIImage(named: "back"), forState: .Normal)
         forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
-//        recordButton.setBackgroundImage(UIImage(named: "record-start"), forState: .Normal)
         checkButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
         trashButton.setBackgroundImage(UIImage(named: "trash"), forState: .Normal)
         
@@ -290,10 +328,12 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         if(recorder.isRecording()) {
             recorder.stopRecording()
             checkButton.enabled = true
+            playbackButton.enabled = true
             print(recorder.isRecording())
         } else {
             recorder.startRecording()
             checkButton.enabled = false
+            playbackButton.enabled = false
             print(recorder.isRecording())
         }
     }
@@ -306,6 +346,31 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             recordButton.setRecording(false, animate: true);
             recorder.startPlaying()
             print(recorder.isPlaying())
+        }
+    }
+    
+    func playback_tapped() {
+        if(recorder.isPlaying()){
+            recorder.stopPlaying()
+            print(recorder.isPlaying())
+        } else {
+            recordButton.setRecording(false, animate: true);
+            recorder.startPlaying()
+            print(recorder.isPlaying())
+        }
+    }
+    
+    func updateAudioMeter() {
+        if(recorder.recorder != nil) {
+            
+            let minutes = floor(recorder.recorder.currentTime/60)
+            let seconds = recorder.recorder.currentTime - (minutes * 60)
+            
+//            NSString *time = [[NSString alloc]
+//                initWithFormat:@"%0.0f.%0.0f",
+//            minutes, seconds];
+            
+            self.timeLabel.text = String.localizedStringWithFormat("%02d:%02d", Int(minutes), Int(seconds))
         }
     }
 }
