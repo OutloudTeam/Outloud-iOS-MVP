@@ -15,11 +15,7 @@ class Recorder {
     var recorder: AVAudioRecorder!
     var player: AVAudioPlayer!
     
-    var meterTimer:NSTimer!
-    
     var soundFileURL:NSURL!
-    
-    var recordingTime:String!
     
     init() {
     }
@@ -41,6 +37,10 @@ class Recorder {
     
     func startRecording() {
         
+        if(self.soundFileURL != nil) {
+            try! NSFileManager().removeItemAtURL(self.soundFileURL)
+        }
+        
         // First stop the player
         if player != nil && player.playing {
             player.stop()
@@ -52,7 +52,8 @@ class Recorder {
         }
         
         // Create the recorder is it's not initialized yet.
-        if recorder == nil {
+//        if recorder == nil {
+        
             // Recorder settings
             var recordSettings = [
                 AVFormatIDKey: NSNumber(unsignedInt:kAudioFormatAppleLossless),
@@ -83,12 +84,6 @@ class Recorder {
                             print("Permission to record granted")
                             self.recorder = try! AVAudioRecorder(URL: self.soundFileURL, settings: recordSettings)
                             self.recorder.record()
-                            print("recording now")
-//                            self.meterTimer = NSTimer.scheduledTimerWithTimeInterval(0.1,
-//                                target:self,
-//                                selector:"updateAudioMeter:",
-//                                userInfo:nil,
-//                                repeats:true)
                         } else {
                             print("Permission to record not granted")
                         }
@@ -99,9 +94,6 @@ class Recorder {
             } catch {
                 print("Could not initialize AVAudioRecorder")
             }
-        } else {
-            self.recorder.record()
-        }
         
     }
     
@@ -112,9 +104,7 @@ class Recorder {
     }
     
     func startPlaying() {
-        if (self.player == nil) {
-            self.player = try! AVAudioPlayer(contentsOfURL: self.soundFileURL)
-        }
+        self.player = try! AVAudioPlayer(contentsOfURL: self.soundFileURL)
         
         if(!self.player.playing) {
             if(self.recorder.recording) {
@@ -125,12 +115,14 @@ class Recorder {
     }
     
     func stopPlaying() {
-        // to be implemented
+        if(self.player != nil && self.player.playing) {
+            self.player.stop()
+        }
     }
     
 }
 
-class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
     let backwardButton = UIButton(type: UIButtonType.System) as UIButton
     let forwardButton = UIButton(type: UIButtonType.System) as UIButton
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
@@ -153,6 +145,9 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
                 make.width.equalTo(completionWidth)
             })
         }
+        checkButton.enabled = false
+        playbackButton.enabled = false
+        timeLabel.text = "00:00"
     }
     func backwardParagraph() {
         forwardButton.hidden = false
@@ -179,12 +174,6 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     var timeLabel : UILabel!
     var timer : NSTimer!
     override func viewDidLoad() {
-        
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.1,
-            target:self,
-            selector:"updateAudioMeter",
-            userInfo:nil,
-            repeats:true)
         
         let playbackToolbar = UIView(frame: CGRect(x: 0, y: 0, width: 128, height: 32))
         
@@ -252,6 +241,9 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         recordButton = RecordButton()//UIButton(type: UIButtonType.System) as UIButton
         checkButton = UIButton(type: UIButtonType.System) as UIButton
         let trashButton = UIButton(type: UIButtonType.System) as UIButton
+        
+        checkButton.enabled = false
+        playbackButton.enabled = false
         
         recordButton.addTarget(self, action: "record_tapped:", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.addTarget(self, action: "check_tapped:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -331,23 +323,32 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             checkButton.enabled = true
             playbackButton.enabled = true
             print(recorder.isRecording())
+            timer.invalidate()
+            timer = nil
         } else {
             recorder.startRecording()
             checkButton.enabled = false
             playbackButton.enabled = false
+            timer = NSTimer.scheduledTimerWithTimeInterval(0.1,
+                target:self,
+                selector:"updateAudioMeter",
+                userInfo:nil,
+                repeats:true)
             print(recorder.isRecording())
         }
     }
     
     func check_tapped(sender: UIButton) {
-        if(recorder.isPlaying()){
-            recorder.stopPlaying()
-            print(recorder.isPlaying())
+        
+        // upload the file if there is any.
+        
+        if(ParagraphCount >= FullArticleContentArray.count-1) {
+            // you're good, go back to the paragraph
+            self.navigationController?.popViewControllerAnimated(true)
         } else {
-            recordButton.setRecording(false, animate: true);
-            recorder.startPlaying()
-            print(recorder.isPlaying())
+             forwardParagraph()
         }
+        
     }
     
     func playback_tapped() {
@@ -360,6 +361,11 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             recorder.startPlaying()
             print(recorder.isPlaying())
         }
+        recorder.player.delegate = self
+    }
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+        playbackButton.selected = false
     }
     
     func updateAudioMeter() {
@@ -367,10 +373,6 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             
             let minutes = floor(recorder.recorder.currentTime/60)
             let seconds = recorder.recorder.currentTime - (minutes * 60)
-            
-//            NSString *time = [[NSString alloc]
-//                initWithFormat:@"%0.0f.%0.0f",
-//            minutes, seconds];
             
             self.timeLabel.text = String.localizedStringWithFormat("%02d:%02d", Int(minutes), Int(seconds))
         }
