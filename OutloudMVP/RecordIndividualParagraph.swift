@@ -190,7 +190,8 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         
         // play button
         playbackButton = UIButton()
-        playbackButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
+        playbackButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+        playbackButton.setBackgroundImage(UIImage(named: "stop"), forState: .Selected)
         playbackToolbar.addSubview(playbackButton)
         playbackButton.snp_makeConstraints { (make) -> Void in
             make.right.equalTo(playbackToolbar)
@@ -350,6 +351,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     }
     
     func playback_tapped() {
+        playbackButton.selected = !playbackButton.selected
         if(recorder.isPlaying()){
             recorder.stopPlaying()
             print(recorder.isPlaying())
