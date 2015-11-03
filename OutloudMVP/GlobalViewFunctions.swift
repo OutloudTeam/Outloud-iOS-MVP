@@ -29,7 +29,7 @@ func createNavigationTitleViewArticleRecordParagraph(title: String, callback: ()
     titleLabel.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(container.snp_left)
         make.centerY.equalTo(container.snp_centerY)
-//        make.center.equalTo(container.snp_center)
+        //        make.center.equalTo(container.snp_center)
     }
     
     return container
@@ -50,7 +50,7 @@ func createNavigationTitleViewArticleList(title: String, category: String, callb
     topFrame.addSubview(listenContainer)
     topFrame.addSubview(categoryContainer)
     topFrame.frame = CGRect(x: 0, y: 0, width: 200, height: 32)
-
+    
     listenContainer.frame = CGRect(x: 0, y: 0, width: 100, height: 32)
     listenContainer.addSubview(listenRecordLabel)
     listenContainer.addSubview(listenRecordImageView)
@@ -62,39 +62,40 @@ func createNavigationTitleViewArticleList(title: String, category: String, callb
     topFrame.addSubview(separatorLabel)
     
     listenRecordLabel.text = title
-    listenRecordLabel.font = largeTitleFont
-    listenRecordLabel.textColor = UIColor.whiteColor()
+    listenRecordLabel.font = ListenRecordFont
+    listenRecordLabel.textColor = yellowColor
     listenRecordLabel.textAlignment = .Center
     
     subtitleLabel.text = category
-    subtitleLabel.font = largeTitleFont
-    subtitleLabel.textColor = UIColor.whiteColor()
+    subtitleLabel.font = CategoryTopBarFont
+    subtitleLabel.textColor = blackColor
     subtitleLabel.textAlignment = .Center
     
-    separatorLabel.text = "/"
+    separatorLabel.text = "|"
     separatorLabel.font = separatorTitleFont
-    separatorLabel.textColor = UIColor.whiteColor()
+    separatorLabel.textColor = blackColor.colorWithAlphaComponent(0.7   )
     separatorLabel.textAlignment = .Center
-
+    
     separatorLabel.snp_makeConstraints { (make) -> Void in
         make.centerX.equalTo(topFrame)
         make.centerY.equalTo(topFrame)
     }
     listenContainer.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(topFrame.snp_left)
+        make.left.equalTo(topFrame)
         make.right.equalTo(separatorLabel.snp_left)
         make.centerY.equalTo(topFrame)
         make.top.bottom.equalTo(topFrame)
+    }
+    listenRecordLabel.snp_makeConstraints { (make) -> Void in
+        make.right.equalTo(listenContainer.snp_centerX)
+        make.centerY.equalTo(listenContainer)
     }
     listenRecordImageView.snp_makeConstraints { (make) -> Void in
         make.right.equalTo(listenContainer).offset(-3)
         make.height.width.equalTo(16)
         make.centerY.equalTo(listenContainer)
     }
-    listenRecordLabel.snp_makeConstraints { (make) -> Void in
-        make.right.equalTo(listenRecordImageView.snp_left).offset(-3)
-        make.centerY.equalTo(listenContainer)
-    }
+    
     
     categoryContainer.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(separatorLabel.snp_right).offset(3)
@@ -104,7 +105,7 @@ func createNavigationTitleViewArticleList(title: String, category: String, callb
         
     }
     subtitleLabel.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(categoryContainer.snp_left).offset(5)
+        make.right.equalTo(categoryContainer.snp_centerX)
         make.centerY.equalTo(categoryContainer)
     }
     
@@ -131,7 +132,7 @@ func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -
     container.frame = CGRect(x: 0, y: 0, width: 128, height: 32)
     container.addSubview(titleLabel)
     container.addSubview(imageView)
-
+    
     
     titleLabel.text = title
     titleLabel.font = largeTitleFont
@@ -139,7 +140,7 @@ func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -
     titleLabel.textAlignment = .Center
     
     titleLabel.snp_makeConstraints { (make) -> Void in
-//        make.left.equalTo(container.snp_left)
+        //        make.left.equalTo(container.snp_left)
         make.center.equalTo(container.snp_center)
     }
     

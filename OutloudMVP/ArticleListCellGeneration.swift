@@ -130,8 +130,7 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
         
         make.left.equalTo(articleTitle.snp_right).offset(10)
         make.top.equalTo(articleTitle.snp_top)
-        make.right.equalTo(articleCell.snp_right).offset(-10).priorityLow()
-//        make.height.width.equalTo(90)
+        make.height.width.equalTo(85)
     }
     articleIcon.layer.cornerRadius = articleIcon.frame.size.height/2
     articleIcon.clipsToBounds = true
