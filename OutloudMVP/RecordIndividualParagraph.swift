@@ -173,6 +173,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     var playbackButton : UIButton!
     var timeLabel : UILabel!
     var timer : NSTimer!
+    var audioFiles : NSMutableArray!
     override func viewDidLoad() {
         
         let playbackToolbar = UIView(frame: CGRect(x: 0, y: 0, width: 128, height: 32))
@@ -294,20 +295,25 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let cellHeight = heightForJustifiedView(FullArticleContentArray[ParagraphCount].text!, font: recordArticleParagraphFont, width: (tableView.frame.width - 60), lineSpace: 5)
         //cell height is dynamically generated then constraint values are added
         return cellHeight + 30
     }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return generateRecordingParagraphCell(tableView, indexPath: indexPath)
     }
+    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return generateRecordingHeaderCell(tableView)
     }
+    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let titleHeight = heightForJustifiedView(ArticleDetailArray[0].title!, font: recordArticleTitleFont, width: (tableView.frame.width - 60), lineSpace: 3)
         let authorHeight = heightForJustifiedView(ArticleDetailArray[0].author!, font: authorNameFont, width: (tableView.frame.width-60), lineSpace: 3)

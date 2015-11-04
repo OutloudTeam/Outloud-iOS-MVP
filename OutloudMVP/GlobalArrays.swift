@@ -64,6 +64,7 @@ struct ArticleDetailMediaMetadata {
 struct FullArticleContent {
     var text : String?
     var readings : String?
+    var recordingUrl : NSURL!
 }
 //var CacheValidationArray = [CacheValidation]()
 
