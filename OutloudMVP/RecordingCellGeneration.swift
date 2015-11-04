@@ -114,3 +114,63 @@ func generateRecordingHeaderCell(tableView : UITableView) -> UIView {
     
     return headerView
 }
+
+func generateListenHeaderCell(tableView : UITableView) -> UIView {
+    let headerView = UIView()
+    let authorName = UILabel()
+    let articleTitle = UILabel()
+    let articleLink = UILabel()
+    
+    headerView.addSubview(articleTitle)
+    headerView.addSubview(authorName)
+    headerView.addSubview(articleLink)
+    
+    headerView.backgroundColor = backgroundColorAll
+    
+    articleTitle.text = ArticleDetailArray[0].title
+    transformIntoJustified(articleTitle, lineSpace: 3)
+    articleTitle.font = recordArticleTitleFont
+    articleTitle.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(headerView).offset(30)
+        make.top.equalTo(headerView).offset(30)
+        make.right.equalTo(headerView.snp_right).offset(-30)
+    }
+    //
+    
+    authorName.text = ArticleDetailArray[0].author
+    transformIntoJustified(authorName, lineSpace: 3)
+    authorName.font = authorNameFont
+    authorName.textColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+    
+    
+    authorName.snp_makeConstraints { (make) -> Void in
+        make.top.equalTo(articleTitle.snp_bottom).offset(10)
+        make.left.equalTo(articleTitle.snp_left)
+        make.right.equalTo(articleTitle.snp_right)
+    }
+    
+    
+    articleLink.textColor = transparentBlack
+    articleLink.font = articleLinkFont
+    
+    articleLink.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(authorName.snp_left)
+        make.top.equalTo(authorName.snp_bottom)
+    }
+    let separatorBar = UIView()
+    headerView.addSubview(separatorBar)
+    separatorBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.15)
+    separatorBar.snp_makeConstraints { (make) -> Void in
+        make.height.equalTo(1)
+        make.top.equalTo(articleLink.snp_bottom).offset(15)
+        make.left.right.equalTo(headerView)
+    }
+    guard let fullURL = ArticleDetailArray[0].url else {
+        articleLink.text = "Not Found"
+        return headerView
+    }
+    let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
+    articleLink.text = fullURLArray[1]
+    
+    return headerView
+}

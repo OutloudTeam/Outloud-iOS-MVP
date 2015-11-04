@@ -49,8 +49,8 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
             }
         }
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationItem.titleView = createNavigationTitleViewArticleList("Listen", category: "Popular", callback: { () -> Void in
-        })
+//        self.navigationItem.titleView = createNavigationTitleViewArticleList("Listen", category: "Popular", callback: { () -> Void in
+//        })
         
         
         let bottomBar = createBottomArticleListBar(self.view)
@@ -81,8 +81,8 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
-        //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating +
-        return cellHeight + 25 + 5 + 25 + 20
+        //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
+        return cellHeight + 25 + 5 + 25 + 20 + 20
     }
     
 //    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -112,7 +112,7 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 SwiftOverlays.removeAllBlockingOverlays()
                 //                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
-                self.navigationController?.pushViewController(RecordDetails(), animated: true)
+                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
             })
         }
     }

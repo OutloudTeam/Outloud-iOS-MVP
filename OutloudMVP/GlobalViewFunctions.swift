@@ -72,12 +72,12 @@ func createNavigationTitleViewArticleList(title: String, category: String, callb
     
     separatorLabel.text = "|"
     separatorLabel.font = separatorTitleFont
-    separatorLabel.textColor = blackColor.colorWithAlphaComponent(0.3)
+    separatorLabel.textColor = blackColor.colorWithAlphaComponent(0.1)
     separatorLabel.textAlignment = .Center
     
     separatorLabel.snp_makeConstraints { (make) -> Void in
         make.centerX.equalTo(topFrame)
-        make.centerY.equalTo(topFrame)
+        make.centerY.equalTo(topFrame).offset(5)
     }
     listenContainer.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(topFrame)
@@ -87,7 +87,7 @@ func createNavigationTitleViewArticleList(title: String, category: String, callb
     }
     listenRecordLabel.snp_makeConstraints { (make) -> Void in
         make.right.equalTo(listenContainer.snp_centerX)
-        make.centerY.equalTo(listenContainer)
+        make.centerY.equalTo(listenContainer).offset(5)
     }
     listenRecordImageView.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(listenRecordLabel.snp_right).offset(5)
@@ -105,7 +105,7 @@ func createNavigationTitleViewArticleList(title: String, category: String, callb
     }
     subtitleLabel.snp_makeConstraints { (make) -> Void in
         make.right.equalTo(categoryContainer.snp_centerX)
-        make.centerY.equalTo(categoryContainer)
+        make.centerY.equalTo(categoryContainer).offset(5)
     }
     
     subtitleImageView.snp_makeConstraints { (make) -> Void in
@@ -135,7 +135,7 @@ func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -
     
     titleLabel.text = title
     titleLabel.font = largeTitleFont
-    titleLabel.textColor = UIColor.whiteColor()
+    titleLabel.textColor = UIColor.blackColor()
     titleLabel.textAlignment = .Center
     
     titleLabel.snp_makeConstraints { (make) -> Void in
