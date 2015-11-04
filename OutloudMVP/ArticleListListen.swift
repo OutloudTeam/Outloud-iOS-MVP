@@ -12,7 +12,7 @@ import SnapKit
 import AVFoundation
 import SwiftOverlays
 
-class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var refreshControl:UIRefreshControl!
     func refresh(sender:AnyObject)
@@ -26,7 +26,7 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
     override func viewDidAppear(animated: Bool) {
-        self.navigationItem.titleView = createNavigationTitleViewArticleList("Listen", category: "Popular", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleListListen("Listen", category: "Popular", callback: { () -> Void in
         })
         self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
             make.width.equalTo(tableView.frame.width)
@@ -76,7 +76,7 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
         return ArticleListArray.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return generateArticleListCell(tableView, indexPath: indexPath)
+        return generateArticleListListenCell(tableView, indexPath: indexPath)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

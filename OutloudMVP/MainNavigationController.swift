@@ -12,7 +12,7 @@ class MainNavigationController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let mainViewController = ArticleList()
+        let mainViewController = ArticleListRecord()
         self.edgesForExtendedLayout = UIRectEdge.None
         self.setViewControllers([mainViewController], animated: false)
         self.navigationBar.barTintColor = barColor

@@ -129,7 +129,7 @@ func generateListenHeaderCell(tableView : UITableView) -> UIView {
     
     articleTitle.text = ArticleDetailArray[0].title
     transformIntoJustified(articleTitle, lineSpace: 3)
-    articleTitle.font = recordArticleTitleFont
+    articleTitle.font = articleListTileFont
     articleTitle.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(headerView).offset(30)
         make.top.equalTo(headerView).offset(30)

@@ -33,3 +33,4 @@ let addToQueueFont = UIFont.systemFontOfSize(11, weight: UIFontWeightRegular)
 
 //Listen to Article Fonts
 let listenTitleFont = UIFont.systemFontOfSize(16, weight: UIFontWeightBlack)
+let listenArticleFont = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)

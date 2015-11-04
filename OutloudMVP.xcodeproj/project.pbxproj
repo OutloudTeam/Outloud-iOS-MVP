@@ -9,13 +9,15 @@
 /* Begin PBXBuildFile section */
 		B6857BD85E6B83BD1BAB2A61 /* Pods_OutloudMVP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C16C86DA9BCFCD78DB593ACA /* Pods_OutloudMVP.framework */; };
 		DB02F2081BCA25F800064CEB /* ArticleDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02F2071BCA25F800064CEB /* ArticleDetails.swift */; };
-		DB02F20A1BCA28D300064CEB /* ArticleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02F2091BCA28D300064CEB /* ArticleList.swift */; };
+		DB02F20A1BCA28D300064CEB /* ArticleListListen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02F2091BCA28D300064CEB /* ArticleListListen.swift */; };
 		DB0975DA1BCF8F7B00B9F77C /* GloablFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0975D91BCF8F7B00B9F77C /* GloablFunctions.swift */; };
 		DB0A848B1BE15E4400803A23 /* ImageRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0A848A1BE15E4400803A23 /* ImageRequests.swift */; };
 		DB6AE4701BD6DF5A00BCBD95 /* JSONRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6AE46F1BD6DF5A00BCBD95 /* JSONRequests.swift */; };
 		DB6AE4721BD6FCD100BCBD95 /* GlobalArrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6AE4711BD6FCD100BCBD95 /* GlobalArrays.swift */; };
 		DB7B3B9D1BE0794300A392DD /* RecordIndividualParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7B3B9C1BE0794300A392DD /* RecordIndividualParagraph.swift */; };
 		DB7B3B9F1BE08EC900A392DD /* RecordingCellGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7B3B9E1BE08EC900A392DD /* RecordingCellGeneration.swift */; };
+		DBAC4D1A1BE9A842002188CE /* ListenCellGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAC4D191BE9A842002188CE /* ListenCellGeneration.swift */; };
+		DBAC4D1C1BE9ACE5002188CE /* ArticleListRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAC4D1B1BE9ACE5002188CE /* ArticleListRecord.swift */; };
 		DBB683FB1BDED962002ED471 /* ArticleListCellGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB683FA1BDED962002ED471 /* ArticleListCellGeneration.swift */; };
 		DBB683FF1BE02BD6002ED471 /* RecordDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB683FE1BE02BD6002ED471 /* RecordDetails.swift */; };
 		DBC15B751BCF644600C4DCC6 /* ArticleHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC15B741BCF644600C4DCC6 /* ArticleHeader.swift */; };
@@ -57,7 +59,7 @@
 		8960603C0EF526FA2406CA24 /* Pods-OutloudMVP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutloudMVP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OutloudMVP/Pods-OutloudMVP.debug.xcconfig"; sourceTree = "<group>"; };
 		C16C86DA9BCFCD78DB593ACA /* Pods_OutloudMVP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OutloudMVP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB02F2071BCA25F800064CEB /* ArticleDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDetails.swift; sourceTree = "<group>"; };
-		DB02F2091BCA28D300064CEB /* ArticleList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleList.swift; sourceTree = "<group>"; };
+		DB02F2091BCA28D300064CEB /* ArticleListListen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleListListen.swift; sourceTree = "<group>"; };
 		DB0975D91BCF8F7B00B9F77C /* GloablFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GloablFunctions.swift; sourceTree = "<group>"; };
 		DB0A848A1BE15E4400803A23 /* ImageRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRequests.swift; sourceTree = "<group>"; };
 		DB5664241BC9994C00568D8E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -65,6 +67,8 @@
 		DB6AE4711BD6FCD100BCBD95 /* GlobalArrays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalArrays.swift; sourceTree = "<group>"; };
 		DB7B3B9C1BE0794300A392DD /* RecordIndividualParagraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordIndividualParagraph.swift; sourceTree = "<group>"; };
 		DB7B3B9E1BE08EC900A392DD /* RecordingCellGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingCellGeneration.swift; sourceTree = "<group>"; };
+		DBAC4D191BE9A842002188CE /* ListenCellGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenCellGeneration.swift; sourceTree = "<group>"; };
+		DBAC4D1B1BE9ACE5002188CE /* ArticleListRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleListRecord.swift; sourceTree = "<group>"; };
 		DBB683FA1BDED962002ED471 /* ArticleListCellGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleListCellGeneration.swift; sourceTree = "<group>"; };
 		DBB683FE1BE02BD6002ED471 /* RecordDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordDetails.swift; sourceTree = "<group>"; };
 		DBC15B741BCF644600C4DCC6 /* ArticleHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleHeader.swift; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 			children = (
 				DBB683FA1BDED962002ED471 /* ArticleListCellGeneration.swift */,
 				DB7B3B9E1BE08EC900A392DD /* RecordingCellGeneration.swift */,
+				DBAC4D191BE9A842002188CE /* ListenCellGeneration.swift */,
 			);
 			name = CellGeneration;
 			sourceTree = "<group>";
@@ -232,7 +237,8 @@
 				DB02F2071BCA25F800064CEB /* ArticleDetails.swift */,
 				DBB683FE1BE02BD6002ED471 /* RecordDetails.swift */,
 				DB7B3B9C1BE0794300A392DD /* RecordIndividualParagraph.swift */,
-				DB02F2091BCA28D300064CEB /* ArticleList.swift */,
+				DB02F2091BCA28D300064CEB /* ArticleListListen.swift */,
+				DBAC4D1B1BE9ACE5002188CE /* ArticleListRecord.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -434,6 +440,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBAC4D1A1BE9A842002188CE /* ListenCellGeneration.swift in Sources */,
 				DB6AE4721BD6FCD100BCBD95 /* GlobalArrays.swift in Sources */,
 				DB7B3B9F1BE08EC900A392DD /* RecordingCellGeneration.swift in Sources */,
 				F35D5B351BCF43040019C2B9 /* MainNavigationController.swift in Sources */,
@@ -442,10 +449,11 @@
 				DBDCD1911BE6BAF800984608 /* ListenRecordNavButton.swift in Sources */,
 				DB0975DA1BCF8F7B00B9F77C /* GloablFunctions.swift in Sources */,
 				DB7B3B9D1BE0794300A392DD /* RecordIndividualParagraph.swift in Sources */,
-				DB02F20A1BCA28D300064CEB /* ArticleList.swift in Sources */,
+				DB02F20A1BCA28D300064CEB /* ArticleListListen.swift in Sources */,
 				F3C40ABA1BCAB44A00A033FF /* RecordButton.swift in Sources */,
 				F3C40AB31BCAB09600A033FF /* RecordPageViewController.swift in Sources */,
 				DB6AE4701BD6DF5A00BCBD95 /* JSONRequests.swift in Sources */,
+				DBAC4D1C1BE9ACE5002188CE /* ArticleListRecord.swift in Sources */,
 				DBC15B751BCF644600C4DCC6 /* ArticleHeader.swift in Sources */,
 				DB0A848B1BE15E4400803A23 /* ImageRequests.swift in Sources */,
 				F3332C8D1BC98DA3003DF922 /* ViewController.swift in Sources */,
