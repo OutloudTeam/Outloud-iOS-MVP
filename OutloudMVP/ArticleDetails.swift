@@ -23,55 +23,22 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     let voteCount = UILabel()
     var intVoteCount = 1023
-    var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
+    var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100))
     var scrollView: UIScrollView!
-    var playOrPause = false
-    var firstTime = true
-    var backgroundMusic : AVAudioPlayer?
-    var indexToColor = -1
-    func playSound()  {
-        if firstTime == true {
-            firstTime = false
-            delay(14.6, closure: { () -> () in
-                self.indexToColor = 1
-                self.tableView.reloadData()
-            })
-            delay(6.4, closure: { () -> () in
-                self.indexToColor = 0
-                self.tableView.reloadData()
-            })
-        }
-        if playOrPause == false {
-            playOrPause = true
-            playButton.setBackgroundImage(UIImage(named: "play-button-clicked"), forState: .Normal)
-            backgroundMusic?.play()
-        } else {
-            playOrPause = false
-            playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
-            backgroundMusic?.pause()
-        }
-    }
-    func upVoteCast() {
-        intVoteCount += 1
-        voteCount.text = String(intVoteCount)
-    }
-    func downVoteCast() {
-        intVoteCount -= 1
-        voteCount.text = String(intVoteCount)
-    }
-    func sliderValueDidChange(sender:UISlider) {
-        backgroundMusic?.volume = sender.value
-    }
-    func playerItemDidReachEnd(note: NSNotification) {
-        playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
-    }
     
     override func viewDidAppear(animated: Bool) {
-        if let backgroundMusic = setupAudioPlayerWithFile("backyardBees", type:"mp3") {
-            self.backgroundMusic = backgroundMusic
-        }
+        self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Outloud!", callback: { () -> Void in
+
+        })
+        self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
+            make.width.equalTo(tableView.frame.width)
+            make.top.equalTo((self.navigationController?.view)!).offset(20)
+            
+        })
     }
+    
     override func viewDidLoad() {
+//        self.navigationController?.setNavigationBarHidden(true, animated: true)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = UIColor.whiteColor()
@@ -80,8 +47,6 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Listen", callback: { () -> Void in
-        })
         
         let bottomBar = createBottomArticleDetailBar(self.view)
         //Bottom bar
@@ -206,12 +171,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let fontTest = UIFont(name: "Helvetica", size: 14.0)
         paragraph.font = fontTest
         paragraph.textColor = UIColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.0)
-        if(indexToColor == indexPath.row){
-            paragraph.textColor = UIColor.blackColor()
-            let fontTest = UIFont(name: "Helvetica", size: 14.0)
-            paragraph.font = fontTest
-        }
-        cell.userInteractionEnabled = false
+//        cell.userInteractionEnabled = false
         
         return cell
     }
@@ -222,95 +182,18 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         paragraph.font = fontTest
         var cellHeight = heightForView(paragraph.text!, font: fontTest!, width: (tableView.frame.width - 60))
         cellHeight = cellHeight + 10
-        //        if(indexToColor == indexPath.row){
-        //            let fontTest2 = UIFont(name: "Helvetica", size: 18.0)
-        //            paragraph.font = fontTest2
-        //            var cellHeight = heightForView(paragraph.text!, font: fontTest2!, width: (tableView.frame.width - 60))
-        //            cellHeight = cellHeight + 10
-        //        }
         return cellHeight
     }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let articleBar = UIView()
-        let voiceName = UILabel()
-        let authorName = UILabel()
-        
-        self.view.addSubview(articleBar)
-        articleBar.addSubview(voiceName)
-        articleBar.addSubview(authorName)
-        
-        
-        articleBar.backgroundColor = UIColor.whiteColor()
-        let articleTitle = UILabel()
-        articleTitle.text = ArticleDetailArray[0].title
-        articleTitle.font = UIFont(name: ".SFUIText-Light", size: 24)
-        articleTitle.textAlignment = .Center
-        articleTitle.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        articleTitle.numberOfLines = 0
-        //        articleTitle.adjustsFontSizeToFitWidth = true
-        articleTitle.textColor = black
-        articleBar.addSubview(articleTitle)
-        articleTitle.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(articleBar).offset(30)
-            make.top.equalTo(articleBar).offset(5)
-            make.right.equalTo(articleBar.snp_right).offset(-30)
-        }
-        
-        authorName.adjustsFontSizeToFitWidth = true
-        authorName.text = ArticleDetailArray[0].author
-        authorName.font = UIFont(name: ".SFUIText-Light", size: 10)
-        
-        authorName.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(articleTitle.snp_bottom)
-            make.left.equalTo(articleTitle.snp_left).offset(5)
-            make.right.equalTo(voiceName.snp_left)
-        }
-        let articleLink = UILabel()
-        guard let fullURL = ArticleDetailArray[0].url else {
-            articleLink.text = "Not Found"
-            return articleBar
-        }
-        let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
-        articleLink.text = fullURLArray[1]
-        articleLink.textColor = transparentBlack
-        articleLink.font = UIFont(name: ".SFUIText-Light", size: 10)
-        articleBar.addSubview(articleLink)
-        articleLink.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(authorName.snp_left)
-            make.top.equalTo(authorName.snp_bottom).offset(2)
-        }
-        
-        //        voiceName.adjustsFontSizeToFitWidth = true
-        voiceName.text = "@NoneFNow"
-        voiceName.font = UIFont(name: ".SFUIText-Light", size: 12)
-        
-        voiceName.snp_makeConstraints { (make) -> Void in
-            make.right.equalTo(articleTitle.snp_rightMargin)
-            make.centerY.equalTo(authorName.snp_centerY)
-        }
-        let voiceRating = UIButton()
-        articleBar.addSubview(voiceRating)
-        voiceRating.setBackgroundImage(UIImage(named: "rating"), forState: UIControlState.Normal)
-        voiceRating.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(voiceName.snp_bottom)
-            make.left.equalTo(voiceName.snp_left)
-            make.height.equalTo(10)
-            make.width.equalTo(50)
-        }
-        let separatorBar = UIView()
-        articleBar.addSubview(separatorBar)
-        separatorBar.backgroundColor = UIColor.blackColor()
-        separatorBar.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(1)
-            make.top.equalTo(articleLink.snp_bottom).offset(3)
-            make.left.equalTo(articleBar.snp_left).offset(50)
-            make.right.equalTo(articleBar.snp_right).offset(-50)
-        }
-        return articleBar
+        return generateListenHeaderCell(tableView)
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let cellHeight = heightForView(ArticleDetailArray[0].title!, font: UIFont(name: ".SFUIText-Light", size: 24)!, width: (tableView.frame.width - 60))
-        return cellHeight + 40
+        let titleHeight = heightForJustifiedView(ArticleDetailArray[0].title!, font: recordArticleTitleFont, width: (tableView.frame.width - 60), lineSpace: 3)
+        let authorHeight = heightForJustifiedView(ArticleDetailArray[0].author!, font: authorNameFont, width: (tableView.frame.width-60), lineSpace: 3)
+        let articleHeight = heightForView("Placeholder.com", font: articleLinkFont, width: (tableView.frame.width - 60))
+        
+        //cell height is dynamically genrated then the constraint values are added to it
+        return titleHeight + authorHeight + articleHeight + 57
     }
 }
 func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {

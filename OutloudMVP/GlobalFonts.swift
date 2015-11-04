@@ -30,6 +30,6 @@ let articleListTileFont = UIFont.systemFontOfSize(16, weight: UIFontWeightBlack)
 let ListenRecordFont = UIFont.systemFontOfSize(18, weight: UIFontWeightThin)
 let CategoryTopBarFont = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
 let addToQueueFont = UIFont.systemFontOfSize(11, weight: UIFontWeightRegular)
-//let recordArticleTitleFont = UIFont(name: ".SFUIText-Semibold ", size: 16)
-//let recordArticleParagraphFont = UIFont(name: ".SFUIText-Regular", size: 16)
-//let authorNameFont = UIFont(name: ".SFUIText-Bold", size: 12)
+
+//Listen to Article Fonts
+let listenTitleFont = UIFont.systemFontOfSize(16, weight: UIFontWeightBlack)

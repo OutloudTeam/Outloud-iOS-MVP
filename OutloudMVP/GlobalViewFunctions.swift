@@ -136,7 +136,7 @@ func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -
     
     titleLabel.text = title
     titleLabel.font = largeTitleFont
-    titleLabel.textColor = UIColor.whiteColor()
+    titleLabel.textColor = UIColor.blackColor()
     titleLabel.textAlignment = .Center
     
     titleLabel.snp_makeConstraints { (make) -> Void in
