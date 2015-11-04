@@ -73,7 +73,7 @@ func createNavigationTitleViewArticleList(title: String, category: String, callb
     
     separatorLabel.text = "|"
     separatorLabel.font = separatorTitleFont
-    separatorLabel.textColor = blackColor.colorWithAlphaComponent(0.7   )
+    separatorLabel.textColor = blackColor.colorWithAlphaComponent(0.3)
     separatorLabel.textAlignment = .Center
     
     separatorLabel.snp_makeConstraints { (make) -> Void in
@@ -91,9 +91,9 @@ func createNavigationTitleViewArticleList(title: String, category: String, callb
         make.centerY.equalTo(listenContainer)
     }
     listenRecordImageView.snp_makeConstraints { (make) -> Void in
-        make.right.equalTo(listenContainer).offset(-3)
-        make.height.width.equalTo(16)
-        make.centerY.equalTo(listenContainer)
+        make.left.equalTo(listenRecordLabel.snp_right).offset(5)
+        make.height.width.equalTo(35)
+        make.centerY.equalTo(listenRecordLabel)
     }
     
     
@@ -111,8 +111,8 @@ func createNavigationTitleViewArticleList(title: String, category: String, callb
     
     subtitleImageView.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(subtitleLabel.snp_right).offset(5)
-        make.height.width.equalTo(16)
-        make.centerY.equalTo(categoryContainer)
+        make.height.width.equalTo(35)
+        make.centerY.equalTo(subtitleLabel)
     }
     
     listenRecordImageView.image = UIImage(named: "downArrow")
@@ -312,10 +312,17 @@ With QueueList button, queue instructions, playQueueButton and playQueueInstruct
 */
 func createBottomArticleListBar(view: UIView)->UIView{
     let bottomBar = UIView()
+    let separatorBar = UIView()
+    bottomBar.addSubview(separatorBar)
+    separatorBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
+    separatorBar.snp_makeConstraints { (make) -> Void in
+        make.top.left.right.equalTo(bottomBar)
+        make.height.equalTo(0.5)
+    }
     view.addSubview(bottomBar)
     bottomBar.backgroundColor = barColor
     bottomBar.snp_makeConstraints { (make) -> Void in
-        make.height.equalTo(40)
+        make.height.equalTo(50)
         make.bottom.equalTo(view).offset(0)
         make.left.equalTo(view).offset(0)
         make.right.equalTo(view).offset(0)
@@ -325,36 +332,22 @@ func createBottomArticleListBar(view: UIView)->UIView{
     queueListButton.setBackgroundImage(UIImage(named: "edit-queue"), forState: .Normal)
     bottomBar.addSubview(queueListButton)
     queueListButton.snp_makeConstraints { (make) -> Void in
-        make.height.width.equalTo(33)
+        make.height.width.equalTo(25)
         make.left.equalTo(bottomBar.snp_left).offset(10)
         make.centerY.equalTo(bottomBar.snp_centerY)
     }
     
-    let queueInstructions = UILabel()
-    queueInstructions.text = "Edit Queue"
-    queueInstructions.font = UIFont(name: "Helvetica-Light", size: 12)
-    queueInstructions.textColor = UIColor(red:0.72, green:0.72, blue:0.72, alpha:0.3)
-    queueInstructions.adjustsFontSizeToFitWidth = true
-    bottomBar.addSubview(queueInstructions)
-    
-    queueInstructions.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(queueListButton.snp_right).offset(5)
-        make.centerY.equalTo(queueListButton.snp_centerY)
-        make.width.equalTo(75)
-    }
-    
     let playQueueButton = UIButton(type: UIButtonType.System) as UIButton
-    playQueueButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+    playQueueButton.setBackgroundImage(UIImage(named: "playCount"), forState: .Normal)
     bottomBar.addSubview(playQueueButton)
     //    queueButton.backgroundColor = UIColor.whiteColor()
     playQueueButton.snp_makeConstraints { (make) -> Void in
-        make.height.width.equalTo(33)
-        make.right.equalTo(bottomBar.snp_right).offset(-5)
-        make.centerY.equalTo(bottomBar.snp_centerY)
+        make.height.width.equalTo(30)
+        make.centerY.centerX.equalTo(bottomBar)
     }
     playQueueButton.contentMode = .ScaleAspectFit
     let playQueueInstructions = UILabel()
-    playQueueInstructions.text = "3 items in your queue"
+    playQueueInstructions.text = "3 in queue"
     playQueueInstructions.textAlignment = .Right
     playQueueInstructions.font = UIFont(name: "Helvetica-Light", size: 12)
     playQueueInstructions.textColor = UIColor(red:0.72, green:0.72, blue:0.72, alpha:1.0)
@@ -362,8 +355,7 @@ func createBottomArticleListBar(view: UIView)->UIView{
     bottomBar.addSubview(playQueueInstructions)
     
     playQueueInstructions.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(queueInstructions.snp_right)
-        make.right.equalTo(playQueueButton.snp_left).offset(-5)
+        make.right.equalTo(bottomBar).offset(-10)
         make.centerY.equalTo(queueListButton.snp_centerY)
     }
     return bottomBar

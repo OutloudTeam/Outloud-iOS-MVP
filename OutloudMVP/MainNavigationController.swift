@@ -28,7 +28,7 @@ class MainNavigationController: UINavigationController {
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+        return .Default
     }
     
     

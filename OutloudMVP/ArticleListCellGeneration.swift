@@ -40,7 +40,6 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     articleTitle.text = ArticleListArray[indexPath.row].title
     articleAbstract.text = ArticleListArray[indexPath.row].abstract
 
-
     articleTitle.font = articleListTileFont
     articleTitle.textColor = UIColor.blackColor()
     articleAbstract.font = articleListAbstractFont
@@ -52,7 +51,6 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     articleRating.image = UIImage(named: "rating")
     playCountImage.image = UIImage(named: "playCount")
     shareCountImage.image = UIImage(named: "sharedCount")
-    
     
     let numberFormatter = NSNumberFormatter()
     numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
@@ -75,6 +73,12 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
         make.right.equalTo(articleTitle.snp_right)
         make.top.equalTo(articleTitle.snp_bottom).offset(5)
     }
+    articleRating.hidden = true
+    playCountImage.hidden = true
+    playCount.hidden = true
+    shareCountImage.hidden = true
+    shareCount.hidden = true
+    
     articleRating.snp_makeConstraints { (make) -> Void in
         make.width.equalTo(50)
         make.height.equalTo(10)
@@ -101,17 +105,19 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
         make.centerY.equalTo(shareCountImage.snp_centerY)
         make.width.equalTo(40)
     }
+    articleOrigin.textAlignment = .Right
+    articleOrigin.textColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
     articleOrigin.snp_makeConstraints { (make) -> Void in
         make.centerY.equalTo(articleRating.snp_centerY)
         make.left.equalTo(shareCount.snp_right).offset(10)
+        make.right.equalTo(articleIcon.snp_left).offset(-4)
         make.width.equalTo(40)
     }
     
     
-    articleSeparatorBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
+    articleSeparatorBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.05)
     articleSeparatorBar.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(articleTitle.snp_left)
-        make.right.equalTo(articleIcon.snp_right)
+        make.left.right.equalTo(articleCell)
         make.height.equalTo(1)
         make.top.equalTo(articleRating.snp_bottom).offset(20)
     }
@@ -129,7 +135,7 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     articleIcon.snp_makeConstraints { (make) -> Void in
         
         make.left.equalTo(articleTitle.snp_right).offset(10)
-        make.top.equalTo(articleTitle.snp_top)
+        make.top.equalTo(articleTitle.snp_top).offset(-5)
         make.height.width.equalTo(85)
     }
     articleIcon.layer.cornerRadius = articleIcon.frame.size.height/2
