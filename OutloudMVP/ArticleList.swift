@@ -57,10 +57,12 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
         self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.whiteColor()
         tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
+
         tableView.snp_makeConstraints { (make) -> Void in
             make.left.right.top.equalTo(self.view)
             make.bottom.equalTo(bottomBar.snp_top)
@@ -101,7 +103,7 @@ class ArticleList: UIViewController, UITableViewDelegate, UITableViewDataSource 
 //        return articleBar
 //    }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0
+        return 1
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
