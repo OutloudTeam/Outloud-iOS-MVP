@@ -123,16 +123,22 @@ func createNavigationTitleViewArticleListListen(title: String, category: String,
 }
 
 // MARK: - Generates Navigation Top Bar for Article List Record
-func createNavigationTitleViewArticleListRecord(title: String, category: String, callback: ()->Void) -> UIView {
+func createNavigationTitleViewArticleListRecord(view: UIViewController, title: String, category: String, callback: ()->Void) -> UIView {
     
     let topFrame = UIView()
-    let listenContainer = ListenRecordButton()
+    let listenContainer = UIButton()
     let categoryContainer = UIButton()
     let listenRecordLabel = UILabel()
     let listenRecordImageView = UIImageView()
     let separatorLabel = UILabel()
     let subtitleLabel = UILabel()
     let subtitleImageView = UIImageView()
+    listenContainer.addTarget(view, action: "handleSingleTap", forControlEvents: UIControlEvents.TouchUpInside)
+    
+    func handleSingleTap(sender: UIButton) {
+        print("YES")
+    }
+    
     
     topFrame.addSubview(listenContainer)
     topFrame.addSubview(categoryContainer)

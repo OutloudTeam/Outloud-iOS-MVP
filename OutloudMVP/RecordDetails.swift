@@ -40,7 +40,7 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Read", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Record", callback: { () -> Void in
         })
         
         let bottomBar = createBottomRecordDetailBar(self.view)

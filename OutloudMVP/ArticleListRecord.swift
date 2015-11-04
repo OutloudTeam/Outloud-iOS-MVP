@@ -27,7 +27,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
     override func viewDidAppear(animated: Bool) {
-        self.navigationItem.titleView = createNavigationTitleViewArticleListRecord("Record", category: "Trending", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleListRecord(self.parentViewController!, title: "Record", category: "Trending", callback: { () -> Void in
         })
         self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
             make.width.equalTo(tableView.frame.width)
@@ -93,7 +93,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 SwiftOverlays.removeAllBlockingOverlays()
                 //                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
-                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
+                self.navigationController?.pushViewController(RecordDetails(), animated: true)
             })
         }
     }

@@ -33,17 +33,12 @@ class ListenRecordButton : UIButton {
         print("\(buttonIndex) pressed")
         if buttonIndex == 0 {
             print("Listen was clicked")
-//            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-//            articleListJSONGet({ () -> () in
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    createNavigationTitleViewArticleList("KIK", category: "KEK", callback: { () -> Void in
-//                        SwiftOverlays.removeAllBlockingOverlays()
-//                        print("OK")
-//                    })
-//                    
-//                })
-//                
-//            })
+            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    SwiftOverlays.removeAllBlockingOverlays()
+
+//                    UINavigationController.presentViewController(ArticleListListen())
+                })
         } else {
             print("Record was clicked")
         }

@@ -61,7 +61,6 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         playButton.frame = CGRectMake(50, 50, 50, 50)
         playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         bottomBar.addSubview(playButton)
-        playButton.addTarget(self, action: "playSound", forControlEvents: .TouchUpInside)
         playButton.snp_makeConstraints { (make) -> Void in
             make.centerY.equalTo(bottomBar)
             make.width.height.equalTo(35)
