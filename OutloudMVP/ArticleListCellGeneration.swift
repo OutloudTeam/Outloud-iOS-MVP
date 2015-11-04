@@ -22,6 +22,9 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     let shareCount = UILabel()
     let articleOrigin = UILabel()
     let articleIcon = UIImageView()
+    let addToQueueIcon = UIImageView()
+    let addToQueueLabel = UILabel()
+    
     
     articleIcon.frame = CGRectMake(0, 0, 85, 85)
     
@@ -35,6 +38,8 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     articleCell.addSubview(shareCount)
     articleCell.addSubview(articleOrigin)
     articleCell.addSubview(articleIcon)
+    articleCell.addSubview(addToQueueIcon)
+    articleCell.addSubview(addToQueueLabel)
 
     
     articleTitle.text = ArticleListArray[indexPath.row].title
@@ -80,7 +85,7 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     shareCount.hidden = true
     
     articleRating.snp_makeConstraints { (make) -> Void in
-        make.width.equalTo(50)
+//        make.width.equalTo(50)
         make.height.equalTo(10)
         make.left.equalTo(articleTitle.snp_left)
         make.top.equalTo(articleAbstract.snp_bottom).offset(15)
@@ -108,18 +113,30 @@ func generateArticleListCell(tableView: UITableView,indexPath: NSIndexPath)->UIT
     articleOrigin.textAlignment = .Right
     articleOrigin.textColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
     articleOrigin.snp_makeConstraints { (make) -> Void in
-        make.centerY.equalTo(articleRating.snp_centerY)
+        make.centerY.equalTo(addToQueueLabel)
         make.left.equalTo(shareCount.snp_right).offset(10)
         make.right.equalTo(articleIcon.snp_left).offset(-4)
         make.width.equalTo(40)
     }
     
+    addToQueueIcon.image = UIImage(named: "plus")
+    addToQueueIcon.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(articleTitle)
+        make.height.width.equalTo(25)
+        make.bottom.equalTo(articleSeparatorBar).offset(-10)
+    }
+    addToQueueLabel.text = "Add to Queue"
+    addToQueueLabel.font = addToQueueFont
+    addToQueueLabel.textColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+    addToQueueLabel.snp_makeConstraints { (make) -> Void in
+        make.centerY.equalTo(addToQueueIcon)
+        make.left.equalTo(addToQueueIcon.snp_right).offset(3)
+    }
     
     articleSeparatorBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.05)
     articleSeparatorBar.snp_makeConstraints { (make) -> Void in
-        make.left.right.equalTo(articleCell)
+        make.left.bottom.right.equalTo(articleCell)
         make.height.equalTo(1)
-        make.top.equalTo(articleRating.snp_bottom).offset(20)
     }
     
     guard let fullURL = ArticleListArray[indexPath.row].url else {
