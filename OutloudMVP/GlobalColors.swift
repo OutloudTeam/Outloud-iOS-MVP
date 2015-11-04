@@ -19,6 +19,7 @@ let progressBarColor = UIColor(red: 163/255, green: 203/255, blue: 70/255, alpha
 
 //NEW COLORS
 let barColor = UIColor.whiteColor()
+let barTextColor = UIColor.blackColor()
 let recordProgressColor = UIColor(red:217/255, green:39/255, blue:47/255, alpha:1.0)
 let backgroundColorAll = UIColor.whiteColor()
 

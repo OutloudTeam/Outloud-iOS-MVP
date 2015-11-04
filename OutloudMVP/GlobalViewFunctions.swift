@@ -23,13 +23,12 @@ func createNavigationTitleViewArticleRecordParagraph(title: String, callback: ()
     
     titleLabel.text = title
     titleLabel.font = recordArticleTitleFont
-    titleLabel.textColor = UIColor.whiteColor()
+    titleLabel.textColor = barTextColor
     titleLabel.textAlignment = .Left
     
     titleLabel.snp_makeConstraints { (make) -> Void in
         make.left.equalTo(container.snp_left)
         make.centerY.equalTo(container.snp_centerY)
-        //        make.center.equalTo(container.snp_center)
     }
     
     return container

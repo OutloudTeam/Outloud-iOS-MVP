@@ -24,16 +24,16 @@ class RecordButton: UIButton {
         innerView.userInteractionEnabled = false
         self.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
         
-        self.layer.borderColor = UIColor.whiteColor().CGColor;
-        self.backgroundColor = UIColor.blackColor();
-        self.layer.borderWidth = 4;
-        self.layer.masksToBounds = true;
-        innerView.backgroundColor = UIColor.redColor();
-        addSubview(innerView);
+        self.layer.borderColor = UIColor.blackColor().CGColor
+        self.backgroundColor = UIColor.blackColor()
+        self.layer.borderWidth = 4
+        self.layer.masksToBounds = true
+        innerView.backgroundColor = UIColor.whiteColor()
+        addSubview(innerView)
     }
     
     override func layoutSubviews() {
-        innerView.layer.cornerRadius = self.bounds.width/10;
+        innerView.layer.cornerRadius = self.bounds.width/20;
         if(isRecording) {
             innerView.frame = self.bounds.insetBy(dx: self.bounds.width/4, dy: self.bounds.width/4);
         }else{
@@ -55,7 +55,6 @@ class RecordButton: UIButton {
     }
     
     func handleSingleTap(sender: UIButton) {
-        print("Here")
         setRecording(!isRecording, animate: true);
     }
 

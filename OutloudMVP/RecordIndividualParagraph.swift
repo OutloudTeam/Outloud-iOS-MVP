@@ -140,10 +140,10 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
             })
             tableView.reloadData()
-            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
-            completionBar.snp_updateConstraints(closure: { (make) -> Void in
-                make.width.equalTo(completionWidth)
-            })
+//            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
+//            completionBar.snp_updateConstraints(closure: { (make) -> Void in
+//                make.width.equalTo(completionWidth)
+//            })
         }
         checkButton.enabled = false
         playbackButton.enabled = false
@@ -161,10 +161,10 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
             })
             tableView.reloadData()
-            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
-            completionBar.snp_updateConstraints(closure: { (make) -> Void in
-                make.width.equalTo(completionWidth)
-            })
+//            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
+//            completionBar.snp_updateConstraints(closure: { (make) -> Void in
+//                make.width.equalTo(completionWidth)
+//            })
         }
     }
     
@@ -173,6 +173,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     var playbackButton : UIButton!
     var timeLabel : UILabel!
     var timer : NSTimer!
+    var playerTimer : NSTimer!
     var audioFiles : NSMutableArray!
     override func viewDidLoad() {
         
@@ -186,7 +187,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         playbackButton.snp_makeConstraints { (make) -> Void in
             make.right.equalTo(playbackToolbar)
             make.centerY.equalTo(playbackToolbar.snp_centerY)
-            make.width.height.equalTo(32)
+            make.width.height.equalTo(25)
         }
         playbackButton.addTarget(self, action: "playback_tapped", forControlEvents: .TouchUpInside)
         
@@ -194,7 +195,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         timeLabel = UILabel()
         timeLabel.font = mediumTitleFont
         timeLabel.text = "00:00"
-        timeLabel.textColor = UIColor.whiteColor()
+        timeLabel.textColor = barTextColor
         timeLabel.textAlignment = .Right
         playbackToolbar.addSubview(timeLabel)
         timeLabel.snp_makeConstraints { (make) -> Void in
@@ -203,7 +204,6 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             make.left.equalTo(playbackToolbar.snp_leftMargin)
         }
         
-//        playbackToolbar.backgroundColor = UIColor.redColor()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: playbackToolbar)
         
         completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
@@ -266,14 +266,14 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         trashButton.setBackgroundImage(UIImage(named: "trash"), forState: .Normal)
         
         backwardButton.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(20)
-            make.width.equalTo(30)
+            make.height.equalTo(30)
+            make.width.equalTo(45)
             make.centerY.equalTo(bottomBar.snp_centerY)
             make.left.equalTo(bottomBar.snp_left).offset(5)
         }
         forwardButton.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(20)
-            make.width.equalTo(30)
+            make.height.equalTo(30)
+            make.width.equalTo(45)
             make.centerY.equalTo(bottomBar.snp_centerY)
             make.right.equalTo(bottomBar.snp_right).offset(-5)
         }
@@ -282,12 +282,12 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             make.center.equalTo(bottomBar.center)
         }
         checkButton.snp_makeConstraints { (make) -> Void in
-            make.height.width.equalTo(30)
+            make.height.width.equalTo(35)
             make.left.equalTo(recordButton.snp_right).offset(30)
             make.centerY.equalTo(bottomBar.snp_centerY)
         }
         trashButton.snp_makeConstraints { (make) -> Void in
-            make.height.width.equalTo(20)
+            make.height.width.equalTo(35)
             make.right.equalTo(recordButton.snp_left).offset(-30)
             make.centerY.equalTo(bottomBar.snp_centerY)
         }
@@ -361,17 +361,32 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         playbackButton.selected = !playbackButton.selected
         if(recorder.isPlaying()){
             recorder.stopPlaying()
+            playerTimer.invalidate()
+            playerTimer = nil
+            completionBar.snp_updateConstraints(closure: { (make) -> Void in
+                make.width.equalTo(0)
+            })
             print(recorder.isPlaying())
         } else {
-            recordButton.setRecording(false, animate: true);
+            recordButton.setRecording(false, animate: true)
             recorder.startPlaying()
             print(recorder.isPlaying())
+            playerTimer = NSTimer.scheduledTimerWithTimeInterval(0.01,
+                target:self,
+                selector:"updatePlaybackProgress",
+                userInfo:nil,
+                repeats:true)
         }
         recorder.player.delegate = self
     }
     
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+        completionBar.snp_updateConstraints(closure: { (make) -> Void in
+            make.width.equalTo(0)
+        })
         playbackButton.selected = false
+        playerTimer.invalidate()
+        playerTimer = nil
     }
     
     func updateAudioMeter() {
@@ -381,6 +396,20 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             let seconds = recorder.recorder.currentTime - (minutes * 60)
             
             self.timeLabel.text = String.localizedStringWithFormat("%02d:%02d", Int(minutes), Int(seconds))
+        }
+    }
+    
+    func updatePlaybackProgress() {
+        if(recorder.player != nil) {
+            
+            let total = recorder.player.duration
+            let f = recorder.player.currentTime / total;
+            let w = view.frame.width * CGFloat(f)
+            
+            completionBar.snp_updateConstraints(closure: { (make) -> Void in
+                make.width.equalTo(w)
+            })
+            
         }
     }
 }
