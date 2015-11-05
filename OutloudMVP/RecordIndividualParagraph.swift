@@ -10,6 +10,51 @@ import Foundation
 import UIKit
 import AVFoundation
 
+func mergeAudioFiles(audioFileUrls: NSArray, callback: (url: NSURL?, error: NSError?)->()) {
+    
+    // Create the audio composition
+    let composition = AVMutableComposition()
+
+    // Merge
+    var startTime = kCMTimeZero
+    for (var i = 0; i < audioFileUrls.count; i++) {
+        let compositionAudioTrack :AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
+        
+        let asset = AVURLAsset(URL: audioFileUrls[i] as! NSURL)
+        
+        let track = asset.tracksWithMediaType(AVMediaTypeAudio)[0] 
+        
+        let timeRange = CMTimeRange(start: startTime, duration: track.timeRange.duration)
+        
+        try! compositionAudioTrack.insertTimeRange(timeRange, ofTrack: track, atTime: startTime)
+        startTime = timeRange.end
+    }
+    
+    // Create output url
+    let format = NSDateFormatter()
+    format.dateFormat="yyyy-MM-dd-HH-mm-ss"
+    let currentFileName = "recording-\(format.stringFromDate(NSDate()))-merge.m4a"
+    print(currentFileName)
+    
+    let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+    let outputUrl = documentsDirectory.URLByAppendingPathComponent(currentFileName)
+    
+    // Export it
+    let assetExport = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetAppleM4A)
+    assetExport?.outputFileType = AVFileTypeAppleM4A
+    assetExport?.outputURL = outputUrl
+    
+    assetExport?.exportAsynchronouslyWithCompletionHandler({ () -> Void in
+        switch assetExport!.status {
+            case AVAssetExportSessionStatus.Failed:
+                callback(url: nil, error: assetExport?.error)
+            default:
+                callback(url: assetExport?.outputURL, error: nil)
+        }
+    })
+    
+}
+
 class Recorder {
     
     var recorder: AVAudioRecorder!
@@ -198,6 +243,10 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     var playerTimer : NSTimer!
     var audioFiles : NSMutableArray!
     override func viewDidLoad() {
+        
+        // debug
+        
+        // end debug
         
         // Clear all previous recordings
         let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
