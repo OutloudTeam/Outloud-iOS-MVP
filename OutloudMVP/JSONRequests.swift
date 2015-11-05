@@ -39,7 +39,7 @@ func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, artic
             let text = articleDetailJSONDict["full_content"][i]["text"].string
             //                    let readings = articleDetailJSONDict["full_content"][i]["readings"]
             
-            let newContent = FullArticleContent(text: text, readings: nil)
+            let newContent = FullArticleContent(text: text, readings: nil, recordingUrl: nil)
             FullArticleContentArray.append(newContent)
         }
         ArticleDetailMediaArray.removeAll()
