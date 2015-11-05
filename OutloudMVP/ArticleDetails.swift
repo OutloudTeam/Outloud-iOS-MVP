@@ -14,7 +14,7 @@ import AVFoundation
 
 class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //BUTTONS
-    let playButton = UIButton(type: UIButtonType.System) as UIButton
+    let playButton = UIButton()
     let skipBackButton = UIButton(type: UIButtonType.System) as UIButton
     let skipForwardButton =  UIButton(type: UIButtonType.System) as UIButton
     let upvoteButton = UIButton(type: UIButtonType.System) as UIButton
@@ -60,6 +60,10 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         //Bottom bar
         playButton.frame = CGRectMake(50, 50, 50, 50)
         playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+        
+        playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Selected)
+        playButton.addTarget(self, action: "play_tapped", forControlEvents: UIControlEvents.TouchUpInside)
+        
         bottomBar.addSubview(playButton)
         playButton.snp_makeConstraints { (make) -> Void in
             make.centerY.equalTo(bottomBar)
@@ -98,6 +102,11 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
             make.bottom.equalTo(progressBar.snp_top)
         }
     }
+    
+    func play_tapped(){
+        playButton.selected = !playButton.selected
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
