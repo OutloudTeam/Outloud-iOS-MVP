@@ -16,18 +16,17 @@ func mergeAudioFiles(audioFileUrls: NSArray, callback: (url: NSURL?, error: NSEr
     let composition = AVMutableComposition()
 
     // Merge
-    var startTime = kCMTimeZero
     for (var i = 0; i < audioFileUrls.count; i++) {
+        
         let compositionAudioTrack :AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
         
         let asset = AVURLAsset(URL: audioFileUrls[i] as! NSURL)
         
-        let track = asset.tracksWithMediaType(AVMediaTypeAudio)[0] 
+        let track = asset.tracksWithMediaType(AVMediaTypeAudio)[0]
         
-        let timeRange = CMTimeRange(start: startTime, duration: track.timeRange.duration)
+        let timeRange = CMTimeRange(start: CMTimeMake(0, 600), duration: track.timeRange.duration)
         
-        try! compositionAudioTrack.insertTimeRange(timeRange, ofTrack: track, atTime: startTime)
-        startTime = timeRange.end
+        try! compositionAudioTrack.insertTimeRange(timeRange, ofTrack: track, atTime: composition.duration)
     }
     
     // Create output url
