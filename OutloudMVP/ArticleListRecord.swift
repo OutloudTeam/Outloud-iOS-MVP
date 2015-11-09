@@ -14,7 +14,7 @@ import AVFoundation
 import SwiftOverlays
 
 class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+    let listenContainer = UIButton()
     var refreshControl:UIRefreshControl!
     func refresh(sender:AnyObject)
     {
@@ -27,7 +27,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
     override func viewDidAppear(animated: Bool) {
-        self.navigationItem.titleView = createNavigationTitleViewArticleListRecord(self.parentViewController!, title: "Record", category: "Trending", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleListRecord(listenContainer, title: "Record", category: "Trending", callback: { () -> Void in
         })
         self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
             make.width.equalTo(tableView.frame.width)
@@ -35,8 +35,35 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
             
         })
     }
-    
+    func handleSingleTap(sender: UIButton) {
+        let alert: UIAlertView = UIAlertView()
+        
+        let yesBut = alert.addButtonWithTitle("Listen")
+        let noBut = alert.addButtonWithTitle("Record")
+        alert.delegate = self  // set the delegate here
+        alert.show()
+    }
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        let buttonTitle = alertView.buttonTitleAtIndex(buttonIndex)
+        print("\(buttonIndex) pressed")
+        if buttonIndex == 0 {
+            print("Listen was clicked")
+            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                SwiftOverlays.removeAllBlockingOverlays()
+                self.navigationController?.setViewControllers([ArticleListListen()], animated: true)
+            })
+        } else {
+            print("Record was clicked")
+            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                SwiftOverlays.removeAllBlockingOverlays()
+                self.navigationController?.setViewControllers([ArticleListRecord()], animated: true)
+            })
+        }
+    }
     override func viewDidLoad() {
+        listenContainer.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
