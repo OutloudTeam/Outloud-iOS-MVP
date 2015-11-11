@@ -14,6 +14,8 @@ import SwiftOverlays
 
 class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    let listenContainer = UIButton()
+    
     var refreshControl:UIRefreshControl!
     func refresh(sender:AnyObject)
     {
@@ -22,20 +24,50 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             self.refreshControl.endRefreshing()
         }
     }
+    
+    func handleSingleTap(sender: UIButton) {
+        let alert: UIAlertView = UIAlertView()
+        
+        let yesBut = alert.addButtonWithTitle("Listen")
+        let noBut = alert.addButtonWithTitle("Record")
+        alert.delegate = self  // set the delegate here
+        alert.show()
+    }
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        let buttonTitle = alertView.buttonTitleAtIndex(buttonIndex)
+        print("\(buttonIndex) pressed")
+        if buttonIndex == 0 {
+            print("Listen was clicked")
+            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                SwiftOverlays.removeAllBlockingOverlays()
+                self.navigationController?.setViewControllers([ArticleListListen()], animated: true)
+            })
+        } else {
+            print("Record was clicked")
+            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                SwiftOverlays.removeAllBlockingOverlays()
+                self.navigationController?.setViewControllers([ArticleListRecord()], animated: true)
+            })
+        }
+    }
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
     override func viewDidAppear(animated: Bool) {
-        self.navigationItem.titleView = createNavigationTitleViewArticleListListen("Listen", category: "Popular", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleListListen(listenContainer , title: "Listen", category: "Popular", callback: { () -> Void in
         })
         self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
             make.width.equalTo(tableView.frame.width)
             make.top.equalTo((self.navigationController?.view)!).offset(20)
-            
         })
     }
     
     override func viewDidLoad() {
+        listenContainer.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -49,8 +81,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             }
         }
         self.edgesForExtendedLayout = UIRectEdge.None
-//        self.navigationItem.titleView = createNavigationTitleViewArticleList("Listen", category: "Popular", callback: { () -> Void in
-//        })
+        //        self.navigationItem.titleView = createNavigationTitleViewArticleList("Listen", category: "Popular", callback: { () -> Void in
+        //        })
         
         
         let bottomBar = createBottomArticleListBar(self.view)
@@ -62,7 +94,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-
+        
         tableView.snp_makeConstraints { (make) -> Void in
             make.left.right.top.equalTo(self.view)
             make.bottom.equalTo(bottomBar.snp_top)
@@ -85,23 +117,23 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         return cellHeight + 25 + 5 + 25 + 20 + 20
     }
     
-//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let articleBar = UIView()
-//        self.view.addSubview(articleBar)
-//        articleBar.backgroundColor = UIColor.whiteColor()
-//        playAllButton.frame = CGRectMake(100, 50, 100, 50)
-//        playAllButton.setBackgroundImage(UIImage(named: "play-all"), forState: .Normal)
-//        playAllButton.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0)
-//        articleBar.addSubview(playAllButton)
-//        playAllButton.snp_makeConstraints { (make) -> Void in
-//            make.height.equalTo(50)
-//            make.width.equalTo(150)
-//            make.centerX.equalTo(articleBar.snp_centerX)
-//            make.centerY.equalTo(articleBar.snp_centerY)
-//        }
-//        
-//        return articleBar
-//    }
+    //    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    //        let articleBar = UIView()
+    //        self.view.addSubview(articleBar)
+    //        articleBar.backgroundColor = UIColor.whiteColor()
+    //        playAllButton.frame = CGRectMake(100, 50, 100, 50)
+    //        playAllButton.setBackgroundImage(UIImage(named: "play-all"), forState: .Normal)
+    //        playAllButton.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0)
+    //        articleBar.addSubview(playAllButton)
+    //        playAllButton.snp_makeConstraints { (make) -> Void in
+    //            make.height.equalTo(50)
+    //            make.width.equalTo(150)
+    //            make.centerX.equalTo(articleBar.snp_centerX)
+    //            make.centerY.equalTo(articleBar.snp_centerY)
+    //        }
+    //
+    //        return articleBar
+    //    }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 1
     }

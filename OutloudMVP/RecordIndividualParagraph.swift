@@ -10,6 +10,50 @@ import Foundation
 import UIKit
 import AVFoundation
 
+func mergeAudioFiles(audioFileUrls: NSArray, callback: (url: NSURL?, error: NSError?)->()) {
+    
+    // Create the audio composition
+    let composition = AVMutableComposition()
+
+    // Merge
+    for (var i = 0; i < audioFileUrls.count; i++) {
+        
+        let compositionAudioTrack :AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
+        
+        let asset = AVURLAsset(URL: audioFileUrls[i] as! NSURL)
+        
+        let track = asset.tracksWithMediaType(AVMediaTypeAudio)[0]
+        
+        let timeRange = CMTimeRange(start: CMTimeMake(0, 600), duration: track.timeRange.duration)
+        
+        try! compositionAudioTrack.insertTimeRange(timeRange, ofTrack: track, atTime: composition.duration)
+    }
+    
+    // Create output url
+    let format = NSDateFormatter()
+    format.dateFormat="yyyy-MM-dd-HH-mm-ss"
+    let currentFileName = "recording-\(format.stringFromDate(NSDate()))-merge.m4a"
+    print(currentFileName)
+    
+    let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+    let outputUrl = documentsDirectory.URLByAppendingPathComponent(currentFileName)
+    
+    // Export it
+    let assetExport = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetAppleM4A)
+    assetExport?.outputFileType = AVFileTypeAppleM4A
+    assetExport?.outputURL = outputUrl
+    
+    assetExport?.exportAsynchronouslyWithCompletionHandler({ () -> Void in
+        switch assetExport!.status {
+            case AVAssetExportSessionStatus.Failed:
+                callback(url: nil, error: assetExport?.error)
+            default:
+                callback(url: assetExport?.outputURL, error: nil)
+        }
+    })
+    
+}
+
 class Recorder {
     
     var recorder: AVAudioRecorder!
@@ -38,7 +82,8 @@ class Recorder {
     func startRecording() {
         
         if(self.soundFileURL != nil) {
-            try! NSFileManager().removeItemAtURL(self.soundFileURL)
+            try! NSFileManager.defaultManager().removeItemAtURL(self.soundFileURL)
+            print("Removed previous recording.")
         }
         
         // First stop the player
@@ -128,6 +173,22 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     let completionBar = UIView()
     var completionWidth : CGFloat!
+    
+    func resetPlayer() {
+        let currentArticle = FullArticleContentArray[ParagraphCount]
+        if(currentArticle.recordingUrl != nil) {
+            recorder.soundFileURL = currentArticle.recordingUrl!
+            recorder.player = try! AVAudioPlayer(contentsOfURL: currentArticle.recordingUrl!)
+            playbackButton.enabled = true
+            timeLabel.text = String.localizedStringWithFormat("%02d:%02d", Int(recorder.player.duration) / 60, Int(recorder.player.duration) % 60)
+        } else {
+            recorder.soundFileURL = nil
+            playbackButton.enabled = false
+            timeLabel.text = "00:00"
+        }
+        checkButton.enabled = false
+    }
+    
     func forwardParagraph() {
         backwardButton.hidden = false
         if(ParagraphCount < FullArticleContentArray.count-1) {
@@ -140,14 +201,15 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
             })
             tableView.reloadData()
+            
+            // Reset player
+            resetPlayer()
+            
 //            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
 //            completionBar.snp_updateConstraints(closure: { (make) -> Void in
 //                make.width.equalTo(completionWidth)
 //            })
         }
-        checkButton.enabled = false
-        playbackButton.enabled = false
-        timeLabel.text = "00:00"
     }
     func backwardParagraph() {
         forwardButton.hidden = false
@@ -161,6 +223,10 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
             })
             tableView.reloadData()
+            
+            // Reset player
+            resetPlayer()
+            
 //            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
 //            completionBar.snp_updateConstraints(closure: { (make) -> Void in
 //                make.width.equalTo(completionWidth)
@@ -177,6 +243,28 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     var audioFiles : NSMutableArray!
     override func viewDidLoad() {
         
+        // debug
+        
+        // end debug
+        
+        // Clear all previous recordings
+        let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+        if let enumerator = NSFileManager.defaultManager().enumeratorAtPath(documentsDirectory.absoluteString) {
+            while let fileName = enumerator.nextObject() as? String {
+                do {
+                    try NSFileManager.defaultManager().removeItemAtPath("\(documentsDirectory)\(fileName)")
+                    print("deleted file: \(fileName)")
+                }
+                catch let e as NSError {
+                    print(e)
+                }
+                catch {
+                    print("error")
+                }
+            }
+        }
+        
+        // Setup UI
         let playbackToolbar = UIView(frame: CGRect(x: 0, y: 0, width: 128, height: 32))
         
         // play button
@@ -220,7 +308,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         completionBar.backgroundColor = recordProgressColor
         completionBar.snp_makeConstraints { (make) -> Void in
             make.height.equalTo(4)
-            make.width.greaterThanOrEqualTo(completionWidth)
+            make.width.greaterThanOrEqualTo(0)
             make.left.top.equalTo(self.view)
         }
         let bottomBar = createBottomParagraphRecordingBar(self.view)
@@ -326,6 +414,9 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     func record_tapped(sender: UIButton) {
         if(recorder.isRecording()) {
             recorder.stopRecording()
+            // save the url
+            print(ParagraphCount)
+            FullArticleContentArray[ParagraphCount].recordingUrl = recorder.soundFileURL
             checkButton.enabled = true
             playbackButton.enabled = true
             print(recorder.isRecording())
