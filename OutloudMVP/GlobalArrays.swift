@@ -83,3 +83,4 @@ var ArticleListMediaMetadataArray = [ArticleDetailMediaMetadata]()
 var articleDetailDictionary :[String: AnyObject] = ["place":"holder"]
 
 var ParagraphCount = 0
+var CurrentArticleUuid :String? = nil

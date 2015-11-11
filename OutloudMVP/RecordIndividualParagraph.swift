@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import AVFoundation
+import Alamofire
 
 func mergeAudioFiles(audioFileUrls: NSArray, callback: (url: NSURL?, error: NSError?)->()) {
     
@@ -53,6 +54,40 @@ func mergeAudioFiles(audioFileUrls: NSArray, callback: (url: NSURL?, error: NSEr
         }
     })
     
+}
+
+// this function creates the required URLRequestConvertible and NSData we need to use Alamofire.upload
+func urlRequestWithComponents(urlString:String, parameters:Dictionary<String, String>, imageData:NSData) -> (URLRequestConvertible, NSData) {
+    
+    // create url request to send
+    let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: urlString)!)
+    mutableURLRequest.HTTPMethod = Alamofire.Method.POST.rawValue
+    let boundaryConstant = "myRandomBoundary12345";
+    let contentType = "multipart/form-data;boundary="+boundaryConstant
+    mutableURLRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+    
+    
+    
+    // create upload data to send
+    let uploadData = NSMutableData()
+    
+    // add image
+    uploadData.appendData("\r\n--\(boundaryConstant)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+    uploadData.appendData("Content-Disposition: form-data; name=\"file\"; filename=\"file.m4a\"\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+    uploadData.appendData("Content-Type: audio/mp4\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+    uploadData.appendData(imageData)
+    
+    // add parameters
+    for (key, value) in parameters {
+        uploadData.appendData("\r\n--\(boundaryConstant)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        uploadData.appendData("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n\(value)".dataUsingEncoding(NSUTF8StringEncoding)!)
+    }
+    uploadData.appendData("\r\n--\(boundaryConstant)--\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+    
+    
+    
+    // return URLRequestConvertible and NSData
+    return (Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: nil).0, uploadData)
 }
 
 class Recorder {
@@ -191,6 +226,15 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     }
     
     func forwardParagraph() {
+        // stop recording and playing
+        if(recorder.isPlaying()) {
+            playback_tapped()
+        }
+        
+        if(recorder.isRecording()) {
+            record_tapped()
+        }
+        
         backwardButton.hidden = false
         if(ParagraphCount < FullArticleContentArray.count-1) {
             if (ParagraphCount+1 == FullArticleContentArray.count-1) {
@@ -335,7 +379,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         checkButton.enabled = false
         playbackButton.enabled = false
         
-        recordButton.addTarget(self, action: "record_tapped:", forControlEvents: UIControlEvents.TouchUpInside)
+        recordButton.addTarget(self, action: "record_tapped", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.addTarget(self, action: "check_tapped:", forControlEvents: UIControlEvents.TouchUpInside)
         
         forwardButton.frame = CGRectMake(50, 50, 70, 50)
@@ -352,6 +396,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         backwardButton.setBackgroundImage(UIImage(named: "back"), forState: .Normal)
         forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
         checkButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
+        checkButton.setBackgroundImage(UIImage(named: "check-disabled"), forState: .Disabled)
         trashButton.setBackgroundImage(UIImage(named: "trash"), forState: .Normal)
         
         backwardButton.snp_makeConstraints { (make) -> Void in
@@ -412,13 +457,20 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     }
     
     let recorder = Recorder()
-    func record_tapped(sender: UIButton) {
+    func record_tapped() {
         if(recorder.isRecording()) {
             recorder.stopRecording()
             // save the url
             print(ParagraphCount)
             FullArticleContentArray[ParagraphCount].recordingUrl = recorder.soundFileURL
             checkButton.enabled = true
+            for(var i = 0; i < FullArticleContentArray.count; i++) {
+                if(FullArticleContentArray[i].recordingUrl == nil) {
+                    checkButton.enabled = false
+                    break
+                }
+            }
+            recordButton.setRecording(false, animate: true)
             playbackButton.enabled = true
             print(recorder.isRecording())
             timer.invalidate()
@@ -443,19 +495,27 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         if(ParagraphCount >= FullArticleContentArray.count-1) {
             // you're good, go back to the paragraph
             
-            var audioFiles = NSMutableArray()
+            let audioFiles = NSMutableArray()
             for(var i = 0; i < FullArticleContentArray.count; i++) {
                 audioFiles.addObject(FullArticleContentArray[i].recordingUrl!)
             }
             mergeAudioFiles(audioFiles, callback: { (url, error) -> () in
-                print("Done")
-                print("URL is: " + (url?.absoluteString)!)
+                
+                if(url != nil) {
+                    let parameters = ["article_id":CurrentArticleUuid!,"is_human":"true","reader_id":"Peyman MO","email":"pkd2008@hotmail.com"]
+                    
+                    let data = NSData(contentsOfURL: url!)
+                    
+                    let request = urlRequestWithComponents("http://www.outloud.io:8080/api/reading/new", parameters: parameters, imageData: data!)
+                    
+                    Alamofire.upload(request.0, data: request.1)
+                }
+                
             })
             self.navigationController?.popViewControllerAnimated(true)
         } else {
              forwardParagraph()
         }
-        
     }
     
     func playback_tapped() {
