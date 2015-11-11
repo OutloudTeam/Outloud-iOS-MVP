@@ -37,6 +37,7 @@ func mergeAudioFiles(audioFileUrls: NSArray, callback: (url: NSURL?, error: NSEr
     
     let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
     let outputUrl = documentsDirectory.URLByAppendingPathComponent(currentFileName)
+    print(outputUrl.absoluteString)
     
     // Export it
     let assetExport = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetAppleM4A)
@@ -441,6 +442,15 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         
         if(ParagraphCount >= FullArticleContentArray.count-1) {
             // you're good, go back to the paragraph
+            
+            var audioFiles = NSMutableArray()
+            for(var i = 0; i < FullArticleContentArray.count; i++) {
+                audioFiles.addObject(FullArticleContentArray[i].recordingUrl!)
+            }
+            mergeAudioFiles(audioFiles, callback: { (url, error) -> () in
+                print("Done")
+                print("URL is: " + (url?.absoluteString)!)
+            })
             self.navigationController?.popViewControllerAnimated(true)
         } else {
              forwardParagraph()
