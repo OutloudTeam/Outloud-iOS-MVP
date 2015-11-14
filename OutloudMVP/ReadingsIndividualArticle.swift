@@ -13,7 +13,7 @@ import AVFoundation
 import SwiftOverlays
 import Alamofire
 
-class ReadingsIndividualArticle: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
+class ReadingsIndividualArticle: UIViewController, UIActionSheetDelegate {
     
     let listenContainer = UIButton()
     let middleView = UIView()
@@ -144,19 +144,16 @@ class ReadingsIndividualArticle: UIViewController, UITableViewDelegate, UITableV
             }
         }
     }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return generateReadingListCell(tableView, indexPath: indexPath)
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+    override func viewWillDisappear(animated: Bool) {
+        if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
+            self.fileURL = directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
+            directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
+            do {
+                try NSFileManager.defaultManager().removeItemAtURL(fileURL)
+            } catch {
+                
+            }
+        }
     }
     
     //    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -176,11 +173,4 @@ class ReadingsIndividualArticle: UIViewController, UITableViewDelegate, UITableV
     //
     //        return articleBar
     //    }
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-    }
 }
