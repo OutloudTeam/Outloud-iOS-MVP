@@ -118,7 +118,7 @@ class ReadingsIndividualArticle: UIViewController, UIActionSheetDelegate {
         self.title = ""
         self.edgesForExtendedLayout = UIRectEdge.None
         let bottomBar = createBottomArticleListBar(self.view)
-        middleView.backgroundColor = UIColor.blueColor()
+        middleView.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(middleView)
         middleView.snp_makeConstraints { (make) -> Void in
             make.left.top.right.equalTo(self.view)
