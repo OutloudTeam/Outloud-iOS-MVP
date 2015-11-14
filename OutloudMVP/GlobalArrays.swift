@@ -66,6 +66,16 @@ struct FullArticleContent {
     var readings : String?
     var recordingUrl : NSURL?
 }
+
+struct ReadingListStruct {
+    var uuid : String?
+    var articleID : String?
+    var isHuman : Bool?
+    var readerID : String?
+    var contentUrl : String?
+    var url : String?
+    var fileType : String?
+}
 //var CacheValidationArray = [CacheValidation]()
 
 var CacheValidationArray : NSMutableArray = []
@@ -79,6 +89,8 @@ var ArticleDetailMediaMetadataArray = [ArticleDetailMediaMetadata]()
 
 var ArticleListMediaArray = [ArticleDetailMedia]()
 var ArticleListMediaMetadataArray = [ArticleDetailMediaMetadata]()
+
+var ReadingsListArray = [ReadingListStruct]()
 
 var articleDetailDictionary :[String: AnyObject] = ["place":"holder"]
 

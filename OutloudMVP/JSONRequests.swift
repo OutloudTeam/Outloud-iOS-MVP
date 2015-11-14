@@ -70,7 +70,6 @@ func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, artic
     }
 }
 // MARK: - Generate article list from API
-// TODO: - Implement cacheing
 func articleListJSONGet(success:()->()) {
     let urlString = "http://www.outloud.io:8080/api/feed/"
     let cache = Shared.dataCache
@@ -124,6 +123,36 @@ func articleListJSONGet(success:()->()) {
 //            }
             let newArticle = ArticleListStruct(uuid: uuid, source: source, popularity: popularity, section: section, title: title, author: author, abstract: abstract, url: url, byline: byline, updated_date: updated_date, created_date: created_date, published_date: published_date, media: ArticleListMediaArray)
             ArticleListArray.append(newArticle)
+        }
+        success()
+    }
+}
+
+// MARK: - Generate article list from API
+func readingsListGet(success:()->()) {
+    let urlString = "http://www.outloud.io:8080/api/readings"
+    let cache = Shared.dataCache
+    if(cacheCheck() == false){
+        cache.removeAll()
+        removeTime(0)
+        writeTime(currentYearDayHourMinute())
+    }
+    let URL = NSURL(string: urlString)!
+    cache.fetch(URL: URL).onSuccess { (Data) -> () in
+        let readingsListJSON = JSON(data: Data)
+        let articleListCount = readingsListJSON.count
+        ReadingsListArray.removeAll()
+        for var i = 0; i < articleListCount; i++ {
+            let uuid = readingsListJSON[i]["uuid"].string
+            let articleID = readingsListJSON[i]["article_id"].string
+            let isHuman = readingsListJSON[i]["is_human"].bool
+            let readerID = readingsListJSON[i]["reader_id"].string
+            let contentUrl = readingsListJSON[i]["content_url"].string
+            let url = readingsListJSON[i]["url"].string
+            let fileType = readingsListJSON[i]["file_type"].string
+        
+            let newArticle = ReadingListStruct(uuid: uuid, articleID: articleID, isHuman: isHuman, readerID: readerID, contentUrl: contentUrl, url: url, fileType: fileType)
+            ReadingsListArray.append(newArticle)
         }
         success()
     }

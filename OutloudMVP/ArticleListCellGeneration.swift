@@ -10,6 +10,22 @@ import Foundation
 import UIKit
 import SnapKit
 
+func generateReadingListCell(tableView: UITableView, indexPath: NSIndexPath)->UITableViewCell {
+    let readingCell = UITableViewCell(style: .Default, reuseIdentifier: "readingCell")
+    let readingTitle = UILabel()
+    
+    readingCell.addSubview(readingTitle)
+    
+    readingTitle.text = ReadingsListArray[indexPath.row].url
+    readingTitle.adjustsFontSizeToFitWidth = true
+    readingTitle.snp_makeConstraints { (make) -> Void in
+        make.centerY.left.right.equalTo(readingCell)
+        make.height.equalTo(30)
+    }
+    return readingCell
+}
+
+
 func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath)->UITableViewCell {
     let articleCell = UITableViewCell(style: .Default, reuseIdentifier: "articleCell")
     let articleTitle = UILabel()
@@ -40,11 +56,11 @@ func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath
     articleCell.addSubview(articleIcon)
     articleCell.addSubview(addToQueueIcon)
     articleCell.addSubview(addToQueueLabel)
-
+    
     
     articleTitle.text = ArticleListArray[indexPath.row].title
     articleAbstract.text = ArticleListArray[indexPath.row].abstract
-
+    
     articleTitle.font = articleListTileFont
     articleTitle.textColor = UIColor.blackColor()
     articleAbstract.font = articleListAbstractFont
@@ -85,7 +101,7 @@ func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath
     shareCount.hidden = true
     
     articleRating.snp_makeConstraints { (make) -> Void in
-//        make.width.equalTo(50)
+        //        make.width.equalTo(50)
         make.height.equalTo(10)
         make.left.equalTo(articleTitle.snp_left)
         make.top.equalTo(articleAbstract.snp_bottom).offset(15)

@@ -1,62 +1,62 @@
 //
-//  ArticleList.swift
+//  ReadingsList.swift
 //  OutloudMVP
 //
-//  Created by Frederik Lohner on 10/Oct/15.
+//  Created by Frederik Lohner on 13/Nov/15.
 //  Copyright © 2015 Outloud. All rights reserved.
 //
 
 import Foundation
 import UIKit
 import SnapKit
-import AVFoundation
+//import AVFoundation
 import SwiftOverlays
 
-class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
+class ReadingsList: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
     
     let listenContainer = UIButton()
     
     var refreshControl:UIRefreshControl!
     func refresh(sender:AnyObject)
     {
-        articleListJSONGet { () -> () in
+        readingsListGet() { () -> () in
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
         }
     }
     
-    func handleSingleTap(sender: UIButton) {
-        let alert: UIAlertView = UIAlertView()
-        
-        alert.addButtonWithTitle("Listen")
-        alert.addButtonWithTitle("Record")
-        alert.delegate = self  // set the delegate here
-        alert.show()
-    }
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        alertView.buttonTitleAtIndex(buttonIndex)
-        print("\(buttonIndex) pressed")
-        if buttonIndex == 0 {
-            print("Listen was clicked")
-            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                SwiftOverlays.removeAllBlockingOverlays()
-                self.navigationController?.setViewControllers([ArticleListListen()], animated: true)
-            })
-        } else {
-            print("Record was clicked")
-            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                SwiftOverlays.removeAllBlockingOverlays()
-                self.navigationController?.setViewControllers([ArticleListRecord()], animated: true)
-            })
-        }
-    }
+    //    func handleSingleTap(sender: UIButton) {
+    //        let alert: UIAlertView = UIAlertView()
+    //
+    //        alert.addButtonWithTitle("Listen")
+    //        alert.addButtonWithTitle("Record")
+    //        alert.delegate = self  // set the delegate here
+    //        alert.show()
+    //    }
+    //    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    //        alertView.buttonTitleAtIndex(buttonIndex)
+    //        print("\(buttonIndex) pressed")
+    //        if buttonIndex == 0 {
+    //            print("Listen was clicked")
+    //            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+    //            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+    //                SwiftOverlays.removeAllBlockingOverlays()
+    //                self.navigationController?.setViewControllers([ArticleListListen()], animated: true)
+    //            })
+    //        } else {
+    //            print("Record was clicked")
+    //            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+    //            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+    //                SwiftOverlays.removeAllBlockingOverlays()
+    //                self.navigationController?.setViewControllers([ArticleListRecord()], animated: true)
+    //            })
+    //        }
+    //    }
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
     override func viewDidAppear(animated: Bool) {
-        self.navigationItem.titleView = createNavigationTitleViewArticleListListen(listenContainer , title: "Listen", category: "Popular", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleListListen(listenContainer , title: "Readings", category: "All", callback: { () -> Void in
         })
         self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
             make.width.equalTo(tableView.frame.width)
@@ -65,7 +65,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     override func viewDidLoad() {
-        listenContainer.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
+        //        listenContainer.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -73,7 +73,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         self.tableView.addSubview(refreshControl)
         
         self.title = ""
-        articleListJSONGet { () -> () in
+        readingsListGet() { () -> () in
             dispatch_async(dispatch_get_main_queue()) { [unowned self] in
                 self.tableView.reloadData()
             }
@@ -100,16 +100,14 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         return 1
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ArticleListArray.count
+        return ReadingsListArray.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return generateArticleListListenCell(tableView, indexPath: indexPath)
+        return generateReadingListCell(tableView, indexPath: indexPath)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
-        //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
-        return cellHeight + 25 + 5 + 25 + 20 + 20
+        return 60
     }
     
     //    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -134,14 +132,13 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-        articleJSONGet(&articleDetailDictionary, articleID: ArticleListArray[indexPath.row].uuid!) { () -> () in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                SwiftOverlays.removeAllBlockingOverlays()
-                //                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
-                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
-            })
-        }
+        print("SELECTED")
+        SwiftOverlays.showBlockingWaitOverlayWithText("Loading Reading!")
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            SwiftOverlays.removeAllBlockingOverlays()
+            self.navigationController?.pushViewController(ReadingsIndividualArticle(), animated: true)
+        })
     }
+    
     
 }

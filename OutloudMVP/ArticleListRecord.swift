@@ -26,6 +26,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
+    
     override func viewDidAppear(animated: Bool) {
         self.navigationItem.titleView = createNavigationTitleViewArticleListRecord(listenContainer, title: "Record", category: "Trending", callback: { () -> Void in
         })
