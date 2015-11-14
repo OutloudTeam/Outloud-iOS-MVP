@@ -17,7 +17,30 @@ class ReadingsIndividualArticle: UIViewController, UITableViewDelegate, UITableV
     
     let listenContainer = UIButton()
     let middleView = UIView()
+    var Readingplayer: AVAudioPlayer!
+    var fileURL : NSURL!
     var index: Int?
+    
+    func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
+        
+        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
+        let url = NSURL.fileURLWithPath(path!)
+        
+        var audioPlayer:AVAudioPlayer?
+        
+        do {
+            try audioPlayer = AVAudioPlayer(contentsOfURL: url)
+        } catch {
+            print("Player not available")
+        }
+        
+        return audioPlayer
+    }
+    
+    
+    
+    
+    
     //    func handleSingleTap(sender: UIButton) {
     //        let alert: UIAlertView = UIAlertView()
     //
@@ -60,7 +83,21 @@ class ReadingsIndividualArticle: UIViewController, UITableViewDelegate, UITableV
             make.bottom.equalTo(bottomBar.snp_top)
         }
         
-        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
+        
+        let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
+            (temporaryURL, response) in
+            
+            if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
+                print("TEMP URL: \(directoryURL.URLByAppendingPathComponent("\(response.suggestedFilename)"))")
+                self.fileURL = directoryURL.URLByAppendingPathComponent("\(response.suggestedFilename)")
+                return directoryURL.URLByAppendingPathComponent("\(response.suggestedFilename)")
+            }
+            print("TEMP URL: \(temporaryURL)")
+            return temporaryURL
+        }
+        
+        
+        //        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
         Alamofire.download(.GET, ReadingsListArray[0].url!, destination: destination)
             .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
                 dispatch_async(dispatch_get_main_queue()) {
@@ -75,9 +112,17 @@ class ReadingsIndividualArticle: UIViewController, UITableViewDelegate, UITableV
                     SwiftOverlays.removeAllBlockingOverlays()
                 } else {
                     print("Downloaded file successfully")
+                    self.Readingplayer = AVAudioPlayer()
                     SwiftOverlays.removeAllBlockingOverlays()
+                    do {
+                        let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
+                        self.Readingplayer = Readingplayer
+                        self.Readingplayer.play()
+                    } catch {
+                    }
                 }
         }
+        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
