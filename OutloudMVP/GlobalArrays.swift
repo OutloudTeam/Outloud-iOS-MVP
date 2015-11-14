@@ -95,3 +95,4 @@ var ReadingsListArray = [ReadingListStruct]()
 var articleDetailDictionary :[String: AnyObject] = ["place":"holder"]
 
 var ParagraphCount = 0
+var indexToListenAt = 0

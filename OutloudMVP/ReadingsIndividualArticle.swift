@@ -71,26 +71,14 @@ class ReadingsIndividualArticle: UIViewController, UITableViewDelegate, UITableV
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
-    
-    override func viewDidLoad() {
-        self.title = ""
-        self.edgesForExtendedLayout = UIRectEdge.None
-        let bottomBar = createBottomArticleListBar(self.view)
-        middleView.backgroundColor = UIColor.blueColor()
-        self.view.addSubview(middleView)
-        middleView.snp_makeConstraints { (make) -> Void in
-            make.left.top.right.equalTo(self.view)
-            make.bottom.equalTo(bottomBar.snp_top)
-        }
-        
-        
+    func downloadFile() {
         let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
             (temporaryURL, response) in
             
             if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
-                print("TEMP URL: \(directoryURL.URLByAppendingPathComponent("\(response.suggestedFilename)"))")
-                self.fileURL = directoryURL.URLByAppendingPathComponent("\(response.suggestedFilename)")
-                return directoryURL.URLByAppendingPathComponent("\(response.suggestedFilename)")
+                print("TEMP URL: \(directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)"))")
+                self.fileURL = directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
+                return directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
             }
             print("TEMP URL: \(temporaryURL)")
             return temporaryURL
@@ -98,7 +86,7 @@ class ReadingsIndividualArticle: UIViewController, UITableViewDelegate, UITableV
         
         
         //        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
-        Alamofire.download(.GET, ReadingsListArray[0].url!, destination: destination)
+        Alamofire.download(.GET, ReadingsListArray[indexToListenAt].url!, destination: destination)
             .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
                 dispatch_async(dispatch_get_main_queue()) {
                     let progress = (Double(totalBytesRead) / Double(totalBytesExpectedToRead)) * 100
@@ -123,6 +111,38 @@ class ReadingsIndividualArticle: UIViewController, UITableViewDelegate, UITableV
                 }
         }
         
+    }
+    
+    
+    override func viewDidLoad() {
+        self.title = ""
+        self.edgesForExtendedLayout = UIRectEdge.None
+        let bottomBar = createBottomArticleListBar(self.view)
+        middleView.backgroundColor = UIColor.blueColor()
+        self.view.addSubview(middleView)
+        middleView.snp_makeConstraints { (make) -> Void in
+            make.left.top.right.equalTo(self.view)
+            make.bottom.equalTo(bottomBar.snp_top)
+        }
+        
+        if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
+            self.fileURL = directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
+            directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
+        }
+        
+        var error:NSError?
+        let folderExists = self.fileURL!.checkResourceIsReachableAndReturnError(&error)
+        if folderExists != true {
+            downloadFile()
+        } else {
+            do {
+                let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
+                self.Readingplayer = Readingplayer
+                self.Readingplayer.play()
+            } catch {
+                print(error)
+            }
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

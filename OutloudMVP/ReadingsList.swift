@@ -133,6 +133,7 @@ class ReadingsList: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("SELECTED")
+        indexToListenAt = indexPath.row
         SwiftOverlays.showBlockingWaitOverlayWithText("Loading Reading!")
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             SwiftOverlays.removeAllBlockingOverlays()
