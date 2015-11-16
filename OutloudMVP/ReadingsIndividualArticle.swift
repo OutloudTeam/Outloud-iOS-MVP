@@ -121,6 +121,7 @@ class ReadingsIndividualArticle: UIViewController, UIActionSheetDelegate, AVAudi
             make.left.top.right.equalTo(self.view)
             make.bottom.equalTo(bottomBar.snp_top)
         }
+        
         progressView.snp_makeConstraints { (make) -> Void in
 //            make.left.right.bottom.equalTo(middleView)
             make.center.equalTo(middleView)
