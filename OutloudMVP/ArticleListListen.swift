@@ -15,7 +15,7 @@ import SwiftOverlays
 class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
     
     let listenContainer = UIButton()
-    
+    let playButton = UIButton(type: UIButtonType.System) as UIButton
     var refreshControl:UIRefreshControl!
     func refresh(sender:AnyObject)
     {
@@ -53,7 +53,6 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
-    let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
     override func viewDidAppear(animated: Bool) {
         self.navigationItem.titleView = createNavigationTitleViewArticleListListen(listenContainer , title: "Listen", category: "Popular", callback: { () -> Void in
@@ -80,7 +79,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         self.edgesForExtendedLayout = UIRectEdge.None
         
-        let bottomBar = createBottomArticleListBar(self.view)
+        let bottomBar = createBottomArticleListBar(self.view, playButton: playButton)
         self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self

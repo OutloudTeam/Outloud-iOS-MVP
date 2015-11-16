@@ -405,7 +405,7 @@ func createBottomRecordDetailBar(superView: UIView)->UIView{
 MARK: - Generates bottom article list bar
 With QueueList button, queue instructions, playQueueButton and playQueueInstructions.
 */
-func createBottomArticleListBar(view: UIView)->UIView{
+func createBottomArticleListBar(view: UIView, playButton: UIButton)->UIView{
     let bottomBar = UIView()
     let separatorBar = UIView()
     bottomBar.addSubview(separatorBar)
@@ -432,15 +432,14 @@ func createBottomArticleListBar(view: UIView)->UIView{
         make.centerY.equalTo(bottomBar.snp_centerY)
     }
     
-    let playQueueButton = UIButton(type: UIButtonType.System) as UIButton
-    playQueueButton.setBackgroundImage(UIImage(named: "playCount"), forState: .Normal)
-    bottomBar.addSubview(playQueueButton)
+    playButton.setBackgroundImage(UIImage(named: "playCount"), forState: .Normal)
+    bottomBar.addSubview(playButton)
     //    queueButton.backgroundColor = UIColor.whiteColor()
-    playQueueButton.snp_makeConstraints { (make) -> Void in
+    playButton.snp_makeConstraints { (make) -> Void in
         make.height.width.equalTo(30)
         make.centerY.centerX.equalTo(bottomBar)
     }
-    playQueueButton.contentMode = .ScaleAspectFit
+    playButton.contentMode = .ScaleAspectFit
     let playQueueInstructions = UILabel()
     playQueueInstructions.text = "3 in queue"
     playQueueInstructions.textAlignment = .Right

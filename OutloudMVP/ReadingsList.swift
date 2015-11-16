@@ -15,7 +15,7 @@ import SwiftOverlays
 class ReadingsList: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
     
     let listenContainer = UIButton()
-    
+    let playButton = UIButton()
     var refreshControl:UIRefreshControl!
     func refresh(sender:AnyObject)
     {
@@ -80,7 +80,7 @@ class ReadingsList: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
         self.edgesForExtendedLayout = UIRectEdge.None
         
-        let bottomBar = createBottomArticleListBar(self.view)
+        let bottomBar = createBottomArticleListBar(self.view, playButton: playButton)
         self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self

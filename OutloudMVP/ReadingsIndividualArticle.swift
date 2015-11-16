@@ -13,79 +13,33 @@ import AVFoundation
 import SwiftOverlays
 import Alamofire
 
-class ReadingsIndividualArticle: UIViewController, UIActionSheetDelegate {
-    
+class ReadingsIndividualArticle: UIViewController, UIActionSheetDelegate, AVAudioPlayerDelegate {
+    let playButton = UIButton(type: UIButtonType.System) as UIButton
     let listenContainer = UIButton()
     let middleView = UIView()
-    var Readingplayer: AVAudioPlayer!
+    let progressView = ProgressView()
+    
+    lazy var playOrPause = false
+    lazy var Readingplayer = AVAudioPlayer()
+    lazy var currentTrackIndex = 0
+    lazy var tracks:[String] = [String]()
     var fileURL : NSURL!
     var index: Int?
     
-    func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
-        
-        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
-        let url = NSURL.fileURLWithPath(path!)
-        
-        var audioPlayer:AVAudioPlayer?
-        
-        do {
-            try audioPlayer = AVAudioPlayer(contentsOfURL: url)
-        } catch {
-            print("Player not available")
-        }
-        
-        return audioPlayer
-    }
-    
-    
-    
-    
-    
-    //    func handleSingleTap(sender: UIButton) {
-    //        let alert: UIAlertView = UIAlertView()
-    //
-    //        alert.addButtonWithTitle("Listen")
-    //        alert.addButtonWithTitle("Record")
-    //        alert.delegate = self  // set the delegate here
-    //        alert.show()
-    //    }
-    //    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-    //        alertView.buttonTitleAtIndex(buttonIndex)
-    //        print("\(buttonIndex) pressed")
-    //        if buttonIndex == 0 {
-    //            print("Listen was clicked")
-    //            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-    //            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-    //                SwiftOverlays.removeAllBlockingOverlays()
-    //                self.navigationController?.setViewControllers([ArticleListListen()], animated: true)
-    //            })
-    //        } else {
-    //            print("Record was clicked")
-    //            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-    //            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-    //                SwiftOverlays.removeAllBlockingOverlays()
-    //                self.navigationController?.setViewControllers([ArticleListRecord()], animated: true)
-    //            })
-    //        }
-    //    }
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
-    let playAllButton = UIButton(type: UIButtonType.System) as UIButton
+    let playAllButton = UIButton()
     
     func downloadFile() {
         let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
             (temporaryURL, response) in
             
             if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
-                print("TEMP URL: \(directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)"))")
                 self.fileURL = directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
                 return directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
             }
-            print("TEMP URL: \(temporaryURL)")
             return temporaryURL
         }
         
-        
-        //        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
         Alamofire.download(.GET, ReadingsListArray[indexToListenAt].url!, destination: destination)
             .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
                 dispatch_async(dispatch_get_main_queue()) {
@@ -105,30 +59,74 @@ class ReadingsIndividualArticle: UIViewController, UIActionSheetDelegate {
                     do {
                         let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
                         self.Readingplayer = Readingplayer
-                        self.Readingplayer.play()
+                        self.Readingplayer.delegate = self
                     } catch {
+                        print(error)
                     }
                 }
         }
-        
     }
     
+    func playFile() {
+        progressView.animateProgressView()
+        if (playOrPause == false) {
+            self.Readingplayer.play()
+            playOrPause = true
+            playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Normal)
+        } else {
+            self.Readingplayer.pause()
+            playOrPause = false
+            playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+        }
+    }
+    
+    func getTrackURL(index: Int) {
+        if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
+            fileURL = directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[index].uuid)")
+            directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[index].uuid)")
+        }
+    }
+    
+    func getCurrentTimeAsString() -> String {
+        var seconds = 0
+        var minutes = 0
+        if let time = Readingplayer.currentTime as? Double {
+            seconds = Int(time) % 60
+            minutes = (Int(time) / 60) % 60
+        }
+        return String(format: "%0.2d:%0.2d",minutes,seconds)
+    }
+    
+    func getProgress()->Float{
+        var theCurrentTime = 0.0
+        var theCurrentDuration = 0.0
+        if let currentTime = Readingplayer.currentTime as? Double, duration = Readingplayer.duration as? Double {
+            theCurrentTime = currentTime
+            theCurrentDuration = duration
+        }
+        return Float(theCurrentTime / theCurrentDuration)
+    }
     
     override func viewDidLoad() {
+//        Readingplayer.delegate = self
+        playButton.addTarget(self, action: "playFile", forControlEvents: UIControlEvents.TouchUpInside)
         self.title = ""
         self.edgesForExtendedLayout = UIRectEdge.None
-        let bottomBar = createBottomArticleListBar(self.view)
-        middleView.backgroundColor = UIColor.whiteColor()
+        let bottomBar = createBottomArticleListBar(self.view, playButton: playButton)
+//        middleView.backgroundColor = UIColor.whiteColor()
+        middleView.backgroundColor = UIColor(red: 52.0/255.0, green: 170.0/255.0, blue: 220.0/255.0, alpha: 1.0)
         self.view.addSubview(middleView)
+        middleView.addSubview(progressView)
         middleView.snp_makeConstraints { (make) -> Void in
             make.left.top.right.equalTo(self.view)
             make.bottom.equalTo(bottomBar.snp_top)
         }
-        
-        if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
-            self.fileURL = directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
-            directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
+        progressView.snp_makeConstraints { (make) -> Void in
+//            make.left.right.bottom.equalTo(middleView)
+            make.center.equalTo(middleView)
+            make.height.width.equalTo(300)
         }
+        getTrackURL(indexToListenAt)
         
         var error:NSError?
         let folderExists = self.fileURL!.checkResourceIsReachableAndReturnError(&error)
@@ -138,39 +136,29 @@ class ReadingsIndividualArticle: UIViewController, UIActionSheetDelegate {
             do {
                 let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
                 self.Readingplayer = Readingplayer
-                self.Readingplayer.play()
+                self.Readingplayer.delegate = self
             } catch {
                 print(error)
             }
         }
     }
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+        playOrPause = false
+        playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+    }
+    
     override func viewWillDisappear(animated: Bool) {
+        playOrPause = false
+        progressView.animateProgressView()
         if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
             self.fileURL = directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
             directoryURL.URLByAppendingPathComponent("\(ReadingsListArray[indexToListenAt].uuid)")
             do {
                 try NSFileManager.defaultManager().removeItemAtURL(fileURL)
             } catch {
-                
+                print(error)
             }
         }
     }
-    
-    //    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    //        let articleBar = UIView()
-    //        self.view.addSubview(articleBar)
-    //        articleBar.backgroundColor = UIColor.whiteColor()
-    //        playAllButton.frame = CGRectMake(100, 50, 100, 50)
-    //        playAllButton.setBackgroundImage(UIImage(named: "play-all"), forState: .Normal)
-    //        playAllButton.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0)
-    //        articleBar.addSubview(playAllButton)
-    //        playAllButton.snp_makeConstraints { (make) -> Void in
-    //            make.height.equalTo(50)
-    //            make.width.equalTo(150)
-    //            make.centerX.equalTo(articleBar.snp_centerX)
-    //            make.centerY.equalTo(articleBar.snp_centerY)
-    //        }
-    //
-    //        return articleBar
-    //    }
 }

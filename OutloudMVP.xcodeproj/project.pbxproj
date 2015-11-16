@@ -16,6 +16,7 @@
 		DB6AE4721BD6FCD100BCBD95 /* GlobalArrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6AE4711BD6FCD100BCBD95 /* GlobalArrays.swift */; };
 		DB7B3B9D1BE0794300A392DD /* RecordIndividualParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7B3B9C1BE0794300A392DD /* RecordIndividualParagraph.swift */; };
 		DB7B3B9F1BE08EC900A392DD /* RecordingCellGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7B3B9E1BE08EC900A392DD /* RecordingCellGeneration.swift */; };
+		DBA3B2701BF94CBE00C1D8B0 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3B26F1BF94CBE00C1D8B0 /* ProgressView.swift */; };
 		DBAC4D1A1BE9A842002188CE /* ListenCellGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAC4D191BE9A842002188CE /* ListenCellGeneration.swift */; };
 		DBAC4D1C1BE9ACE5002188CE /* ArticleListRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAC4D1B1BE9ACE5002188CE /* ArticleListRecord.swift */; };
 		DBB0AD021BF6B213004CE574 /* ReadingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB0AD011BF6B213004CE574 /* ReadingsList.swift */; };
@@ -69,6 +70,7 @@
 		DB6AE4711BD6FCD100BCBD95 /* GlobalArrays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalArrays.swift; sourceTree = "<group>"; };
 		DB7B3B9C1BE0794300A392DD /* RecordIndividualParagraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordIndividualParagraph.swift; sourceTree = "<group>"; };
 		DB7B3B9E1BE08EC900A392DD /* RecordingCellGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingCellGeneration.swift; sourceTree = "<group>"; };
+		DBA3B26F1BF94CBE00C1D8B0 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		DBAC4D191BE9A842002188CE /* ListenCellGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenCellGeneration.swift; sourceTree = "<group>"; };
 		DBAC4D1B1BE9ACE5002188CE /* ArticleListRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleListRecord.swift; sourceTree = "<group>"; };
 		DBB0AD011BF6B213004CE574 /* ReadingsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingsList.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				F35D5B361BCF46D70019C2B9 /* GlobalViewFunctions.swift */,
+				DBA3B26F1BF94CBE00C1D8B0 /* ProgressView.swift */,
 				DB6AE46F1BD6DF5A00BCBD95 /* JSONRequests.swift */,
 				DB0A848A1BE15E4400803A23 /* ImageRequests.swift */,
 				DB0975D91BCF8F7B00B9F77C /* GloablFunctions.swift */,
@@ -466,6 +469,7 @@
 				DB7B3B9D1BE0794300A392DD /* RecordIndividualParagraph.swift in Sources */,
 				DB02F20A1BCA28D300064CEB /* ArticleListListen.swift in Sources */,
 				F3C40ABA1BCAB44A00A033FF /* RecordButton.swift in Sources */,
+				DBA3B2701BF94CBE00C1D8B0 /* ProgressView.swift in Sources */,
 				F3C40AB31BCAB09600A033FF /* RecordPageViewController.swift in Sources */,
 				DB6AE4701BD6DF5A00BCBD95 /* JSONRequests.swift in Sources */,
 				DBAC4D1C1BE9ACE5002188CE /* ArticleListRecord.swift in Sources */,
