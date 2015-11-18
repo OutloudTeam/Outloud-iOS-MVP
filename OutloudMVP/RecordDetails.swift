@@ -40,10 +40,10 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Record", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Hold a paragraph to start recording!", callback: { () -> Void in
         })
         
-        let bottomBar = createBottomRecordDetailBar(self.view)
+        //        let bottomBar = createBottomRecordDetailBar(self.view)
         self.view.addSubview(tableView)
         tableView.backgroundColor = backgroundColorAll
         tableView.delegate = self
@@ -52,8 +52,8 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.snp_makeConstraints { (make) -> Void in
-            make.left.right.top.equalTo(self.view)
-            make.bottom.equalTo(bottomBar.snp_top)
+            make.left.right.top.bottom.equalTo(self.view)
+            //            make.bottom.equalTo(bottomBar.snp_top)
         }
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -88,17 +88,18 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let locationInView = longPress.locationInView(tableView)
         let indexPath = tableView.indexPathForRowAtPoint(locationInView)
         if let cellToRecordAtProtector = indexPath?.row {
-            if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
-                print(cellToRecordAtProtector)
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    ParagraphCount = cellToRecordAtProtector
-                    self.cellToRecordAt = -1
-                    self.navigationController?.pushViewController(RecordIndividualParagraph(), animated: true)
-                })
-            } else if (gestureRecognizer.state == UIGestureRecognizerState.Changed) {
-                cellToRecordAt = cellToRecordAtProtector
-                tableView.reloadData()
-            } else if (gestureRecognizer.state == UIGestureRecognizerState.Began) {
+            //            if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
+            //                print(cellToRecordAtProtector)
+            //                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            //                    ParagraphCount = cellToRecordAtProtector
+            //                    self.cellToRecordAt = -1
+            //                    self.navigationController?.pushViewController(RecordIndividualParagraph(), animated: true)
+            //                })
+            //            } else if (gestureRecognizer.state == UIGestureRecognizerState.Changed) {
+            //                cellToRecordAt = cellToRecordAtProtector
+            //                tableView.reloadData()
+            //            } else
+            if (gestureRecognizer.state == UIGestureRecognizerState.Began) {
                 cellToRecordAt = cellToRecordAtProtector
                 tableView.reloadData()
                 print(cellToRecordAtProtector)

@@ -49,7 +49,7 @@ func generateRecordingParagraphCell(tableView: UITableView, indexPath: NSIndexPa
         make.top.equalTo(paragraphCell.snp_top).offset(30)
     }
     
-    //    paragraphCell.selectionStyle = .None
+    paragraphCell.selectionStyle = .None
     
     return paragraphCell
 }

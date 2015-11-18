@@ -222,6 +222,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
             recorder.soundFileURL = nil
             playbackButton.enabled = false
             timeLabel.text = "00:00"
+
         }
         checkButton.enabled = false
     }
@@ -322,7 +323,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         // play button
         playbackButton = UIButton()
         playbackButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
-        playbackButton.setBackgroundImage(UIImage(named: "stop"), forState: .Selected)
+        playbackButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Selected)
         playbackToolbar.addSubview(playbackButton)
 
         
@@ -338,7 +339,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         timeLabel = UILabel()
         timeLabel.font = mediumTitleFont
         timeLabel.text = "00:00"
-        timeLabel.textColor = barTextColor
+        timeLabel.textColor = redColor
         timeLabel.textAlignment = .Right
         playbackToolbar.addSubview(timeLabel)
         timeLabel.snp_makeConstraints { (make) -> Void in
