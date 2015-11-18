@@ -206,6 +206,7 @@ class Recorder {
 class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
     let backwardButton = UIButton(type: UIButtonType.System) as UIButton
     let forwardButton = UIButton(type: UIButtonType.System) as UIButton
+    let forwardParagraphLabel = UILabel()
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     let completionBar = UIView()
     var completionWidth : CGFloat!
@@ -239,8 +240,10 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         if(ParagraphCount < FullArticleContentArray.count-1) {
             if (ParagraphCount+1 == FullArticleContentArray.count-1) {
                 forwardButton.hidden = true
+                forwardParagraphLabel.hidden = true
             } else {
                 forwardButton.hidden = false
+                forwardParagraphLabel.hidden = true
             }
             ParagraphCount++
             self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
@@ -261,8 +264,10 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         if(ParagraphCount > 0) {
             if (ParagraphCount-1 == 0) {
                 backwardButton.hidden = true
+                forwardParagraphLabel.hidden = false
             } else {
                 backwardButton.hidden = false
+                forwardParagraphLabel.hidden = true
             }
             ParagraphCount--
             self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
@@ -319,6 +324,9 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         playbackButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         playbackButton.setBackgroundImage(UIImage(named: "stop"), forState: .Selected)
         playbackToolbar.addSubview(playbackButton)
+
+        
+        
         playbackButton.snp_makeConstraints { (make) -> Void in
             make.right.equalTo(playbackToolbar)
             make.centerY.equalTo(playbackToolbar.snp_centerY)
@@ -349,6 +357,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         self.view.addSubview(completionBar)
         if(ParagraphCount == 0) {
             backwardButton.hidden = true
+            forwardParagraphLabel.hidden = false
         } else if (ParagraphCount+1 == FullArticleContentArray.count) {
             forwardButton.hidden = true
         }
@@ -393,6 +402,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         bottomBar.addSubview(recordButton)
         bottomBar.addSubview(checkButton)
         bottomBar.addSubview(trashButton)
+        bottomBar.addSubview(forwardParagraphLabel)
         
         forwardButton.addTarget(self, action: "forwardParagraph", forControlEvents: .TouchUpInside)
         backwardButton.addTarget(self, action: "backwardParagraph", forControlEvents: .TouchUpInside)
@@ -402,6 +412,23 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         checkButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
         checkButton.setBackgroundImage(UIImage(named: "check-disabled"), forState: .Disabled)
         trashButton.setBackgroundImage(UIImage(named: "trash"), forState: .Normal)
+        
+        forwardParagraphLabel.text = "Next"
+        forwardParagraphLabel.font = UIFont.systemFontOfSize(14, weight: UIFontWeightLight)
+        forwardParagraphLabel.textColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+        forwardParagraphLabel.textAlignment = .Right
+        forwardParagraphLabel.adjustsFontSizeToFitWidth = true
+        
+        if(ParagraphCount != 0) {
+            forwardParagraphLabel.hidden = true
+        }
+        
+        forwardParagraphLabel.snp_makeConstraints { (make) -> Void in
+            make.right.equalTo(forwardButton.snp_left).offset(-2)
+            make.height.centerY.equalTo(forwardButton)
+            make.left.equalTo(recordButton.snp_right).offset(5)
+        }
+
         
         backwardButton.snp_makeConstraints { (make) -> Void in
             make.height.equalTo(30)
@@ -449,15 +476,24 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return generateRecordingHeaderCell(tableView)
+        if(ParagraphCount == 0) {
+            return generateRecordingHeaderCell(tableView)
+        } else {
+            return nil
+        }
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if(ParagraphCount == 0) {
+
         let titleHeight = heightForJustifiedView(ArticleDetailArray[0].title!, font: recordArticleTitleFont, width: (tableView.frame.width - 60), lineSpace: 3)
         let authorHeight = heightForJustifiedView(ArticleDetailArray[0].author!, font: authorNameFont, width: (tableView.frame.width-60), lineSpace: 3)
         let articleHeight = heightForView("Placeholder.com", font: articleLinkFont, width: (tableView.frame.width - 60))
         //cell height is dynamically genrated then the constraint values are added to it
         return titleHeight + authorHeight + articleHeight + 67
+        } else {
+            return 0
+        }
     }
     
     let recorder = Recorder()

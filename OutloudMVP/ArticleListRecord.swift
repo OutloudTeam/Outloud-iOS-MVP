@@ -28,13 +28,14 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     
     
     override func viewDidAppear(animated: Bool) {
-        self.navigationItem.titleView = createNavigationTitleViewArticleListRecord(listenContainer, title: "Record", category: "Trending", callback: { () -> Void in
-        })
-        self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
-            make.width.equalTo(tableView.frame.width)
-            make.top.equalTo((self.navigationController?.view)!).offset(20)
+        self.navigationItem.titleView = createNavigationTitleViewArticleListRecordSingleTitle(listenContainer, title: "Record", callback: { () -> Void in
             
         })
+//        self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
+//            make.width.equalTo(tableView.frame.width)
+//            make.top.equalTo((self.navigationController?.view)!).offset(20)
+//            
+//        })
     }
     func handleSingleTap(sender: UIButton) {
         let alert: UIAlertView = UIAlertView()

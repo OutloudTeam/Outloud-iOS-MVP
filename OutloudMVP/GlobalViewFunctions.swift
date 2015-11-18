@@ -123,6 +123,45 @@ func createNavigationTitleViewArticleListListen(listenContainer: UIButton, title
     return topFrame
 }
 
+func createNavigationTitleViewArticleListRecordSingleTitle(listenContainer: UIButton, title: String, callback: ()->Void) -> UIView {
+    
+    let topFrame = UIView()
+    let listenRecordLabel = UILabel()
+    let listenRecordImageView = UIImageView()
+    
+    topFrame.addSubview(listenContainer)
+    topFrame.frame = CGRect(x: 0, y: 0, width: 200, height: 32)
+    
+    listenContainer.frame = CGRect(x: 0, y: 0, width: 100, height: 32)
+    listenContainer.addSubview(listenRecordLabel)
+    listenContainer.addSubview(listenRecordImageView)
+    
+    listenRecordLabel.text = title
+    listenRecordLabel.font = ListenRecordFont
+    listenRecordLabel.textColor = redColor
+    listenRecordLabel.textAlignment = .Center
+    
+    listenContainer.snp_makeConstraints { (make) -> Void in
+        make.center.equalTo(topFrame)
+        make.top.bottom.equalTo(topFrame)
+        make.width.equalTo(200)
+    }
+    listenRecordLabel.snp_makeConstraints { (make) -> Void in
+        make.centerX.equalTo(listenContainer.snp_centerX)
+        make.centerY.equalTo(listenContainer).offset(5)
+    }
+    listenRecordImageView.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(listenRecordLabel.snp_right).offset(5)
+        make.height.width.equalTo(35)
+        make.centerY.equalTo(listenRecordLabel)
+    }
+    
+    listenRecordImageView.image = UIImage(named: "downArrow")
+    listenRecordImageView.contentMode = .ScaleAspectFit
+    
+    return topFrame
+}
+
 // MARK: - Generates Navigation Top Bar for Article List Record
 func createNavigationTitleViewArticleListRecord(listenContainer: UIButton, title: String, category: String, callback: ()->Void) -> UIView {
     
