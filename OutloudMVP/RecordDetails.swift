@@ -101,6 +101,12 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
             } else if (gestureRecognizer.state == UIGestureRecognizerState.Began) {
                 cellToRecordAt = cellToRecordAtProtector
                 tableView.reloadData()
+                print(cellToRecordAtProtector)
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    ParagraphCount = cellToRecordAtProtector
+                    self.cellToRecordAt = -1
+                    self.navigationController?.pushViewController(RecordIndividualParagraph(), animated: true)
+                })
             }
         }
     }
