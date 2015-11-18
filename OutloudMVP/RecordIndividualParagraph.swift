@@ -288,6 +288,8 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     var audioFiles : NSMutableArray!
     override func viewDidLoad() {
         
+        
+        
         // debug
         
         // end debug
@@ -374,6 +376,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         //Bottom bar buttons
         recordButton = RecordButton()//UIButton(type: UIButtonType.System) as UIButton
         checkButton = UIButton(type: UIButtonType.System) as UIButton
+        checkButton.hidden = true
         let trashButton = UIButton(type: UIButtonType.System) as UIButton
         
         checkButton.enabled = false
@@ -381,6 +384,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         
         recordButton.addTarget(self, action: "record_tapped", forControlEvents: UIControlEvents.TouchUpInside)
         checkButton.addTarget(self, action: "check_tapped:", forControlEvents: UIControlEvents.TouchUpInside)
+        
         
         forwardButton.frame = CGRectMake(50, 50, 70, 50)
         recordButton.frame = CGRectMake(100,100,100,100)

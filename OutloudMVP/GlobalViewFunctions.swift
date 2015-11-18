@@ -378,14 +378,17 @@ MARK: - Generates bottom record detail bar
 */
 func createBottomRecordDetailBar(superView: UIView)->UIView{
     let bottomBar = UIView()
+    let separatorBar = UIView()
     let recordInstructions = UILabel()
     superView.addSubview(bottomBar)
     superView.addSubview(recordInstructions)
+    superView.addSubview(separatorBar)
     
     bottomBar.backgroundColor = barColor
-    recordInstructions.text = "Hold a paragraph to record!"
+    separatorBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.15)
+    recordInstructions.text = "Hold a paragraph to start recording!"
     recordInstructions.font = mediumTitleFont
-    recordInstructions.textColor = UIColor.whiteColor()
+    recordInstructions.textColor = UIColor.redColor()
     
     bottomBar.snp_makeConstraints { (make) -> Void in
         make.height.equalTo(30)
@@ -396,6 +399,10 @@ func createBottomRecordDetailBar(superView: UIView)->UIView{
     recordInstructions.snp_makeConstraints { (make) -> Void in
         make.centerX.equalTo(bottomBar.snp_centerX)
         make.centerY.equalTo(bottomBar.snp_centerY)
+    }
+    separatorBar.snp_makeConstraints { (make) -> Void in
+        make.left.top.right.equalTo(bottomBar)
+        make.height.equalTo(0.5)
     }
     return bottomBar
 }
@@ -459,11 +466,19 @@ MARK: - Generates bottom bar for recording paragraphs
 */
 func createBottomParagraphRecordingBar(superView: UIView)->UIView{
     let bottomBar = UIView()
+    let separatorBar = UIView()
     superView.addSubview(bottomBar)
-    bottomBar.backgroundColor = barColor
+    superView.addSubview(separatorBar)
     
+    bottomBar.backgroundColor = barColor
+    separatorBar.backgroundColor = redColor
+    
+    separatorBar.snp_makeConstraints { (make) -> Void in
+        make.left.top.right.equalTo(bottomBar)
+        make.height.equalTo(0.5)
+    }
     bottomBar.snp_makeConstraints { (make) -> Void in
-        make.height.equalTo(50)
+        make.height.equalTo(60)
         make.bottom.equalTo(superView).offset(0)
         make.left.equalTo(superView).offset(0)
         make.right.equalTo(superView).offset(0)

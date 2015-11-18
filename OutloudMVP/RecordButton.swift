@@ -24,8 +24,8 @@ class RecordButton: UIButton {
         innerView.userInteractionEnabled = false
         self.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
         
-        self.layer.borderColor = UIColor.blackColor().CGColor
-        self.backgroundColor = UIColor.blackColor()
+        self.layer.borderColor = redColor.CGColor
+        self.backgroundColor = redColor
         self.layer.borderWidth = 4
         self.layer.masksToBounds = true
         innerView.backgroundColor = UIColor.whiteColor()

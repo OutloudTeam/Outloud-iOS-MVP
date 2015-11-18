@@ -41,6 +41,7 @@ func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath
     let addToQueueIcon = UIImageView()
     let addToQueueLabel = UILabel()
     
+    articleCell.selectionStyle = .None
     
     articleIcon.frame = CGRectMake(0, 0, 85, 85)
     
@@ -192,10 +193,13 @@ func generateArticleListRecordCell(tableView: UITableView,indexPath: NSIndexPath
     let articleIcon = UIImageView()
     let addToQueueIcon = UIImageView()
     let addToQueueLabel = UILabel()
+    addToQueueIcon.hidden = true
+    addToQueueLabel.hidden = true
     
     
     articleIcon.frame = CGRectMake(0, 0, 85, 85)
     
+    articleCell.selectionStyle = .None
     articleCell.addSubview(articleTitle)
     articleCell.addSubview(articleAbstract)
     articleCell.addSubview(articleSeparatorBar)
@@ -280,10 +284,15 @@ func generateArticleListRecordCell(tableView: UITableView,indexPath: NSIndexPath
     }
     articleOrigin.textAlignment = .Right
     articleOrigin.textColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+//    articleOrigin.snp_makeConstraints { (make) -> Void in
+//        make.centerY.equalTo(addToQueueLabel)
+//        make.left.equalTo(shareCount.snp_right).offset(10)
+//        make.right.equalTo(articleIcon.snp_left).offset(-4)
+//        make.width.equalTo(40)
+//    }
     articleOrigin.snp_makeConstraints { (make) -> Void in
-        make.centerY.equalTo(addToQueueLabel)
-        make.left.equalTo(shareCount.snp_right).offset(10)
-        make.right.equalTo(articleIcon.snp_left).offset(-4)
+        make.centerX.equalTo(articleIcon)
+        make.top.equalTo(articleIcon.snp_bottom).offset(2)
         make.width.equalTo(40)
     }
     

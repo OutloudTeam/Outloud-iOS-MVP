@@ -88,7 +88,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
+
         tableView.snp_makeConstraints { (make) -> Void in
             make.left.right.top.equalTo(self.view)
             make.bottom.equalTo(bottomBar.snp_top)

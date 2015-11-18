@@ -71,6 +71,7 @@ class ReadingsIndividualArticle: UIViewController, UIActionSheetDelegate, AVAudi
         progressView.animateProgressView()
         if (playOrPause == false) {
             self.Readingplayer.play()
+            
             playOrPause = true
             playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Normal)
         } else {
