@@ -256,19 +256,20 @@ func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -
     let imageView = UIImageView()
     
     
-    container.frame = CGRect(x: 0, y: 0, width: 128, height: 32)
+    container.frame = CGRect(x: 0, y: 0, width: 256, height: 32)
     container.addSubview(titleLabel)
     container.addSubview(imageView)
     
     
     titleLabel.text = title
     titleLabel.font = largeTitleFont
-    titleLabel.textColor = UIColor.blackColor()
+    titleLabel.textColor = redColor
     titleLabel.textAlignment = .Center
     
     titleLabel.snp_makeConstraints { (make) -> Void in
         //        make.left.equalTo(container.snp_left)
-        make.center.equalTo(container.snp_center)
+        make.centerX.equalTo(container)
+        make.centerY.equalTo(container).offset(2)
     }
     
     imageView.snp_makeConstraints { (make) -> Void in

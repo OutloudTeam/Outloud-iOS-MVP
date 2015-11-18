@@ -40,10 +40,10 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Record", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Hold a paragraph to start recording!", callback: { () -> Void in
         })
         
-        let bottomBar = createBottomRecordDetailBar(self.view)
+//        let bottomBar = createBottomRecordDetailBar(self.view)
         self.view.addSubview(tableView)
         tableView.backgroundColor = backgroundColorAll
         tableView.delegate = self
@@ -52,8 +52,8 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.snp_makeConstraints { (make) -> Void in
-            make.left.right.top.equalTo(self.view)
-            make.bottom.equalTo(bottomBar.snp_top)
+            make.left.right.top.bottom.equalTo(self.view)
+//            make.bottom.equalTo(bottomBar.snp_top)
         }
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
