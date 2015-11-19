@@ -513,14 +513,6 @@ func createBottomArticleListBar(view: UIView, playButton: UIButton)->UIView{
         make.right.equalTo(view).offset(0)
     }
     
-    let queueListButton = UIButton(type: UIButtonType.System) as UIButton
-    queueListButton.setBackgroundImage(UIImage(named: "edit-queue"), forState: .Normal)
-    bottomBar.addSubview(queueListButton)
-    queueListButton.snp_makeConstraints { (make) -> Void in
-        make.height.width.equalTo(25)
-        make.left.equalTo(bottomBar.snp_left).offset(10)
-        make.centerY.equalTo(bottomBar.snp_centerY)
-    }
     
     playButton.setBackgroundImage(UIImage(named: "playCount"), forState: .Normal)
     bottomBar.addSubview(playButton)
@@ -530,18 +522,7 @@ func createBottomArticleListBar(view: UIView, playButton: UIButton)->UIView{
         make.centerY.centerX.equalTo(bottomBar)
     }
     playButton.contentMode = .ScaleAspectFit
-    let playQueueInstructions = UILabel()
-    playQueueInstructions.text = "3 in queue"
-    playQueueInstructions.textAlignment = .Right
-    playQueueInstructions.font = UIFont(name: "Helvetica-Light", size: 12)
-    playQueueInstructions.textColor = UIColor(red:0.72, green:0.72, blue:0.72, alpha:1.0)
-    playQueueInstructions.adjustsFontSizeToFitWidth = true
-    bottomBar.addSubview(playQueueInstructions)
-    
-    playQueueInstructions.snp_makeConstraints { (make) -> Void in
-        make.right.equalTo(bottomBar).offset(-10)
-        make.centerY.equalTo(queueListButton.snp_centerY)
-    }
+
     return bottomBar
 }
 /*

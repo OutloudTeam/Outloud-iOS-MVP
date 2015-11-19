@@ -294,6 +294,9 @@ func generateArticleListRecordCell(tableView: UITableView,indexPath: NSIndexPath
         make.top.equalTo(articleIcon.snp_bottom).offset(2)
         make.width.equalTo(40)
     }
+//    if articleOrigin == "outloud" {
+        articleOrigin.hidden = true
+//    }1
     
     addToQueueIcon.image = UIImage(named: "notify")
     addToQueueIcon.snp_makeConstraints { (make) -> Void in
