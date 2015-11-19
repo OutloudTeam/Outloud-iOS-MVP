@@ -188,7 +188,6 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 1
     }
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if fileURL != nil {
             self.Readingplayer.stop()
