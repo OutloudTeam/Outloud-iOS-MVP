@@ -247,7 +247,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
                 forwardParagraphLabel.hidden = true
             }
             ParagraphCount++
-            self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
+            self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
             })
             tableView.reloadData()
             
@@ -271,7 +271,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
                 forwardParagraphLabel.hidden = true
             }
             ParagraphCount--
-            self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
+            self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
             })
             tableView.reloadData()
             

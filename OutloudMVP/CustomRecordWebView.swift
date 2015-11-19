@@ -29,6 +29,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     var playerTimer : NSTimer!
     var audioFiles : NSMutableArray!
     var recordingsCount = 1
+    var currentRecording = 0
     
     
     override func viewDidLoad() {
@@ -106,8 +107,9 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         bottomBar.addSubview(recordButton)
         bottomBar.addSubview(checkButton)
         
-        //        forwardButton.addTarget(self, action: "forwardParagraph", forControlEvents: .TouchUpInside)
-        //        backwardButton.addTarget(self, action: "backwardParagraph", forControlEvents: .TouchUpInside)
+        forwardButton.addTarget(self, action: "forwardParagraph", forControlEvents: .TouchUpInside)
+        backwardButton.addTarget(self, action: "backwardParagraph", forControlEvents: .TouchUpInside)
+        backwardButton.hidden = true
         
         backwardButton.setBackgroundImage(UIImage(named: "back"), forState: .Normal)
         forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
@@ -147,7 +149,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
             if WebViewFullArticleContentArray.count < recordingsCount {
                 WebViewFullArticleContentArray.append(newElement)
             } else {
-                WebViewFullArticleContentArray[recordingsCount-1].recordingUrl = recorder.soundFileURL
+                WebViewFullArticleContentArray[currentRecording].recordingUrl = recorder.soundFileURL
             }
             print(WebViewFullArticleContentArray)
             //            FullArticleContentArray[ParagraphCount].recordingUrl = recorder.soundFileURL
@@ -169,6 +171,62 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         }
     }
     
+    func forwardParagraph() {
+        // stop recording and playing
+        if WebViewFullArticleContentArray.count == recordingsCount {
+            recordingsCount++
+            let newElement = FullArticleContent(text: "none", readings: "none", recordingUrl: nil)
+            WebViewFullArticleContentArray.append(newElement)
+        }
+        
+        if(recorder.isPlaying()) {
+            playback_tapped()
+        }
+        
+        if(recorder.isRecording()) {
+            record_tapped()
+        }
+        
+        backwardButton.hidden = false
+        //            ParagraphCount++
+        
+        // Reset player
+        
+        currentRecording++
+        resetPlayer()
+        self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(currentRecording+1)", callback: { () -> Void in
+        })
+        
+        //            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
+        //            completionBar.snp_updateConstraints(closure: { (make) -> Void in
+        //                make.width.equalTo(completionWidth)
+        //            })
+    }
+    func backwardParagraph() {
+        
+        forwardButton.hidden = false
+        if(currentRecording > 0) {
+            if (currentRecording-1 == 0) {
+                backwardButton.hidden = true
+                //                forwardParagraphLabel.hidden = false
+            } else {
+                backwardButton.hidden = false
+                //                forwardParagraphLabel.hidden = true
+            }
+            currentRecording--
+            self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(currentRecording+1)", callback: { () -> Void in
+            })
+            
+            // Reset player
+            resetPlayer()
+            
+            //            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
+            //            completionBar.snp_updateConstraints(closure: { (make) -> Void in
+            //                make.width.equalTo(completionWidth)
+            //            })
+        }
+    }
+    
     func updateAudioMeter() {
         if(recorder.recorder != nil) {
             
@@ -180,7 +238,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     }
     
     func resetPlayer() {
-        let currentArticle = FullArticleContentArray[ParagraphCount]
+        let currentArticle = WebViewFullArticleContentArray[currentRecording]
         if(currentArticle.recordingUrl != nil) {
             recorder.soundFileURL = currentArticle.recordingUrl!
             recorder.player = try! AVAudioPlayer(contentsOfURL: currentArticle.recordingUrl!)
