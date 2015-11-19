@@ -384,9 +384,10 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         //Bottom bar buttons
         recordButton = RecordButton()//UIButton(type: UIButtonType.System) as UIButton
         checkButton = UIButton(type: UIButtonType.System) as UIButton
-        checkButton.hidden = true
-        let trashButton = UIButton(type: UIButtonType.System) as UIButton
+//        checkButton.hidden = true
         
+        let trashButton = UIButton(type: UIButtonType.System) as UIButton
+        trashButton.hidden = true
         checkButton.enabled = false
         playbackButton.enabled = false
         
