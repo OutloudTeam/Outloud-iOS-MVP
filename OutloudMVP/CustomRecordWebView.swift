@@ -50,6 +50,8 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
                 }
             }
         }
+        self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(currentRecording+1) / \(WebViewFullArticleContentArray.count + 1)", callback: { () -> Void in
+        })
         
         // Setup playback toolbar and button
         let playbackToolbar = UIView(frame: CGRect(x: 0, y: 0, width: 128, height: 32))
@@ -178,6 +180,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     
     func forwardParagraph() {
         if WebViewFullArticleContentArray.count == recordingsCount {
+            print("ADDED")
             recordingsCount++
             let newElement = FullArticleContent(text: "", readings: "none", recordingUrl: nil)
             forwardButton.setBackgroundImage(UIImage(named: "plusParagraph"), forState: .Normal)
@@ -197,7 +200,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         backwardButton.hidden = false
         currentRecording++
         resetPlayer()
-        self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(currentRecording+1)", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(currentRecording+1) / \(WebViewFullArticleContentArray.count)", callback: { () -> Void in
         })
     }
     func backwardParagraph() {
@@ -213,9 +216,9 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
                 //                forwardParagraphLabel.hidden = true
             }
             currentRecording--
-            self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(currentRecording+1)", callback: { () -> Void in
-            })
-            
+        self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(currentRecording+1) / \(WebViewFullArticleContentArray.count)", callback: { () -> Void in
+        })
+        
             // Reset player
             resetPlayer()
         
