@@ -88,6 +88,8 @@ var FullArticleContentArray = [FullArticleContent]()
 var ArticleDetailMediaArray = [ArticleDetailMedia]()
 var ArticleDetailMediaMetadataArray = [ArticleDetailMediaMetadata]()
 
+var WebViewFullArticleContentArray = [FullArticleContent]()
+
 var ArticleListMediaArray = [ArticleDetailMedia]()
 var ArticleListMediaMetadataArray = [ArticleDetailMediaMetadata]()
 
@@ -102,7 +104,7 @@ var indexToListenAt = 0
 
 
 func generateCustomCellRecording() {
-    let uuid = "", source = "", popularity = "", section = "", title = "Custom Article", author = "", abstract = "Click on this cell to navigate to any article online!", url = "www.outloud.io", byline = "", updated_date = "", created_date = "", published_date = "", isRead = false, type = "", subtype = "", caption = "", copyright = "", imageurl = "", format = "", height = 0, width = 0
+    let uuid = "", source = "", popularity = "", section = "", title = "Custom Article", author = "", abstract = "Click on this cell to navigate to any article online!  Record yourself by paragraphs and submit it!  We'll feature it on the app once we verify it!", url = "www.outloud.io", byline = "", updated_date = "", created_date = "", published_date = "", isRead = false, type = "", subtype = "", caption = "", copyright = "", imageurl = "", format = "", height = 0, width = 0
     
     
     let newMediaMetadata = ArticleDetailMediaMetadata(url: imageurl, format: format, height: height, width: width)

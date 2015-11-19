@@ -495,7 +495,7 @@ func createBottomRecordDetailBar(superView: UIView)->UIView{
 MARK: - Generates bottom article list bar
 With QueueList button, queue instructions, playQueueButton and playQueueInstructions.
 */
-func createBottomArticleListBar(view: UIView, playButton: UIButton)->UIView{
+func createBottomArticleListBar(view: UIView, playButton: UIButton, playbackSpeedButton: UIButton)->UIView{
     let bottomBar = UIView()
     let separatorBar = UIView()
     bottomBar.addSubview(separatorBar)
@@ -507,7 +507,7 @@ func createBottomArticleListBar(view: UIView, playButton: UIButton)->UIView{
     view.addSubview(bottomBar)
     bottomBar.backgroundColor = barColor
     bottomBar.snp_makeConstraints { (make) -> Void in
-        make.height.equalTo(50)
+        make.height.equalTo(70)
         make.bottom.equalTo(view).offset(0)
         make.left.equalTo(view).offset(0)
         make.right.equalTo(view).offset(0)
@@ -516,10 +516,16 @@ func createBottomArticleListBar(view: UIView, playButton: UIButton)->UIView{
     
     playButton.setBackgroundImage(UIImage(named: "playCount"), forState: .Normal)
     bottomBar.addSubview(playButton)
+    bottomBar.addSubview(playbackSpeedButton)
     //    queueButton.backgroundColor = UIColor.whiteColor()
     playButton.snp_makeConstraints { (make) -> Void in
-        make.height.width.equalTo(30)
+        make.height.width.equalTo(40)
         make.centerY.centerX.equalTo(bottomBar)
+    }
+    playbackSpeedButton.snp_makeConstraints { (make) -> Void in
+        make.height.width.equalTo(30)
+        make.centerY.equalTo(playButton)
+        make.right.equalTo(playButton.snp_left).offset(-10)
     }
     playButton.contentMode = .ScaleAspectFit
 
@@ -542,7 +548,7 @@ func createBottomParagraphRecordingBar(superView: UIView)->UIView{
         make.height.equalTo(0.5)
     }
     bottomBar.snp_makeConstraints { (make) -> Void in
-        make.height.equalTo(60)
+        make.height.equalTo(70)
         make.bottom.equalTo(superView).offset(0)
         make.left.equalTo(superView).offset(0)
         make.right.equalTo(superView).offset(0)

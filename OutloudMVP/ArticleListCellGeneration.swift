@@ -159,9 +159,9 @@ func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath
         articleOrigin.text = "Not Found"
         return articleCell
     }
-    let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
-    articleOrigin.text = fullURLArray[1]
-    
+//    let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
+//    articleOrigin.text = fullURLArray[1]
+    articleIcon.image = UIImage(named: "parrot-load")
     downloadAndCacheImage(articleIcon, indexPath: indexPath)
     
     
@@ -322,9 +322,10 @@ func generateArticleListRecordCell(tableView: UITableView,indexPath: NSIndexPath
         articleOrigin.text = "Not Found"
         return articleCell
     }
-    let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
-    articleOrigin.text = fullURLArray[1]
+//    let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
+//    articleOrigin.text = fullURLArray[1]
     
+    articleIcon.image = UIImage(named: "parrot-load")
     downloadAndCacheImage(articleIcon, indexPath: indexPath)
     
     

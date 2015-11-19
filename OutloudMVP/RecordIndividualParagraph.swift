@@ -247,7 +247,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
                 forwardParagraphLabel.hidden = true
             }
             ParagraphCount++
-            self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
+            self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
             })
             tableView.reloadData()
             
@@ -271,7 +271,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
                 forwardParagraphLabel.hidden = true
             }
             ParagraphCount--
-            self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Pargraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
+            self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(ParagraphCount+1) / \(FullArticleContentArray.count)", callback: { () -> Void in
             })
             tableView.reloadData()
             
@@ -292,10 +292,8 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     var timer : NSTimer!
     var playerTimer : NSTimer!
     var audioFiles : NSMutableArray!
+    
     override func viewDidLoad() {
-        
-        
-        
         // debug
         
         // end debug
@@ -386,9 +384,10 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         //Bottom bar buttons
         recordButton = RecordButton()//UIButton(type: UIButtonType.System) as UIButton
         checkButton = UIButton(type: UIButtonType.System) as UIButton
-        checkButton.hidden = true
-        let trashButton = UIButton(type: UIButtonType.System) as UIButton
+//        checkButton.hidden = true
         
+        let trashButton = UIButton(type: UIButtonType.System) as UIButton
+        trashButton.hidden = true
         checkButton.enabled = false
         playbackButton.enabled = false
         
@@ -432,23 +431,23 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
 
         
         backwardButton.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(30)
-            make.width.equalTo(45)
+            make.height.equalTo(40)
+            make.width.equalTo(55)
             make.centerY.equalTo(bottomBar.snp_centerY)
             make.left.equalTo(bottomBar.snp_left).offset(5)
         }
         forwardButton.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(30)
-            make.width.equalTo(45)
+            make.height.equalTo(40)
+            make.width.equalTo(55)
             make.centerY.equalTo(bottomBar.snp_centerY)
             make.right.equalTo(bottomBar.snp_right).offset(-5)
         }
         recordButton.snp_makeConstraints { (make) -> Void in
-            make.height.width.equalTo(40)
+            make.height.width.equalTo(50)
             make.center.equalTo(bottomBar.center)
         }
         checkButton.snp_makeConstraints { (make) -> Void in
-            make.height.width.equalTo(35)
+            make.height.width.equalTo(45)
             make.left.equalTo(recordButton.snp_right).offset(30)
             make.centerY.equalTo(bottomBar.snp_centerY)
         }
