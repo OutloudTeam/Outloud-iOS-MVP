@@ -148,6 +148,9 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
 //                Readingplayer.stop()
 //            }
 //        }
+        if fileURL != nil {
+            self.Readingplayer.stop()
+        }
         playOrPause = false
         playButton.enabled = false
         playButton.selected = false
