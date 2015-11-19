@@ -40,7 +40,7 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         
         self.edgesForExtendedLayout = UIRectEdge.None
-        self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Hold a paragraph to start recording!", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleDetail(false, title: "Hold a paragraph to start recording!", callback: { () -> Void in
         })
         
         //        let bottomBar = createBottomRecordDetailBar(self.view)

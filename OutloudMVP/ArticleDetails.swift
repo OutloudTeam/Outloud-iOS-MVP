@@ -28,7 +28,7 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
     var scrollView: UIScrollView!
     
     override func viewDidAppear(animated: Bool) {
-        self.navigationItem.titleView = createNavigationTitleViewArticleDetail("Outloud!", callback: { () -> Void in
+        self.navigationItem.titleView = createNavigationTitleViewArticleDetail(true, title: "Outloud!", callback: { () -> Void in
 
         })
         self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in

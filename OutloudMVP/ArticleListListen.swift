@@ -14,24 +14,31 @@ import SwiftOverlays
 
 class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
     
+    var buttonIndex = 0
     let listenContainer = UIButton()
     let playButton = UIButton(type: UIButtonType.System) as UIButton
     var refreshControl:UIRefreshControl!
     func refresh(sender:AnyObject)
     {
-        articleListJSONGet { () -> () in
+        articleListJSONGet(true) { () -> () in
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
         }
     }
     
     func handleSingleTap(sender: UIButton) {
-        let alert: UIAlertView = UIAlertView()
-        
-        alert.addButtonWithTitle("Listen")
-        alert.addButtonWithTitle("Record")
-        alert.delegate = self  // set the delegate here
-        alert.show()
+//        let alert: UIAlertView = UIAlertView()
+//        
+//        alert.addButtonWithTitle("Listen")
+//        alert.addButtonWithTitle("Record")
+//        alert.delegate = self  // set the delegate here
+//        alert.show()
+        print("Record was clicked")
+        SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            SwiftOverlays.removeAllBlockingOverlays()
+            self.navigationController?.setViewControllers([ArticleListRecord()], animated: true)
+        })
     }
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         alertView.buttonTitleAtIndex(buttonIndex)
@@ -55,15 +62,12 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     
     override func viewDidAppear(animated: Bool) {
-        self.navigationItem.titleView = createNavigationTitleViewArticleListListen(listenContainer , title: "Listen", category: "Popular", callback: { () -> Void in
-        })
-        self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
-            make.width.equalTo(tableView.frame.width)
-            make.top.equalTo((self.navigationController?.view)!).offset(20)
-        })
+        
     }
     
     override func viewDidLoad() {
+        self.navigationItem.titleView = createNavigationTitleViewArticleListListenSingleTitle(listenContainer, title: "Listen", callback: { () -> Void in
+        })
         listenContainer.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.refreshControl = UIRefreshControl()
@@ -72,7 +76,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         self.tableView.addSubview(refreshControl)
         
         self.title = ""
-        articleListJSONGet { () -> () in
+        articleListJSONGet(true) { () -> () in
             dispatch_async(dispatch_get_main_queue()) { [unowned self] in
                 self.tableView.reloadData()
             }
@@ -108,7 +112,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
         //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
-        return cellHeight + 25 + 5 + 25 + 20 + 20
+//        return cellHeight + 25 + 5 + 25 + 20 + 20
+        return cellHeight + 25 + 5 + 25 + 20
     }
     
     //    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -137,7 +142,6 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         articleJSONGet(&articleDetailDictionary, articleID: ArticleListArray[indexPath.row].uuid!) { () -> () in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 SwiftOverlays.removeAllBlockingOverlays()
-                //                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
                 self.navigationController?.pushViewController(ArticleDetail(), animated: true)
             })
         }

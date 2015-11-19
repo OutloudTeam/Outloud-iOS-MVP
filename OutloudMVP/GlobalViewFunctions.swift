@@ -123,6 +123,45 @@ func createNavigationTitleViewArticleListListen(listenContainer: UIButton, title
     return topFrame
 }
 
+func createNavigationTitleViewArticleListListenSingleTitle(listenContainer: UIButton, title: String, callback: ()->Void) -> UIView {
+    
+    let topFrame = UIView()
+    let listenRecordLabel = UILabel()
+    let listenRecordImageView = UIImageView()
+    
+    topFrame.addSubview(listenContainer)
+    topFrame.frame = CGRect(x: 0, y: 0, width: 200, height: 32)
+    
+    listenContainer.frame = CGRect(x: 0, y: 0, width: 100, height: 32)
+    listenContainer.addSubview(listenRecordLabel)
+    listenContainer.addSubview(listenRecordImageView)
+    
+    listenRecordLabel.text = title
+    listenRecordLabel.font = ListenRecordFont
+    listenRecordLabel.textColor = yellowColor
+    listenRecordLabel.textAlignment = .Center
+    
+    listenContainer.snp_makeConstraints { (make) -> Void in
+        make.center.equalTo(topFrame)
+        make.top.bottom.equalTo(topFrame)
+        make.width.equalTo(200)
+    }
+    listenRecordLabel.snp_makeConstraints { (make) -> Void in
+        make.centerX.equalTo(listenContainer.snp_centerX)
+        make.centerY.equalTo(listenContainer).offset(5)
+    }
+    listenRecordImageView.snp_makeConstraints { (make) -> Void in
+        make.left.equalTo(listenRecordLabel.snp_right).offset(5)
+        make.height.width.equalTo(35)
+        make.centerY.equalTo(listenRecordLabel)
+    }
+    
+    listenRecordImageView.image = UIImage(named: "downArrow")
+    listenRecordImageView.contentMode = .ScaleAspectFit
+    
+    return topFrame
+}
+
 func createNavigationTitleViewArticleListRecordSingleTitle(listenContainer: UIButton, title: String, callback: ()->Void) -> UIView {
     
     let topFrame = UIView()
@@ -250,7 +289,7 @@ func createNavigationTitleViewArticleListRecord(listenContainer: UIButton, title
 }
 
 // MARK: - Generates Navigation Top Bar for Article Detail
-func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -> UIView {
+func createNavigationTitleViewArticleDetail(isListen: Bool, title: String, callback: ()->Void) -> UIView {
     let container = UIButton()
     let titleLabel = UILabel()
     let imageView = UIImageView()
@@ -263,7 +302,11 @@ func createNavigationTitleViewArticleDetail(title: String, callback: ()->Void) -
     
     titleLabel.text = title
     titleLabel.font = largeTitleFont
-    titleLabel.textColor = redColor
+    if isListen == false {
+        titleLabel.textColor = redColor
+    } else {
+        titleLabel.textColor = yellowColor
+    }
     titleLabel.textAlignment = .Center
     
     titleLabel.snp_makeConstraints { (make) -> Void in

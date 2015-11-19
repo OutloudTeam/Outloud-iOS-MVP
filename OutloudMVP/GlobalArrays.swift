@@ -27,6 +27,7 @@ struct ArticleListStruct {
     var created_date : String?
     var published_date : String?
     var media = [ArticleDetailMedia]()
+    var isRead : Bool?
 }
 
 struct ArticleDetailStruct {
