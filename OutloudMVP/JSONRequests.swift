@@ -91,6 +91,9 @@ func articleListJSONGet(read: Bool, success:()->()) {
         ArticleListArray.removeAll()
         ArticleListMediaArray.removeAll()
         ArticleListMediaMetadataArray.removeAll()
+        if read == false {
+            generateCustomCellRecording()
+        }
         for var i = 0; i < articleListCount; i++ {
             let uuid = articleListJSONDict[i]["uuid"].string
             let source = articleListJSONDict[i]["source"].string

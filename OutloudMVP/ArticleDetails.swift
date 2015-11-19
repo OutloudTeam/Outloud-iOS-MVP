@@ -28,17 +28,13 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
     var scrollView: UIScrollView!
     
     override func viewDidAppear(animated: Bool) {
-        self.navigationItem.titleView = createNavigationTitleViewArticleDetail(true, title: "Outloud!", callback: { () -> Void in
-
-        })
-        self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
-            make.width.equalTo(tableView.frame.width)
-            make.top.equalTo((self.navigationController?.view)!).offset(20)
-            
-        })
+        
     }
     
     override func viewDidLoad() {
+        self.navigationItem.titleView = createNavigationTitleViewArticleDetail(true, title: "Outloud!", callback: { () -> Void in
+        })
+        
         progressBar.backgroundColor = yellowColor
         self.view.addSubview(progressBar)
         tableView.delegate = self
@@ -132,6 +128,8 @@ class ArticleDetail: UIViewController, UITableViewDelegate, UITableViewDataSourc
         //cell height is dynamically genrated then the constraint values are added to it
         return titleHeight + authorHeight + articleHeight + 57
     }
+    
+    
 }
 func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
     let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)

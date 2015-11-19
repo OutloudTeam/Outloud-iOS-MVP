@@ -163,6 +163,25 @@
 			name = CellGeneration;
 			sourceTree = "<group>";
 		};
+		DBBC14601BFD6A6F000753FB /* Listen Views */ = {
+			isa = PBXGroup;
+			children = (
+				DB02F2091BCA28D300064CEB /* ArticleListListen.swift */,
+			);
+			name = "Listen Views";
+			sourceTree = "<group>";
+		};
+		DBBC14611BFD6A85000753FB /* Recording Views */ = {
+			isa = PBXGroup;
+			children = (
+				DBAC4D1B1BE9ACE5002188CE /* ArticleListRecord.swift */,
+				DBB683FE1BE02BD6002ED471 /* RecordDetails.swift */,
+				F3C40AB21BCAB09600A033FF /* RecordPageViewController.swift */,
+				DB7B3B9C1BE0794300A392DD /* RecordIndividualParagraph.swift */,
+			);
+			name = "Recording Views";
+			sourceTree = "<group>";
+		};
 		DBC15B731BCF640700C4DCC6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,14 +267,11 @@
 		F3C40AB11BCAB02600A033FF /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				DBB0AD031BF6B3E2004CE574 /* Readings */,
-				F3C40AB21BCAB09600A033FF /* RecordPageViewController.swift */,
 				F3332C8C1BC98DA3003DF922 /* ViewController.swift */,
 				DB02F2071BCA25F800064CEB /* ArticleDetails.swift */,
-				DBB683FE1BE02BD6002ED471 /* RecordDetails.swift */,
-				DB7B3B9C1BE0794300A392DD /* RecordIndividualParagraph.swift */,
-				DB02F2091BCA28D300064CEB /* ArticleListListen.swift */,
-				DBAC4D1B1BE9ACE5002188CE /* ArticleListRecord.swift */,
+				DBB0AD031BF6B3E2004CE574 /* Readings */,
+				DBBC14601BFD6A6F000753FB /* Listen Views */,
+				DBBC14611BFD6A85000753FB /* Recording Views */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
