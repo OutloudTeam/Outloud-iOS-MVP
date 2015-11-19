@@ -292,10 +292,8 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     var timer : NSTimer!
     var playerTimer : NSTimer!
     var audioFiles : NSMutableArray!
+    
     override func viewDidLoad() {
-        
-        
-        
         // debug
         
         // end debug

@@ -88,6 +88,8 @@ var FullArticleContentArray = [FullArticleContent]()
 var ArticleDetailMediaArray = [ArticleDetailMedia]()
 var ArticleDetailMediaMetadataArray = [ArticleDetailMediaMetadata]()
 
+var WebViewFullArticleContentArray = [FullArticleContent]()
+
 var ArticleListMediaArray = [ArticleDetailMedia]()
 var ArticleListMediaMetadataArray = [ArticleDetailMediaMetadata]()
 
