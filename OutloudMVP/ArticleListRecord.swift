@@ -18,7 +18,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     var refreshControl:UIRefreshControl!
     func refresh(sender:AnyObject)
     {
-        articleListJSONGet(false) { () -> () in
+        articleListJSONGet(false, forceRefresh: true) { () -> () in
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
         }
@@ -75,7 +75,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         self.tableView.addSubview(refreshControl)
         
         self.title = ""
-        articleListJSONGet(false) { () -> () in
+        articleListJSONGet(false, forceRefresh: false) { () -> () in
             dispatch_async(dispatch_get_main_queue()) { [unowned self] in
                 self.tableView.reloadData()
             }

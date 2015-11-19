@@ -31,7 +31,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func refresh(sender:AnyObject)
     {
-        articleListJSONGet(true) { () -> () in
+        articleListJSONGet(true, forceRefresh: true) { () -> () in
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
         }
@@ -100,8 +100,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         
         self.title = ""
         readingsListGet { () -> () in
-            
-            articleListJSONGet(true) { () -> () in
+            articleListJSONGet(true, forceRefresh: false) { () -> () in
                 dispatch_async(dispatch_get_main_queue()) { [unowned self] in
                     self.tableView.reloadData()
                 }
@@ -125,7 +124,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         self.view.addSubview(progressView)
         
-       
+        
         progressView.addSubview(imageLogo)
         imageLogo.image = UIImage(named: "parrot-load")
         progressView.snp_makeConstraints { (make) -> Void in
@@ -136,10 +135,10 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             make.left.right.top.bottom.equalTo(progressView)
         }
         
-         progressView.addSubview(progressIndicatorView)
+        progressView.addSubview(progressIndicatorView)
         progressIndicatorView.snp_makeConstraints { (make) -> Void in
             make.center.equalTo(imageLogo)
-//            make.width.height.equalTo(imageLogo)
+            //            make.width.height.equalTo(imageLogo)
         }
         progressIndicatorView.backgroundColor = redColor
         progressIndicatorView.frame = progressView.bounds
@@ -151,12 +150,12 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         progressView.layer.mask = progressIndicatorView.circlePathLayer
         progressView.layer.mask?.bounds = imageLogo.bounds
         self.progressView.alpha = 0
-//        self.progressIndicatorView.reveal()
+        //        self.progressIndicatorView.reveal()
         
-
-       
-//        progressIndicatorView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
-
+        
+        
+        //        progressIndicatorView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -175,7 +174,12 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
+        var cellHeight : CGFloat = 0
+        if (ArticleListArray[indexPath.row].title != "") {
+            cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
+        } else {
+            cellHeight = heightForJustifiedView("Title is being processed!", font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView("We are currently processing this recording!  Please have patience with us!", font: articleListAbstractFont, width: (tableView.frame.width - 115))
+        }
         //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
         //        return cellHeight + 25 + 5 + 25 + 20 + 20
         return cellHeight + 25 + 5 + 25 + 20
@@ -247,18 +251,18 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                 dispatch_async(dispatch_get_main_queue()) {
                     let progress = (Double(totalBytesRead) / Double(totalBytesExpectedToRead)) * 1
                     self.progressIndicatorView.progress = CGFloat(progress)
-//                    SwiftOverlays.showBlockingWaitOverlayWithText("Downloading Article: \(Int(progress))%!")
+                    //                    SwiftOverlays.showBlockingWaitOverlayWithText("Downloading Article: \(Int(progress))%!")
                     print("Total bytes read on main queue: \(progress)")
                 }
             }
             .response { _, _, _, error in
                 if let error = error {
                     print("Failed with error: \(error)")
-//                    SwiftOverlays.removeAllBlockingOverlays()
+                    //                    SwiftOverlays.removeAllBlockingOverlays()
                 } else {
                     print("Downloaded file successfully")
                     self.Readingplayer = AVAudioPlayer()
-//                    SwiftOverlays.removeAllBlockingOverlays()
+                    //                    SwiftOverlays.removeAllBlockingOverlays()
                     do {
                         let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
                         self.Readingplayer = Readingplayer
