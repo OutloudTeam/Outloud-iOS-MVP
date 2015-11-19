@@ -30,12 +30,12 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidAppear(animated: Bool) {
     }
     func handleSingleTap(sender: UIButton) {
-//        let alert: UIAlertView = UIAlertView()
-//        
-//        let yesBut = alert.addButtonWithTitle("Listen")
-//        let noBut = alert.addButtonWithTitle("Record")
-//        alert.delegate = self  // set the delegate here
-//        alert.show()
+        //        let alert: UIAlertView = UIAlertView()
+        //
+        //        let yesBut = alert.addButtonWithTitle("Listen")
+        //        let noBut = alert.addButtonWithTitle("Record")
+        //        alert.delegate = self  // set the delegate here
+        //        alert.show()
         print("Listen was clicked")
         SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -63,7 +63,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     override func viewDidLoad() {
-        self.navigationItem.titleView = createNavigationTitleViewArticleListRecordSingleTitle(listenContainer, title: "Record", callback: { () -> Void in    
+        self.navigationItem.titleView = createNavigationTitleViewArticleListRecordSingleTitle(listenContainer, title: "Record", callback: { () -> Void in
         })
         self.navigationItem.setLeftBarButtonItem(nil, animated: true)
         
@@ -83,7 +83,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         self.edgesForExtendedLayout = UIRectEdge.None
         
         
-
+        
         self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
@@ -111,7 +111,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
         //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
-//        return cellHeight + 25 + 5 + 25 + 20 + 20
+        //        return cellHeight + 25 + 5 + 25 + 20 + 20
         return cellHeight + 25 + 5 + 25 + 20
     }
     
@@ -120,14 +120,19 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-        articleJSONGet(&articleDetailDictionary, articleID: ArticleListArray[indexPath.row].uuid!) { () -> () in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                SwiftOverlays.removeAllBlockingOverlays()
-                //                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
-                CurrentArticleUuid = ArticleListArray[indexPath.row].uuid
-                self.navigationController?.pushViewController(RecordDetails(), animated: true)
-            })
+        if(indexPath.row != 0) {
+            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+            articleJSONGet(&articleDetailDictionary, articleID: ArticleListArray[indexPath.row].uuid!) { () -> () in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    SwiftOverlays.removeAllBlockingOverlays()
+                    //                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
+                    CurrentArticleUuid = ArticleListArray[indexPath.row].uuid
+                    self.navigationController?.pushViewController(RecordDetails(), animated: true)
+                })
+            }
+          //HERE WE GO TO WEB VIEW
+        } else {
+            
         }
     }
     
