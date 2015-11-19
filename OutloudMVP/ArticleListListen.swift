@@ -205,6 +205,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         } else {
             do {
                 let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
+                
                 self.Readingplayer = Readingplayer
                 self.Readingplayer.enableRate = true
                 self.Readingplayer.delegate = self

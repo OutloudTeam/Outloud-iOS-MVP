@@ -507,7 +507,7 @@ func createBottomArticleListBar(view: UIView, playButton: UIButton, playbackSpee
     view.addSubview(bottomBar)
     bottomBar.backgroundColor = barColor
     bottomBar.snp_makeConstraints { (make) -> Void in
-        make.height.equalTo(50)
+        make.height.equalTo(70)
         make.bottom.equalTo(view).offset(0)
         make.left.equalTo(view).offset(0)
         make.right.equalTo(view).offset(0)
@@ -519,7 +519,7 @@ func createBottomArticleListBar(view: UIView, playButton: UIButton, playbackSpee
     bottomBar.addSubview(playbackSpeedButton)
     //    queueButton.backgroundColor = UIColor.whiteColor()
     playButton.snp_makeConstraints { (make) -> Void in
-        make.height.width.equalTo(30)
+        make.height.width.equalTo(40)
         make.centerY.centerX.equalTo(bottomBar)
     }
     playbackSpeedButton.snp_makeConstraints { (make) -> Void in
@@ -548,7 +548,7 @@ func createBottomParagraphRecordingBar(superView: UIView)->UIView{
         make.height.equalTo(0.5)
     }
     bottomBar.snp_makeConstraints { (make) -> Void in
-        make.height.equalTo(60)
+        make.height.equalTo(70)
         make.bottom.equalTo(superView).offset(0)
         make.left.equalTo(superView).offset(0)
         make.right.equalTo(superView).offset(0)

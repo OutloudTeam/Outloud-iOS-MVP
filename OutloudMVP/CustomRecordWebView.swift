@@ -17,7 +17,6 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     let webView = UIWebView()
     let backgroundView = UIView()
     let initialURL = "http://google.com"
-    
     var recordButton : RecordButton!
     let recorder = Recorder()
     var checkButton : UIButton!
@@ -326,8 +325,8 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
                     let email = alert.textFields![1].text! as? String else {
                         return
                 }
-//                self.webCheckTapped(name, email: email)
-                print(self.webView.request?.mainDocumentURL)
+                self.webCheckTapped(name, email: email)
+//                print(self.webView.request?.mainDocumentURL)
             }
         }
         alert.addAction(sendAction)
@@ -337,6 +336,9 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     func webCheckTapped(name: String, email: String) {
         // upload the file if there is any.
         // you're good, go back to the paragraph
+//        guard let website = self.webView.request?.mainDocumentURL as? String else {
+//            return
+//        }
         
         let audioFiles = NSMutableArray()
         for(var i = 0; i < WebViewFullArticleContentArray.count; i++) {
@@ -347,7 +349,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         mergeAudioFiles(audioFiles, callback: { (url, error) -> () in
             
             if(url != nil) {
-                let parameters = ["article_id":"FRED-FRED-1234-FRED","is_human":"true","reader_id":"\(name)","email":"\(email)"]
+                let parameters = ["is_human":"true","reader_id":"\(name)","email":"\(email)", "content_url":"\(self.webView.request!.mainDocumentURL!)"]
                 
                 let data = NSData(contentsOfURL: url!)
                 
