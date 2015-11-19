@@ -177,15 +177,23 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         }
     }
     
+    var isForward = false
     func forwardParagraph() {
-        if WebViewFullArticleContentArray.count == recordingsCount {
-            print("ADDED")
-            recordingsCount++
+        
+        print("Forward: \(WebViewFullArticleContentArray.count) =? \(currentRecording)")
+        
+        if WebViewFullArticleContentArray.count == currentRecording + 1 {
             let newElement = FullArticleContent(text: "", readings: "none", recordingUrl: nil)
             forwardButton.setBackgroundImage(UIImage(named: "plusParagraph"), forState: .Normal)
             WebViewFullArticleContentArray.append(newElement)
+            isForward = false
         } else {
             forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
+            isForward = true
+        }
+        
+        if (!isForward) {
+            recordingsCount++
         }
         
         if(recorder.isPlaying()) {
@@ -195,13 +203,15 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         if(recorder.isRecording()) {
             record_tapped()
         }
+
+        currentRecording++
         
         backwardButton.hidden = false
-        currentRecording++
         resetPlayer()
         self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(currentRecording+1) / \(WebViewFullArticleContentArray.count)", callback: { () -> Void in
         })
     }
+    
     func backwardParagraph() {
         forwardButton.hidden = false
         forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
