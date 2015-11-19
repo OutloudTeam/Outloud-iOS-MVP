@@ -336,9 +336,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     func webCheckTapped(name: String, email: String) {
         // upload the file if there is any.
         // you're good, go back to the paragraph
-//        guard let website = self.webView.request?.mainDocumentURL as? String else {
-//            return
-//        }
+        let htmlTitle = webView.stringByEvaluatingJavaScriptFromString("document.title")
         
         let audioFiles = NSMutableArray()
         for(var i = 0; i < WebViewFullArticleContentArray.count; i++) {
@@ -349,7 +347,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         mergeAudioFiles(audioFiles, callback: { (url, error) -> () in
             
             if(url != nil) {
-                let parameters = ["is_human":"true","reader_id":"\(name)","email":"\(email)", "content_url":"\(self.webView.request!.mainDocumentURL!)"]
+                let parameters = ["is_human":"true","reader_id":"\(name)","email":"\(email)", "content_url":"\(self.webView.request!.mainDocumentURL!)", "title":"\(htmlTitle!)"]
                 
                 let data = NSData(contentsOfURL: url!)
                 

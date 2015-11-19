@@ -58,10 +58,16 @@ func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath
 //    articleCell.addSubview(addToQueueIcon)
 //    articleCell.addSubview(addToQueueLabel)
     
-    
+    if ArticleListArray[indexPath.row].title != "" {
     articleTitle.text = ArticleListArray[indexPath.row].title
+    } else {
+        articleTitle.text = "Title is being processed!"
+    }
+    if ArticleListArray[indexPath.row].abstract != "" {
     articleAbstract.text = ArticleListArray[indexPath.row].abstract
-    
+    } else {
+        articleAbstract.text = "We are currently processing this recording!  Please have patience with us!"
+    }
     articleTitle.font = articleListTileFont
     articleTitle.textColor = UIColor.blackColor()
     articleAbstract.font = articleListAbstractFont
