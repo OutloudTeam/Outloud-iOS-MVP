@@ -495,7 +495,7 @@ func createBottomRecordDetailBar(superView: UIView)->UIView{
 MARK: - Generates bottom article list bar
 With QueueList button, queue instructions, playQueueButton and playQueueInstructions.
 */
-func createBottomArticleListBar(view: UIView, playButton: UIButton)->UIView{
+func createBottomArticleListBar(view: UIView, playButton: UIButton, playbackSpeedButton: UIButton)->UIView{
     let bottomBar = UIView()
     let separatorBar = UIView()
     bottomBar.addSubview(separatorBar)
@@ -516,10 +516,16 @@ func createBottomArticleListBar(view: UIView, playButton: UIButton)->UIView{
     
     playButton.setBackgroundImage(UIImage(named: "playCount"), forState: .Normal)
     bottomBar.addSubview(playButton)
+    bottomBar.addSubview(playbackSpeedButton)
     //    queueButton.backgroundColor = UIColor.whiteColor()
     playButton.snp_makeConstraints { (make) -> Void in
         make.height.width.equalTo(30)
         make.centerY.centerX.equalTo(bottomBar)
+    }
+    playbackSpeedButton.snp_makeConstraints { (make) -> Void in
+        make.height.width.equalTo(30)
+        make.centerY.equalTo(playButton)
+        make.right.equalTo(playButton.snp_left).offset(-10)
     }
     playButton.contentMode = .ScaleAspectFit
 

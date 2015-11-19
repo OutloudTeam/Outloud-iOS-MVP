@@ -11,6 +11,7 @@ import UIKit
 import SnapKit
 import AVFoundation
 import Foundation
+import Alamofire
 
 class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     let webView = UIWebView()
@@ -57,6 +58,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         playbackButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         playbackButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Selected)
         playbackToolbar.addSubview(playbackButton)
+        
         playbackButton.addTarget(self, action: "playback_tapped", forControlEvents: .TouchUpInside)
         
         playbackButton.snp_makeConstraints { (make) -> Void in
@@ -98,7 +100,8 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         recordButton.addTarget(self, action: "record_tapped", forControlEvents: UIControlEvents.TouchUpInside)
         
         checkButton = UIButton(type: UIButtonType.System) as UIButton
-        checkButton.hidden = true
+        checkButton.enabled = false
+        checkButton.addTarget(self, action: "preWebCheckTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         
         forwardButton.frame = CGRectMake(50, 50, 70, 50)
         recordButton.frame = CGRectMake(100,100,100,100)
@@ -109,10 +112,11 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         
         forwardButton.addTarget(self, action: "forwardParagraph", forControlEvents: .TouchUpInside)
         backwardButton.addTarget(self, action: "backwardParagraph", forControlEvents: .TouchUpInside)
+        forwardButton.hidden = true
         backwardButton.hidden = true
         
         backwardButton.setBackgroundImage(UIImage(named: "back"), forState: .Normal)
-        forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
+        forwardButton.setBackgroundImage(UIImage(named: "plusParagraph"), forState: .Normal)
         checkButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
         checkButton.setBackgroundImage(UIImage(named: "check-disabled"), forState: .Disabled)
         
@@ -141,17 +145,18 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     }
     
     func record_tapped() {
+        checkButton.enabled = true
+        forwardButton.hidden = false
         if(recorder.isRecording()) {
             recorder.stopRecording()
             // save the url
-            print(ParagraphCount)
             let newElement = FullArticleContent(text: "none", readings: "none", recordingUrl: recorder.soundFileURL)
             if WebViewFullArticleContentArray.count < recordingsCount {
                 WebViewFullArticleContentArray.append(newElement)
             } else {
                 WebViewFullArticleContentArray[currentRecording].recordingUrl = recorder.soundFileURL
+                WebViewFullArticleContentArray[currentRecording].text = newElement.text
             }
-            print(WebViewFullArticleContentArray)
             //            FullArticleContentArray[ParagraphCount].recordingUrl = recorder.soundFileURL
             recordButton.setRecording(false, animate: true)
             playbackButton.enabled = true
@@ -172,11 +177,13 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     }
     
     func forwardParagraph() {
-        // stop recording and playing
         if WebViewFullArticleContentArray.count == recordingsCount {
             recordingsCount++
-            let newElement = FullArticleContent(text: "none", readings: "none", recordingUrl: nil)
+            let newElement = FullArticleContent(text: "", readings: "none", recordingUrl: nil)
+            forwardButton.setBackgroundImage(UIImage(named: "plusParagraph"), forState: .Normal)
             WebViewFullArticleContentArray.append(newElement)
+        } else {
+            forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
         }
         
         if(recorder.isPlaying()) {
@@ -188,25 +195,17 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         }
         
         backwardButton.hidden = false
-        //            ParagraphCount++
-        
-        // Reset player
-        
         currentRecording++
         resetPlayer()
         self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(currentRecording+1)", callback: { () -> Void in
         })
-        
-        //            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
-        //            completionBar.snp_updateConstraints(closure: { (make) -> Void in
-        //                make.width.equalTo(completionWidth)
-        //            })
     }
     func backwardParagraph() {
-        
         forwardButton.hidden = false
-        if(currentRecording > 0) {
+        forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
+//        if(currentRecording > 0) {
             if (currentRecording-1 == 0) {
+                forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
                 backwardButton.hidden = true
                 //                forwardParagraphLabel.hidden = false
             } else {
@@ -219,12 +218,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
             
             // Reset player
             resetPlayer()
-            
-            //            completionWidth = self.view.frame.width * (CGFloat(ParagraphCount+1) / CGFloat(FullArticleContentArray.count))
-            //            completionBar.snp_updateConstraints(closure: { (make) -> Void in
-            //                make.width.equalTo(completionWidth)
-            //            })
-        }
+        
     }
     
     func updateAudioMeter() {
@@ -250,7 +244,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
             timeLabel.text = "00:00"
             
         }
-        checkButton.enabled = false
+        //        checkButton.enabled = false
     }
     
     func loadAddressURL() {
@@ -302,5 +296,65 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
             })
             
         }
+    }
+    
+    func preWebCheckTapped(sender: UIButton) {
+        let alert = UIAlertController(title: "Thanks!", message: "Enter your information to send your recording to us!  We'll review it and send you  confirmation once it appears on our listen page!  You rock!", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "Enter name:"
+            
+        })
+        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "Enter email:"
+            
+        })
+        let sendAction = UIAlertAction(title: "Send", style: .Default) { (action) in
+            var didFillFields = true
+            for(var i=0;i<alert.textFields?.count;i++) {
+                if alert.textFields![i].text == "" {
+                    didFillFields = false
+                }
+            }
+            if didFillFields == true {
+                guard let name = alert.textFields![0].text! as? String,
+                    let email = alert.textFields![1].text! as? String else {
+                        return
+                }
+//                self.webCheckTapped(name, email: email)
+                print(self.webView.request?.mainDocumentURL)
+            }
+        }
+        alert.addAction(sendAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func webCheckTapped(name: String, email: String) {
+        // upload the file if there is any.
+        // you're good, go back to the paragraph
+        
+        let audioFiles = NSMutableArray()
+        for(var i = 0; i < WebViewFullArticleContentArray.count; i++) {
+            if(WebViewFullArticleContentArray[i].text! == "none") {
+                audioFiles.addObject(WebViewFullArticleContentArray[i].recordingUrl!)
+            }
+        }
+        mergeAudioFiles(audioFiles, callback: { (url, error) -> () in
+            
+            if(url != nil) {
+                let parameters = ["article_id":"FRED-FRED-1234-FRED","is_human":"true","reader_id":"\(name)","email":"\(email)"]
+                
+                let data = NSData(contentsOfURL: url!)
+                
+                let request = urlRequestWithComponents("http://www.outloud.io:8080/api/reading/new", parameters: parameters, imageData: data!)
+                
+                Alamofire.upload(request.0, data: request.1)
+            }
+            
+        })
+        print("SENT")
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }

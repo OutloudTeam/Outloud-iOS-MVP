@@ -18,6 +18,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     var buttonIndex = 0
     let listenContainer = UIButton()
     let playButton = UIButton()
+    let playbackSpeedButton = UIButton()
     var refreshControl:UIRefreshControl!
     
     lazy var playOrPause = false
@@ -78,11 +79,16 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Selected)
         
+        playbackSpeedButton.setBackgroundImage(UIImage(named: "speedModifier"), forState: .Normal)
+        playbackSpeedButton.setBackgroundImage(UIImage(named: "edit-queue"), forState: .Selected)
+        playbackSpeedButton.enabled = false
+        
         self.navigationItem.titleView = createNavigationTitleViewArticleListListenSingleTitle(listenContainer, title: "Listen", callback: { () -> Void in
         })
         
         playButton.addTarget(self, action: "playFile", forControlEvents: UIControlEvents.TouchUpInside)
         listenContainer.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
+        playbackSpeedButton.addTarget(self, action: "changeSpeed", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -100,7 +106,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         self.edgesForExtendedLayout = UIRectEdge.None
         
-        let bottomBar = createBottomArticleListBar(self.view, playButton: playButton)
+        let bottomBar = createBottomArticleListBar(self.view, playButton: playButton, playbackSpeedButton: playbackSpeedButton)
         self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
@@ -154,6 +160,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         playOrPause = false
         playButton.enabled = false
         playButton.selected = false
+        playbackSpeedButton.selected = false
         
         getTrackURL(indexPath)
         
@@ -167,10 +174,12 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             do {
                 let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
                 self.Readingplayer = Readingplayer
+                self.Readingplayer.enableRate = true
                 self.Readingplayer.delegate = self
                 self.Readingplayer.play()
                 playButton.selected = true
                 playButton.enabled = true
+                playbackSpeedButton.enabled = true
             } catch {
                 print(error)
             }
@@ -219,9 +228,11 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                         let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
                         self.Readingplayer = Readingplayer
                         self.Readingplayer.delegate = self
+                        self.Readingplayer.enableRate = true
                         self.Readingplayer.play()
                         self.playButton.selected = true
                         self.playButton.enabled = true
+                        self.playbackSpeedButton.enabled = true
                     } catch {
                         print(error)
                     }
@@ -253,6 +264,16 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             playOrPause = false
 //            playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         }
+    }
+    
+    func changeSpeed() {
+        playbackSpeedButton.selected = !playbackSpeedButton.selected
+        if playbackSpeedButton.selected == true {
+            self.Readingplayer.rate = 1.3
+        } else {
+            self.Readingplayer.rate = 1.0
+        }
+        
     }
     
 }
