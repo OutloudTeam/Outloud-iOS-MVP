@@ -11,13 +11,21 @@ import UIKit
 import SnapKit
 import AVFoundation
 import SwiftOverlays
+import Alamofire
 
-class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
+class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, AVAudioPlayerDelegate {
     
     var buttonIndex = 0
     let listenContainer = UIButton()
     let playButton = UIButton(type: UIButtonType.System) as UIButton
     var refreshControl:UIRefreshControl!
+    
+    lazy var playOrPause = false
+    lazy var Readingplayer = AVAudioPlayer()
+    lazy var currentTrackIndex = 0
+    lazy var tracks:[String] = [String]()
+    var fileURL : NSURL!
+    
     func refresh(sender:AnyObject)
     {
         articleListJSONGet(true) { () -> () in
@@ -27,12 +35,12 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func handleSingleTap(sender: UIButton) {
-//        let alert: UIAlertView = UIAlertView()
-//        
-//        alert.addButtonWithTitle("Listen")
-//        alert.addButtonWithTitle("Record")
-//        alert.delegate = self  // set the delegate here
-//        alert.show()
+        //        let alert: UIAlertView = UIAlertView()
+        //
+        //        alert.addButtonWithTitle("Listen")
+        //        alert.addButtonWithTitle("Record")
+        //        alert.delegate = self  // set the delegate here
+        //        alert.show()
         print("Record was clicked")
         SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -66,8 +74,11 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     override func viewDidLoad() {
+        
         self.navigationItem.titleView = createNavigationTitleViewArticleListListenSingleTitle(listenContainer, title: "Listen", callback: { () -> Void in
         })
+        
+        playButton.addTarget(self, action: "playFile", forControlEvents: UIControlEvents.TouchUpInside)
         listenContainer.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.refreshControl = UIRefreshControl()
@@ -76,9 +87,12 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         self.tableView.addSubview(refreshControl)
         
         self.title = ""
-        articleListJSONGet(true) { () -> () in
-            dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-                self.tableView.reloadData()
+        readingsListGet { () -> () in
+            
+            articleListJSONGet(true) { () -> () in
+                dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+                    self.tableView.reloadData()
+                }
             }
         }
         self.edgesForExtendedLayout = UIRectEdge.None
@@ -92,7 +106,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-
+        
         tableView.snp_makeConstraints { (make) -> Void in
             make.left.right.top.equalTo(self.view)
             make.bottom.equalTo(bottomBar.snp_top)
@@ -112,38 +126,112 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
         //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
-//        return cellHeight + 25 + 5 + 25 + 20 + 20
+        //        return cellHeight + 25 + 5 + 25 + 20 + 20
         return cellHeight + 25 + 5 + 25 + 20
     }
     
-    //    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    //        let articleBar = UIView()
-    //        self.view.addSubview(articleBar)
-    //        articleBar.backgroundColor = UIColor.whiteColor()
-    //        playAllButton.frame = CGRectMake(100, 50, 100, 50)
-    //        playAllButton.setBackgroundImage(UIImage(named: "play-all"), forState: .Normal)
-    //        playAllButton.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0)
-    //        articleBar.addSubview(playAllButton)
-    //        playAllButton.snp_makeConstraints { (make) -> Void in
-    //            make.height.equalTo(50)
-    //            make.width.equalTo(150)
-    //            make.centerX.equalTo(articleBar.snp_centerX)
-    //            make.centerY.equalTo(articleBar.snp_centerY)
-    //        }
-    //
-    //        return articleBar
-    //    }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 1
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-        articleJSONGet(&articleDetailDictionary, articleID: ArticleListArray[indexPath.row].uuid!) { () -> () in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                SwiftOverlays.removeAllBlockingOverlays()
-                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
-            })
+//        if let reader = Readingplayer {
+//            if reader.playing == true {
+//                Readingplayer.stop()
+//            }
+//        }
+        playOrPause = false
+        playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+        
+        getTrackURL(indexPath)
+//        print(ReadingsListArray)
+        
+        var error:NSError?
+        let folderExists = self.fileURL!.checkResourceIsReachableAndReturnError(&error)
+        if folderExists != true {
+            downloadFile(indexPath)
+        } else {
+            do {
+                let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
+                self.Readingplayer = Readingplayer
+                self.Readingplayer.delegate = self
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    
+    //CODE FOR PLAYING FILES
+    func downloadFile(indexPath: NSIndexPath) {
+        var url = ""
+        let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
+            (temporaryURL, response) in
+            
+            if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
+                self.fileURL = directoryURL.URLByAppendingPathComponent("\(ArticleListArray[indexPath.row].uuid)")
+                return directoryURL.URLByAppendingPathComponent("\(ArticleListArray[indexPath.row].uuid)")
+            }
+            return temporaryURL
+        }
+        
+        for (var i = 0; i<ReadingsListArray.count;i++) {
+            if(ReadingsListArray[i].articleID == ArticleListArray[indexPath.row].uuid) {
+                url = ReadingsListArray[i].url!
+            }
+        }
+        if url == "" {
+            return
+        }
+        Alamofire.download(.GET, url, destination: destination)
+            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+                dispatch_async(dispatch_get_main_queue()) {
+                    let progress = (Double(totalBytesRead) / Double(totalBytesExpectedToRead)) * 100
+                    SwiftOverlays.showBlockingWaitOverlayWithText("Downloading Article: \(Int(progress))%!")
+                    print("Total bytes read on main queue: \(progress)")
+                }
+            }
+            .response { _, _, _, error in
+                if let error = error {
+                    print("Failed with error: \(error)")
+                    SwiftOverlays.removeAllBlockingOverlays()
+                } else {
+                    print("Downloaded file successfully")
+                    self.Readingplayer = AVAudioPlayer()
+                    SwiftOverlays.removeAllBlockingOverlays()
+                    do {
+                        let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
+                        self.Readingplayer = Readingplayer
+                        self.Readingplayer.delegate = self
+                    } catch {
+                        print(error)
+                    }
+                }
+        }
+    }
+    
+    func getTrackURL(indexPath: NSIndexPath) {
+        if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
+            fileURL = directoryURL.URLByAppendingPathComponent("\(ArticleListArray[indexPath.row].uuid)")
+            directoryURL.URLByAppendingPathComponent("\(ArticleListArray[indexPath.row].uuid)")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+        playOrPause = false
+        playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+    }
+    
+    func playFile() {
+        if (playOrPause == false) {
+            self.Readingplayer.play()
+            
+            playOrPause = true
+            playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Normal)
+        } else {
+            self.Readingplayer.pause()
+            playOrPause = false
+            playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         }
     }
     

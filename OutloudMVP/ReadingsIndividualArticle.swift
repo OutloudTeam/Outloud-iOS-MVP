@@ -109,12 +109,12 @@ class ReadingsIndividualArticle: UIViewController, UIActionSheetDelegate, AVAudi
     }
     
     override func viewDidLoad() {
-//        Readingplayer.delegate = self
+        //        Readingplayer.delegate = self
         playButton.addTarget(self, action: "playFile", forControlEvents: UIControlEvents.TouchUpInside)
         self.title = ""
         self.edgesForExtendedLayout = UIRectEdge.None
         let bottomBar = createBottomArticleListBar(self.view, playButton: playButton)
-//        middleView.backgroundColor = UIColor.whiteColor()
+        //        middleView.backgroundColor = UIColor.whiteColor()
         middleView.backgroundColor = UIColor(red: 52.0/255.0, green: 170.0/255.0, blue: 220.0/255.0, alpha: 1.0)
         self.view.addSubview(middleView)
         middleView.addSubview(progressView)
@@ -124,7 +124,7 @@ class ReadingsIndividualArticle: UIViewController, UIActionSheetDelegate, AVAudi
         }
         
         progressView.snp_makeConstraints { (make) -> Void in
-//            make.left.right.bottom.equalTo(middleView)
+            //            make.left.right.bottom.equalTo(middleView)
             make.center.equalTo(middleView)
             make.height.width.equalTo(300)
         }
