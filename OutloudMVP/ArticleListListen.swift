@@ -17,7 +17,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     
     var buttonIndex = 0
     let listenContainer = UIButton()
-    let playButton = UIButton(type: UIButtonType.System) as UIButton
+    let playButton = UIButton()
     var refreshControl:UIRefreshControl!
     
     lazy var playOrPause = false
@@ -74,6 +74,9 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     override func viewDidLoad() {
+        playButton.enabled = false
+        playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+        playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Selected)
         
         self.navigationItem.titleView = createNavigationTitleViewArticleListListenSingleTitle(listenContainer, title: "Listen", callback: { () -> Void in
         })
@@ -141,10 +144,10 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
 //            }
 //        }
         playOrPause = false
+        playButton.enabled = false
         playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         
         getTrackURL(indexPath)
-//        print(ReadingsListArray)
         
         var error:NSError?
         let folderExists = self.fileURL!.checkResourceIsReachableAndReturnError(&error)
@@ -155,6 +158,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                 let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
                 self.Readingplayer = Readingplayer
                 self.Readingplayer.delegate = self
+                playButton.enabled = true
             } catch {
                 print(error)
             }
@@ -203,6 +207,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                         let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
                         self.Readingplayer = Readingplayer
                         self.Readingplayer.delegate = self
+                        self.playButton.enabled = true
                     } catch {
                         print(error)
                     }
@@ -223,15 +228,16 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func playFile() {
+        playButton.selected = !playButton.selected
         if (playOrPause == false) {
             self.Readingplayer.play()
             
             playOrPause = true
-            playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Normal)
+//            playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Normal)
         } else {
             self.Readingplayer.pause()
             playOrPause = false
-            playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+//            playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         }
     }
     

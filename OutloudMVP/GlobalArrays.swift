@@ -98,3 +98,20 @@ var articleDetailDictionary :[String: AnyObject] = ["place":"holder"]
 var ParagraphCount = 0
 var CurrentArticleUuid :String? = nil
 var indexToListenAt = 0
+
+
+
+func generateCustomCellRecording() {
+    let uuid = "", source = "www.outloud.io", popularity = "", section = "", title = "Custom Cell", author = "", abstract = "", url = "www.outloud.io", byline = "", updated_date = "", created_date = "", published_date = "", isRead = false, type = "", subtype = "", caption = "", copyright = "", imageurl = "", format = "", height = 0, width = 0
+    
+    
+    let newMediaMetadata = ArticleDetailMediaMetadata(url: imageurl, format: format, height: height, width: width)
+    ArticleListMediaMetadataArray.append(newMediaMetadata)
+    
+    let newMedia = ArticleDetailMedia(type: type, subtype: subtype, caption: caption, copyright: copyright, mediaMetadata: ArticleDetailMediaMetadataArray)
+    ArticleListMediaArray.append(newMedia)
+    
+
+    let newArticle = ArticleListStruct(uuid: uuid, source: source, popularity: popularity, section: section, title: title, author: author, abstract: abstract, url: url, byline: byline, updated_date: updated_date, created_date: created_date, published_date: published_date, media: ArticleListMediaArray, isRead: isRead)
+    ArticleListArray.append(newArticle)
+}
