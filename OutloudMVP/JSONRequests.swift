@@ -70,8 +70,13 @@ func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, artic
     }
 }
 // MARK: - Generate article list from API
-func articleListJSONGet(success:()->()) {
-    let urlString = "http://www.outloud.io:8080/api/feed/"
+func articleListJSONGet(read: Bool, success:()->()) {
+    var urlString = ""
+    if read == true {
+        urlString = "http://www.outloud.io:8080/api/feed/"
+    } else {
+        urlString = "http://www.outloud.io:8080/api/feed?is_read=false"
+    }
     let cache = Shared.dataCache
     if(cacheCheck() == false){
         cache.removeAll()
@@ -100,28 +105,28 @@ func articleListJSONGet(success:()->()) {
             let created_date = articleListJSONDict[i]["created_data"].string
             let published_date = articleListJSONDict[i]["published_date"].string
             let media = articleListJSONDict[i]["media"]
+            let isRead = articleListJSONDict[i]["is_read"].bool
+            //            for var z = 0; z < articleListJSONDict["media"].count; z++ {
+            let type = media[0]["type"].string
+            let subtype = media[0]["subtype"].string
+            let caption = media[0]["caption"].string
+            let copyright = media[0]["copyright"].string
+            let mediaMetadata = articleListJSONDict["media"][0]["media-metadata"]
+            //                for var p = 0; p < mediaMetadata.count; p++ {
+            let imageurl = media[0]["media-metadata"][0]["url"].string
+            let format = media[0]["media-metadata"][0]["format"].string
+            let height = media[0]["media-metadata"][0]["height"].int
+            let width  = media[0]["media-metadata"][0]["width"].int
             
-//            for var z = 0; z < articleListJSONDict["media"].count; z++ {
-                let type = media[0]["type"].string
-                let subtype = media[0]["subtype"].string
-                let caption = media[0]["caption"].string
-                let copyright = media[0]["copyright"].string
-                let mediaMetadata = articleListJSONDict["media"][0]["media-metadata"]
-//                for var p = 0; p < mediaMetadata.count; p++ {
-                    let imageurl = media[0]["media-metadata"][0]["url"].string
-                    let format = media[0]["media-metadata"][0]["format"].string
-                    let height = media[0]["media-metadata"][0]["height"].int
-                    let width  = media[0]["media-metadata"][0]["width"].int
-                    
-                    let newMediaMetadata = ArticleDetailMediaMetadata(url: imageurl, format: format, height: height, width: width)
-                    ArticleListMediaMetadataArray.append(newMediaMetadata)
-                    //
-//                }
-                let newMedia = ArticleDetailMedia(type: type, subtype: subtype, caption: caption, copyright: copyright, mediaMetadata: ArticleDetailMediaMetadataArray)
-                ArticleListMediaArray.append(newMedia)
-                
-//            }
-            let newArticle = ArticleListStruct(uuid: uuid, source: source, popularity: popularity, section: section, title: title, author: author, abstract: abstract, url: url, byline: byline, updated_date: updated_date, created_date: created_date, published_date: published_date, media: ArticleListMediaArray)
+            let newMediaMetadata = ArticleDetailMediaMetadata(url: imageurl, format: format, height: height, width: width)
+            ArticleListMediaMetadataArray.append(newMediaMetadata)
+            //
+            //                }
+            let newMedia = ArticleDetailMedia(type: type, subtype: subtype, caption: caption, copyright: copyright, mediaMetadata: ArticleDetailMediaMetadataArray)
+            ArticleListMediaArray.append(newMedia)
+            
+            //            }
+            let newArticle = ArticleListStruct(uuid: uuid, source: source, popularity: popularity, section: section, title: title, author: author, abstract: abstract, url: url, byline: byline, updated_date: updated_date, created_date: created_date, published_date: published_date, media: ArticleListMediaArray, isRead: isRead)
             ArticleListArray.append(newArticle)
         }
         success()
@@ -150,7 +155,7 @@ func readingsListGet(success:()->()) {
             let contentUrl = readingsListJSON[i]["content_url"].string
             let url = readingsListJSON[i]["url"].string
             let fileType = readingsListJSON[i]["file_type"].string
-        
+            
             let newArticle = ReadingListStruct(uuid: uuid, articleID: articleID, isHuman: isHuman, readerID: readerID, contentUrl: contentUrl, url: url, fileType: fileType)
             ReadingsListArray.append(newArticle)
         }

@@ -38,8 +38,8 @@ func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath
     let shareCount = UILabel()
     let articleOrigin = UILabel()
     let articleIcon = UIImageView()
-    let addToQueueIcon = UIImageView()
-    let addToQueueLabel = UILabel()
+//    let addToQueueIcon = UIImageView()
+//    let addToQueueLabel = UILabel()
     
     articleCell.selectionStyle = .None
     
@@ -55,8 +55,8 @@ func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath
     articleCell.addSubview(shareCount)
     articleCell.addSubview(articleOrigin)
     articleCell.addSubview(articleIcon)
-    articleCell.addSubview(addToQueueIcon)
-    articleCell.addSubview(addToQueueLabel)
+//    articleCell.addSubview(addToQueueIcon)
+//    articleCell.addSubview(addToQueueLabel)
     
     
     articleTitle.text = ArticleListArray[indexPath.row].title
@@ -130,25 +130,24 @@ func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath
     articleOrigin.textAlignment = .Right
     articleOrigin.textColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
     articleOrigin.snp_makeConstraints { (make) -> Void in
-        make.centerY.equalTo(addToQueueLabel)
-        make.left.equalTo(shareCount.snp_right).offset(10)
-        make.right.equalTo(articleIcon.snp_left).offset(-4)
+        make.centerX.equalTo(articleIcon)
+        make.top.equalTo(articleIcon.snp_bottom)
         make.width.equalTo(40)
     }
-    
-    addToQueueIcon.image = UIImage(named: "plus")
-    addToQueueIcon.snp_makeConstraints { (make) -> Void in
-        make.left.equalTo(articleTitle)
-        make.height.width.equalTo(25)
-        make.bottom.equalTo(articleSeparatorBar).offset(-10)
-    }
-    addToQueueLabel.text = "Add to Queue"
-    addToQueueLabel.font = addToQueueFont
-    addToQueueLabel.textColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
-    addToQueueLabel.snp_makeConstraints { (make) -> Void in
-        make.centerY.equalTo(addToQueueIcon)
-        make.left.equalTo(addToQueueIcon.snp_right).offset(3)
-    }
+//
+//    addToQueueIcon.image = UIImage(named: "plus")
+//    addToQueueIcon.snp_makeConstraints { (make) -> Void in
+//        make.left.equalTo(articleTitle)
+//        make.height.width.equalTo(25)
+//        make.bottom.equalTo(articleSeparatorBar).offset(-10)
+//    }
+//    addToQueueLabel.text = "Add to Queue"
+//    addToQueueLabel.font = addToQueueFont
+//    addToQueueLabel.textColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+//    addToQueueLabel.snp_makeConstraints { (make) -> Void in
+//        make.centerY.equalTo(addToQueueIcon)
+//        make.left.equalTo(addToQueueIcon.snp_right).offset(3)
+//    }
     
     articleSeparatorBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.05)
     articleSeparatorBar.snp_makeConstraints { (make) -> Void in

@@ -18,7 +18,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     var refreshControl:UIRefreshControl!
     func refresh(sender:AnyObject)
     {
-        articleListJSONGet { () -> () in
+        articleListJSONGet(false) { () -> () in
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
         }
@@ -28,22 +28,20 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     
     
     override func viewDidAppear(animated: Bool) {
-        self.navigationItem.titleView = createNavigationTitleViewArticleListRecordSingleTitle(listenContainer, title: "Record", callback: { () -> Void in
-            
-        })
-//        self.navigationItem.titleView?.snp_makeConstraints(closure: { (make) -> Void in
-//            make.width.equalTo(tableView.frame.width)
-//            make.top.equalTo((self.navigationController?.view)!).offset(20)
-//            
-//        })
     }
     func handleSingleTap(sender: UIButton) {
-        let alert: UIAlertView = UIAlertView()
-        
-        let yesBut = alert.addButtonWithTitle("Listen")
-        let noBut = alert.addButtonWithTitle("Record")
-        alert.delegate = self  // set the delegate here
-        alert.show()
+//        let alert: UIAlertView = UIAlertView()
+//        
+//        let yesBut = alert.addButtonWithTitle("Listen")
+//        let noBut = alert.addButtonWithTitle("Record")
+//        alert.delegate = self  // set the delegate here
+//        alert.show()
+        print("Listen was clicked")
+        SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            SwiftOverlays.removeAllBlockingOverlays()
+            self.navigationController?.setViewControllers([ArticleListListen()], animated: true)
+        })
     }
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         let buttonTitle = alertView.buttonTitleAtIndex(buttonIndex)
@@ -65,6 +63,10 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     override func viewDidLoad() {
+        self.navigationItem.titleView = createNavigationTitleViewArticleListRecordSingleTitle(listenContainer, title: "Record", callback: { () -> Void in    
+        })
+        self.navigationItem.setLeftBarButtonItem(nil, animated: true)
+        
         listenContainer.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.refreshControl = UIRefreshControl()
@@ -73,7 +75,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         self.tableView.addSubview(refreshControl)
         
         self.title = ""
-        articleListJSONGet { () -> () in
+        articleListJSONGet(false) { () -> () in
             dispatch_async(dispatch_get_main_queue()) { [unowned self] in
                 self.tableView.reloadData()
             }
