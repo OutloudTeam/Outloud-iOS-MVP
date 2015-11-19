@@ -132,7 +132,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
             }
           //HERE WE GO TO WEB VIEW
         } else {
-            
+            self.navigationController?.pushViewController(CustomRecordWebView(), animated: true)
         }
     }
     
