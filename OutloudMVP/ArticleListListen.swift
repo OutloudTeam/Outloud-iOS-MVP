@@ -22,7 +22,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     
     lazy var playOrPause = false
     lazy var Readingplayer = AVAudioPlayer()
-    lazy var currentTrackIndex = 0
+    lazy var currentTrackIndex = -1
     lazy var tracks:[String] = [String]()
     var fileURL : NSURL!
     
@@ -70,7 +70,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     
     override func viewDidAppear(animated: Bool) {
-        
+        currentTrackIndex = -1
     }
     
     override func viewDidLoad() {
@@ -123,7 +123,12 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         return ArticleListArray.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return generateArticleListListenCell(tableView, indexPath: indexPath)
+        let cell = generateArticleListListenCell(tableView, indexPath: indexPath)
+        cell.backgroundColor = UIColor.whiteColor()
+        if currentTrackIndex == indexPath.row {
+            cell.backgroundColor = yellowColor.colorWithAlphaComponent(0.1)
+        }
+        return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -145,11 +150,13 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
 //        }
         playOrPause = false
         playButton.enabled = false
-        playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+        playButton.selected = false
         
         getTrackURL(indexPath)
         
         var error:NSError?
+        currentTrackIndex = indexPath.row
+        tableView.reloadData()
         let folderExists = self.fileURL!.checkResourceIsReachableAndReturnError(&error)
         if folderExists != true {
             downloadFile(indexPath)
@@ -158,6 +165,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                 let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
                 self.Readingplayer = Readingplayer
                 self.Readingplayer.delegate = self
+                self.Readingplayer.play()
+                playButton.selected = true
                 playButton.enabled = true
             } catch {
                 print(error)
@@ -207,6 +216,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                         let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
                         self.Readingplayer = Readingplayer
                         self.Readingplayer.delegate = self
+                        self.Readingplayer.play()
+                        self.playButton.selected = true
                         self.playButton.enabled = true
                     } catch {
                         print(error)
@@ -229,7 +240,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func playFile() {
         playButton.selected = !playButton.selected
-        if (playOrPause == false) {
+        if (playButton.selected == true) {
             self.Readingplayer.play()
             
             playOrPause = true
