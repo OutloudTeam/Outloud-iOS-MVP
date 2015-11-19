@@ -14,12 +14,14 @@ import SwiftOverlays
 import Alamofire
 
 class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, AVAudioPlayerDelegate {
-    
+    let progressIndicatorView = CircularLoaderView(frame: CGRectZero)
     var buttonIndex = 0
     let listenContainer = UIButton()
     let playButton = UIButton()
     let playbackSpeedButton = UIButton()
     var refreshControl:UIRefreshControl!
+    let progressView = UIView()
+    let imageLogo = UIImageView()
     
     lazy var playOrPause = false
     lazy var Readingplayer = AVAudioPlayer()
@@ -75,6 +77,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     override func viewDidLoad() {
+        
         playButton.enabled = false
         playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Selected)
@@ -120,6 +123,40 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             make.left.right.top.equalTo(self.view)
             make.bottom.equalTo(bottomBar.snp_top)
         }
+        self.view.addSubview(progressView)
+        
+       
+        progressView.addSubview(imageLogo)
+        imageLogo.image = UIImage(named: "parrot-load")
+        progressView.snp_makeConstraints { (make) -> Void in
+            make.center.equalTo(self.view)
+            make.height.width.equalTo(200)
+        }
+        imageLogo.snp_makeConstraints { (make) -> Void in
+            make.left.right.top.bottom.equalTo(progressView)
+        }
+        
+         progressView.addSubview(progressIndicatorView)
+        progressIndicatorView.snp_makeConstraints { (make) -> Void in
+            make.center.equalTo(imageLogo)
+//            make.width.height.equalTo(imageLogo)
+        }
+        progressIndicatorView.backgroundColor = redColor
+        progressIndicatorView.frame = progressView.bounds
+        progressIndicatorView.maskView?.bounds = progressView.bounds
+        progressIndicatorView.autoresizingMask = .FlexibleWidth
+        progressIndicatorView.autoresizingMask = .FlexibleHeight
+        self.progressIndicatorView.progress = 0.0
+        progressIndicatorView.circlePathLayer.removeFromSuperlayer()
+        progressView.layer.mask = progressIndicatorView.circlePathLayer
+        progressView.layer.mask?.bounds = imageLogo.bounds
+        self.progressView.alpha = 0
+//        self.progressIndicatorView.reveal()
+        
+
+       
+//        progressIndicatorView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -149,11 +186,6 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        if let reader = Readingplayer {
-//            if reader.playing == true {
-//                Readingplayer.stop()
-//            }
-//        }
         if fileURL != nil {
             self.Readingplayer.stop()
         }
@@ -186,9 +218,10 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    
     //CODE FOR PLAYING FILES
     func downloadFile(indexPath: NSIndexPath) {
+        self.progressView.alpha = 100
+        self.progressIndicatorView.progress = 0
         var url = ""
         let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
             (temporaryURL, response) in
@@ -211,19 +244,20 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         Alamofire.download(.GET, url, destination: destination)
             .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
                 dispatch_async(dispatch_get_main_queue()) {
-                    let progress = (Double(totalBytesRead) / Double(totalBytesExpectedToRead)) * 100
-                    SwiftOverlays.showBlockingWaitOverlayWithText("Downloading Article: \(Int(progress))%!")
+                    let progress = (Double(totalBytesRead) / Double(totalBytesExpectedToRead)) * 1
+                    self.progressIndicatorView.progress = CGFloat(progress)
+//                    SwiftOverlays.showBlockingWaitOverlayWithText("Downloading Article: \(Int(progress))%!")
                     print("Total bytes read on main queue: \(progress)")
                 }
             }
             .response { _, _, _, error in
                 if let error = error {
                     print("Failed with error: \(error)")
-                    SwiftOverlays.removeAllBlockingOverlays()
+//                    SwiftOverlays.removeAllBlockingOverlays()
                 } else {
                     print("Downloaded file successfully")
                     self.Readingplayer = AVAudioPlayer()
-                    SwiftOverlays.removeAllBlockingOverlays()
+//                    SwiftOverlays.removeAllBlockingOverlays()
                     do {
                         let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
                         self.Readingplayer = Readingplayer
@@ -233,9 +267,13 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                         self.playButton.selected = true
                         self.playButton.enabled = true
                         self.playbackSpeedButton.enabled = true
+                        UIView.animateWithDuration(1.0, animations: {
+                            self.progressView.alpha = 0
+                        })
                     } catch {
                         print(error)
                     }
+                    self.progressIndicatorView.progress = 0
                 }
         }
     }
@@ -258,11 +296,11 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             self.Readingplayer.play()
             
             playOrPause = true
-//            playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Normal)
+            //            playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Normal)
         } else {
             self.Readingplayer.pause()
             playOrPause = false
-//            playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+            //            playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         }
     }
     
