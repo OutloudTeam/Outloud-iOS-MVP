@@ -30,6 +30,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     var audioFiles : NSMutableArray!
     var recordingsCount = 1
     var currentRecording = 0
+    var WebViewFullArticleContentArray = [FullArticleContent]()
     
     
     override func viewDidLoad() {
@@ -148,6 +149,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     func record_tapped() {
         checkButton.enabled = true
         forwardButton.hidden = false
+        forwardButton.enabled = true
         if(recorder.isRecording()) {
             recorder.stopRecording()
             // save the url
@@ -179,21 +181,12 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     
     var isForward = false
     func forwardParagraph() {
-        
-        print("Forward: \(WebViewFullArticleContentArray.count) =? \(currentRecording)")
-        
-        if WebViewFullArticleContentArray.count == currentRecording + 1 {
-            let newElement = FullArticleContent(text: "", readings: "none", recordingUrl: nil)
-            forwardButton.setBackgroundImage(UIImage(named: "plusParagraph"), forState: .Normal)
-            WebViewFullArticleContentArray.append(newElement)
-            isForward = false
-        } else {
-            forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
-            isForward = true
-        }
-        
+    
         if (!isForward) {
+            let newElement = FullArticleContent(text: "", readings: "none", recordingUrl: nil)
+            WebViewFullArticleContentArray.append(newElement)
             recordingsCount++
+            forwardButton.enabled = false
         }
         
         if(recorder.isPlaying()) {
@@ -203,8 +196,16 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         if(recorder.isRecording()) {
             record_tapped()
         }
-
+        
         currentRecording++
+
+        if WebViewFullArticleContentArray.count == currentRecording+1 {
+            forwardButton.setBackgroundImage(UIImage(named: "plusParagraph"), forState: .Normal)
+            isForward = false
+        } else {
+            forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
+            isForward = true
+        }
         
         backwardButton.hidden = false
         resetPlayer()
@@ -213,6 +214,8 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     }
     
     func backwardParagraph() {
+        isForward = true
+        forwardButton.enabled = true
         forwardButton.hidden = false
         forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
 //        if(currentRecording > 0) {
@@ -368,6 +371,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
             
         })
         print("SENT")
+        WebViewFullArticleContentArray = []
         self.navigationController?.popViewControllerAnimated(true)
     }
 }
