@@ -70,7 +70,7 @@ func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, artic
     }
 }
 // MARK: - Generate article list from API
-func articleListJSONGet(read: Bool, success:()->()) {
+func articleListJSONGet(read: Bool, forceRefresh: Bool, success:()->()) {
     var urlString = ""
     if read == true {
         urlString = "http://www.outloud.io:8080/api/feed/"
@@ -78,7 +78,7 @@ func articleListJSONGet(read: Bool, success:()->()) {
         urlString = "http://www.outloud.io:8080/api/feed?is_read=false"
     }
     let cache = Shared.dataCache
-    if(cacheCheck() == false){
+    if(cacheCheck() == false || forceRefresh == true){
         cache.removeAll()
         removeTime(0)
         writeTime(currentYearDayHourMinute())

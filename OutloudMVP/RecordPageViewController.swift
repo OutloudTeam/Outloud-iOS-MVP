@@ -16,14 +16,14 @@ class RecordPageViewController : UIViewController {
         super.viewDidLoad();
         
         // Bottom View
-        let bottomView = UIView();
-        bottomView.backgroundColor = controlBarColor;
-        self.view.addSubview(bottomView);
+        let bottomView = UIView()
+        bottomView.backgroundColor = controlBarColor
+        self.view.addSubview(bottomView)
         
         bottomView.snp_makeConstraints { (make) -> Void in
-            make.width.equalTo(self.view);
-            make.height.equalTo(80);
-            make.bottom.equalTo(self.view);
+            make.width.equalTo(self.view)
+            make.height.equalTo(80)
+            make.bottom.equalTo(self.view)
         };  
         
         
