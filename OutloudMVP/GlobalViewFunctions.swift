@@ -520,12 +520,13 @@ func createBottomArticleListBar(view: UIView, playButton: UIButton, playbackSpee
     //    queueButton.backgroundColor = UIColor.whiteColor()
     playButton.snp_makeConstraints { (make) -> Void in
         make.height.width.equalTo(40)
-        make.centerY.centerX.equalTo(bottomBar)
+        make.centerY.equalTo(bottomBar)
+        make.right.equalTo(bottomBar)
     }
     playbackSpeedButton.snp_makeConstraints { (make) -> Void in
         make.height.width.equalTo(30)
         make.centerY.equalTo(playButton)
-        make.right.equalTo(playButton.snp_left).offset(-10)
+        make.right.equalTo(playButton.snp_left).offset(-20)
     }
     playButton.contentMode = .ScaleAspectFit
 

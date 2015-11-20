@@ -23,6 +23,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     let progressView = UIView()
     let imageLogo = UIImageView()
     
+    lazy var articleTitle = UILabel()
     lazy var playOrPause = false
     lazy var Readingplayer = AVAudioPlayer()
     lazy var currentTrackIndex = -1
@@ -152,7 +153,14 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         self.progressView.alpha = 0
         //        self.progressIndicatorView.reveal()
         
-        
+        bottomBar.addSubview(articleTitle)
+        articleTitle.text = ""
+        articleTitle.snp_makeConstraints { (make) -> Void in
+            make.centerY.equalTo(bottomBar)
+            make.left.equalTo(bottomBar).offset(10)
+            make.top.bottom.equalTo(bottomBar)
+            make.right.equalTo(playbackSpeedButton.snp_left).offset(-12)
+        }
         
         //        progressIndicatorView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
         
@@ -196,6 +204,9 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         playButton.enabled = false
         playButton.selected = false
         playbackSpeedButton.selected = false
+        articleTitle.text = ArticleListArray[indexPath.row].title
+        articleTitle.textColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+        transformIntoJustified(articleTitle, lineSpace: 1)
         
         getTrackURL(indexPath)
         
@@ -225,7 +236,6 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     //CODE FOR PLAYING FILES
     func downloadFile(indexPath: NSIndexPath) {
         self.progressView.alpha = 100
-        self.progressIndicatorView.progress = 0
         var url = ""
         let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
             (temporaryURL, response) in
