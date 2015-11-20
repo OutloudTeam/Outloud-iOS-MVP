@@ -83,8 +83,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         playButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Selected)
         
-        playbackSpeedButton.setBackgroundImage(UIImage(named: "speedModifier"), forState: .Normal)
-        playbackSpeedButton.setBackgroundImage(UIImage(named: "edit-queue"), forState: .Selected)
+        playbackSpeedButton.setBackgroundImage(UIImage(named: "one-speed"), forState: .Normal)
+        playbackSpeedButton.setBackgroundImage(UIImage(named: "one-and-half-speed"), forState: .Selected)
         playbackSpeedButton.enabled = false
         
         self.navigationItem.titleView = createNavigationTitleViewArticleListListenSingleTitle(listenContainer, title: "Listen", callback: { () -> Void in
