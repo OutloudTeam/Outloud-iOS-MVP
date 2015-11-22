@@ -136,7 +136,7 @@ class Recorder {
 //        if recorder == nil {
         
             // Recorder settings
-            var recordSettings = [
+            let recordSettings = [
                 AVFormatIDKey: NSNumber(unsignedInt:kAudioFormatAppleLossless),
                 AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
                 AVEncoderBitRateKey : 320000,
