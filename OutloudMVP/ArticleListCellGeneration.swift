@@ -331,7 +331,7 @@ func generateArticleListRecordCell(tableView: UITableView,indexPath: NSIndexPath
 //    let fullURLArray = fullURL.characters.split{$0 == "."}.map(String.init)
 //    articleOrigin.text = fullURLArray[1]
     
-    articleIcon.image = UIImage(named: "parrot-load")
+    articleIcon.image = UIImage(named: (indexPath.row == 0 ? "custom-article" : "parrot-load"))
     downloadAndCacheImage(articleIcon, indexPath: indexPath)
     
     
