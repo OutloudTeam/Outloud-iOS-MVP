@@ -186,6 +186,11 @@ class Recorder {
     
     func startPlaying() {
         self.player = try! AVAudioPlayer(contentsOfURL: self.soundFileURL)
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: AVAudioSessionCategoryOptions.DefaultToSpeaker)
+        } catch {
+            print("Could not set the default to speaker")
+        }
         
         if(!self.player.playing) {
             if(self.recorder.recording) {
@@ -448,7 +453,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         }
         checkButton.snp_makeConstraints { (make) -> Void in
             make.height.width.equalTo(45)
-            make.left.equalTo(recordButton.snp_right).offset(30)
+            make.right.equalTo(recordButton.snp_left).offset(-30)
             make.centerY.equalTo(bottomBar.snp_centerY)
         }
         trashButton.snp_makeConstraints { (make) -> Void in

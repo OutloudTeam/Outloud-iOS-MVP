@@ -75,9 +75,13 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidAppear(animated: Bool) {
         currentTrackIndex = -1
+        self.tableView.reloadData()
+        SwiftOverlays.removeAllBlockingOverlays()
     }
     
     override func viewDidLoad() {
+        SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+        let bottomBar = createBottomArticleListBar(self.view, playButton: playButton, playbackSpeedButton: playbackSpeedButton)
         
         playButton.enabled = false
         playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
@@ -104,12 +108,31 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             articleListJSONGet(true, forceRefresh: false) { () -> () in
                 dispatch_async(dispatch_get_main_queue()) { [unowned self] in
                     self.tableView.reloadData()
+                    if ArticleListArray.count == 0 {
+                        self.tableView.hidden = true
+                        let noResultsView = UIView()
+                        let noResultsLabel = UILabel()
+                        
+                        self.view.addSubview(noResultsView)
+                        noResultsView.addSubview(noResultsLabel)
+                        
+                        noResultsView.backgroundColor = UIColor.blackColor()
+                        noResultsLabel.text = "No internet found :("
+                        noResultsLabel.textColor = UIColor.whiteColor()
+                        
+                        noResultsView.snp_makeConstraints(closure: { (make) -> Void in
+                            make.left.top.right.equalTo(self.view)
+                            make.bottom.equalTo(bottomBar.snp_top)
+                        })
+                        noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
+                            make.center.equalTo(noResultsView)
+                        })
+                    }
                 }
             }
         }
         self.edgesForExtendedLayout = UIRectEdge.None
         
-        let bottomBar = createBottomArticleListBar(self.view, playButton: playButton, playbackSpeedButton: playbackSpeedButton)
         self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
@@ -123,26 +146,6 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             make.left.right.top.equalTo(self.view)
             make.bottom.equalTo(bottomBar.snp_top)
         }
-//        if ArticleListArray.count == 0 {
-//            tableView.hidden = true
-//            let noResultsView = UIView()
-//            let noResultsLabel = UILabel()
-//            
-//            self.view.addSubview(noResultsView)
-//            noResultsView.addSubview(noResultsLabel)
-//            
-//            noResultsView.backgroundColor = UIColor.blackColor()
-//            noResultsLabel.text = "No internet found :("
-//            noResultsLabel.textColor = UIColor.whiteColor()
-//            
-//            noResultsView.snp_makeConstraints(closure: { (make) -> Void in
-//                make.left.top.right.equalTo(self.view)
-//                make.bottom.equalTo(bottomBar.snp_top)
-//            })
-//            noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
-//                make.center.equalTo(noResultsView)
-//            })
-//        }
         
         
         self.view.addSubview(progressView)
@@ -183,8 +186,6 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             make.top.bottom.equalTo(bottomBar)
             make.right.equalTo(playbackSpeedButton.snp_left).offset(-12)
         }
-        
-        //        progressIndicatorView.autoresizingMask = .FlexibleWidth
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -242,7 +243,6 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         } else {
             do {
                 let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
-                
                 self.Readingplayer = Readingplayer
                 self.Readingplayer.enableRate = true
                 self.Readingplayer.delegate = self
@@ -250,6 +250,11 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                 playButton.selected = true
                 playButton.enabled = true
                 playbackSpeedButton.enabled = true
+                do {
+                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: AVAudioSessionCategoryOptions.DefaultToSpeaker)
+                } catch {
+                    print("Could not set the default to speaker")
+                }
             } catch {
                 print(error)
             }
