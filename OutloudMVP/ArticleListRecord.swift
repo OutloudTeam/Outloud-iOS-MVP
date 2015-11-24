@@ -28,6 +28,8 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     
     
     override func viewDidAppear(animated: Bool) {
+        self.tableView.reloadData()
+        SwiftOverlays.removeAllBlockingOverlays()
     }
     func handleSingleTap(sender: UIButton) {
         //        let alert: UIAlertView = UIAlertView()
@@ -63,6 +65,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     override func viewDidLoad() {
+        SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
         self.navigationItem.titleView = createNavigationTitleViewArticleListRecordSingleTitle(listenContainer, title: "Record", callback: { () -> Void in
         })
         self.navigationItem.setLeftBarButtonItem(nil, animated: true)

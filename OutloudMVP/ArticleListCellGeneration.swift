@@ -27,7 +27,9 @@ func generateReadingListCell(tableView: UITableView, indexPath: NSIndexPath)->UI
 
 
 func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath)->UITableViewCell {
-    let articleCell = UITableViewCell(style: .Default, reuseIdentifier: "articleCell")
+//    let articleCell = tableView.dequeueReusableCellWithIdentifier("listenCell", forIndexPath: indexPath) ?? UITableViewCell(style: .Default, reuseIdentifier: "listenCell")
+        let articleCell = UITableViewCell(style: .Default, reuseIdentifier: "articleCell")
+
     let articleTitle = UILabel()
     let articleAbstract = UILabel()
     let articleSeparatorBar = UIView()
@@ -56,7 +58,8 @@ func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath
     articleCell.addSubview(articleOrigin)
     articleCell.addSubview(articleIcon)
 //    articleCell.addSubview(addToQueueIcon)
-//    articleCell.addSubview(addToQueueLabel)
+//    articleCell.addSubview(addToQueueLabel)¡
+    
     
     if ArticleListArray[indexPath.row].title != "" {
     articleTitle.text = ArticleListArray[indexPath.row].title

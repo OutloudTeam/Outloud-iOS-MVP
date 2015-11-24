@@ -409,8 +409,8 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
         
         backwardButton.setBackgroundImage(UIImage(named: "back"), forState: .Normal)
         forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
-        checkButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
-        checkButton.setBackgroundImage(UIImage(named: "check-disabled"), forState: .Disabled)
+        checkButton.setBackgroundImage(UIImage(named: "upload"), forState: .Normal)
+        checkButton.setBackgroundImage(UIImage(named: "upload-disabled"), forState: .Disabled)
         trashButton.setBackgroundImage(UIImage(named: "trash"), forState: .Normal)
         
         forwardParagraphLabel.text = "Next"
@@ -431,19 +431,19 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
 
         
         backwardButton.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(40)
+            make.height.equalTo(55)
             make.width.equalTo(55)
             make.centerY.equalTo(bottomBar.snp_centerY)
             make.left.equalTo(bottomBar.snp_left).offset(5)
         }
         forwardButton.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(40)
+            make.height.equalTo(55)
             make.width.equalTo(55)
             make.centerY.equalTo(bottomBar.snp_centerY)
             make.right.equalTo(bottomBar.snp_right).offset(-5)
         }
         recordButton.snp_makeConstraints { (make) -> Void in
-            make.height.width.equalTo(50)
+            make.height.width.equalTo(60)
             make.center.equalTo(bottomBar.center)
         }
         checkButton.snp_makeConstraints { (make) -> Void in

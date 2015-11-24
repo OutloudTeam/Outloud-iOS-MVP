@@ -116,33 +116,33 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.whiteColor()
         tableView.separatorStyle = .None
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "listenCell")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         tableView.snp_makeConstraints { (make) -> Void in
             make.left.right.top.equalTo(self.view)
             make.bottom.equalTo(bottomBar.snp_top)
         }
-        if ArticleListArray.count == 0 {
-            tableView.hidden = true
-            let noResultsView = UIView()
-            let noResultsLabel = UILabel()
-            
-            self.view.addSubview(noResultsView)
-            noResultsView.addSubview(noResultsLabel)
-            
-            noResultsView.backgroundColor = UIColor.blackColor()
-            noResultsLabel.text = "No internet found :("
-            noResultsLabel.textColor = UIColor.whiteColor()
-            
-            noResultsView.snp_makeConstraints(closure: { (make) -> Void in
-                make.left.top.right.equalTo(self.view)
-                make.bottom.equalTo(bottomBar.snp_top)
-            })
-            noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
-                make.center.equalTo(noResultsView)
-            })
-        }
+//        if ArticleListArray.count == 0 {
+//            tableView.hidden = true
+//            let noResultsView = UIView()
+//            let noResultsLabel = UILabel()
+//            
+//            self.view.addSubview(noResultsView)
+//            noResultsView.addSubview(noResultsLabel)
+//            
+//            noResultsView.backgroundColor = UIColor.blackColor()
+//            noResultsLabel.text = "No internet found :("
+//            noResultsLabel.textColor = UIColor.whiteColor()
+//            
+//            noResultsView.snp_makeConstraints(closure: { (make) -> Void in
+//                make.left.top.right.equalTo(self.view)
+//                make.bottom.equalTo(bottomBar.snp_top)
+//            })
+//            noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
+//                make.center.equalTo(noResultsView)
+//            })
+//        }
         
         
         self.view.addSubview(progressView)
@@ -184,8 +184,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             make.right.equalTo(playbackSpeedButton.snp_left).offset(-12)
         }
         
-        //        progressIndicatorView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
-        
+        //        progressIndicatorView.autoresizingMask = .FlexibleWidth
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -199,6 +198,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         cell.backgroundColor = UIColor.whiteColor()
         if currentTrackIndex == indexPath.row {
             cell.backgroundColor = yellowColor.colorWithAlphaComponent(0.1)
+        } else {
+            cell.backgroundColor = UIColor.whiteColor()
         }
         return cell
     }

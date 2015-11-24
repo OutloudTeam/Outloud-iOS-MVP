@@ -119,23 +119,23 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         
         backwardButton.setBackgroundImage(UIImage(named: "back"), forState: .Normal)
         forwardButton.setBackgroundImage(UIImage(named: "plusParagraph"), forState: .Normal)
-        checkButton.setBackgroundImage(UIImage(named: "check"), forState: .Normal)
-        checkButton.setBackgroundImage(UIImage(named: "check-disabled"), forState: .Disabled)
+        checkButton.setBackgroundImage(UIImage(named: "upload"), forState: .Normal)
+        checkButton.setBackgroundImage(UIImage(named: "upload-disabled"), forState: .Disabled)
         
         backwardButton.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(30)
-            make.width.equalTo(45)
+            make.height.equalTo(55)
+            make.width.equalTo(55)
             make.centerY.equalTo(bottomBar.snp_centerY)
             make.left.equalTo(bottomBar.snp_left).offset(5)
         }
         forwardButton.snp_makeConstraints { (make) -> Void in
-            make.height.equalTo(30)
-            make.width.equalTo(45)
+            make.height.equalTo(55)
+            make.width.equalTo(55)
             make.centerY.equalTo(bottomBar.snp_centerY)
             make.right.equalTo(bottomBar.snp_right).offset(-5)
         }
         recordButton.snp_makeConstraints { (make) -> Void in
-            make.height.width.equalTo(40)
+            make.height.width.equalTo(60)
             make.center.equalTo(bottomBar.center)
         }
         checkButton.snp_makeConstraints { (make) -> Void in
@@ -314,7 +314,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     }
     
     func preWebCheckTapped(sender: UIButton) {
-        let alert = UIAlertController(title: "Thanks!", message: "Enter your information to send your recording to us!  We'll review it and send you  confirmation once it appears on our listen page!  You rock!", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Thanks!", message: "Your article will now appear in our listen ", preferredStyle: UIAlertControllerStyle.Alert)
         
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))

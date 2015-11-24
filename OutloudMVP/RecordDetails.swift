@@ -29,9 +29,11 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
     var scrollView: UIScrollView!
     
     override func viewDidAppear(animated: Bool) {
+        self.tableView.reloadData()
     }
     
     override func viewDidLoad() {
+        
         self.title = ""
         
         let longpress = UILongPressGestureRecognizer(target: self, action: "longPressGestureRecognized:")

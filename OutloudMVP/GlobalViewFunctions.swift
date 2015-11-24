@@ -521,7 +521,7 @@ func createBottomArticleListBar(view: UIView, playButton: UIButton, playbackSpee
     playButton.snp_makeConstraints { (make) -> Void in
         make.height.width.equalTo(40)
         make.centerY.equalTo(bottomBar)
-        make.right.equalTo(bottomBar)
+        make.right.equalTo(bottomBar).offset(-25)
     }
     playbackSpeedButton.snp_makeConstraints { (make) -> Void in
         make.height.width.equalTo(30)
