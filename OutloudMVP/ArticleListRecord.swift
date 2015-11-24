@@ -96,6 +96,26 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.snp_makeConstraints { (make) -> Void in
             make.left.bottom.right.top.equalTo(self.view)
         }
+        
+        if ArticleListArray.count == 0 {
+            tableView.hidden = true
+            let noResultsView = UIView()
+            let noResultsLabel = UILabel()
+            
+            self.view.addSubview(noResultsView)
+            noResultsView.addSubview(noResultsLabel)
+            
+            noResultsView.backgroundColor = UIColor.blackColor()
+            noResultsLabel.text = "No internet found :("
+            noResultsLabel.textColor = UIColor.whiteColor()
+            
+            noResultsView.snp_makeConstraints(closure: { (make) -> Void in
+                make.left.top.bottom.right.equalTo(self.view)
+            })
+            noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
+                make.center.equalTo(noResultsView)
+            })
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

@@ -136,7 +136,7 @@ func articleListJSONGet(read: Bool, forceRefresh: Bool, success:()->()) {
     }
 }
 
-// MARK: - Generate article list from API
+// MARK: - Generate readings list from API
 func readingsListGet(success:()->()) {
     let urlString = "http://www.outloud.io:8080/api/readings"
     let cache = Shared.dataCache

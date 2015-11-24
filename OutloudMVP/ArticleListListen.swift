@@ -123,6 +123,28 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             make.left.right.top.equalTo(self.view)
             make.bottom.equalTo(bottomBar.snp_top)
         }
+        if ArticleListArray.count == 0 {
+            tableView.hidden = true
+            let noResultsView = UIView()
+            let noResultsLabel = UILabel()
+            
+            self.view.addSubview(noResultsView)
+            noResultsView.addSubview(noResultsLabel)
+            
+            noResultsView.backgroundColor = UIColor.blackColor()
+            noResultsLabel.text = "No internet found :("
+            noResultsLabel.textColor = UIColor.whiteColor()
+            
+            noResultsView.snp_makeConstraints(closure: { (make) -> Void in
+                make.left.top.right.equalTo(self.view)
+                make.bottom.equalTo(bottomBar.snp_top)
+            })
+            noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
+                make.center.equalTo(noResultsView)
+            })
+        }
+        
+        
         self.view.addSubview(progressView)
         
         
