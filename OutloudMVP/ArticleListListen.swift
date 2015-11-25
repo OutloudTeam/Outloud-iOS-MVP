@@ -241,7 +241,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         playButton.selected = false
         playbackSpeedButton.selected = false
         articleTitle.text = ArticleListArray[indexPath.row].title
-        articleTitle.textColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+        articleTitle.textColor = UIColor.blackColor().colorWithAlphaComponent(0.6)
+        articleTitle.font = UIFont.systemFontOfSize(13, weight: UIFontWeightRegular)
         transformIntoJustified(articleTitle, lineSpace: 1)
         
         getTrackURL(indexPath)
