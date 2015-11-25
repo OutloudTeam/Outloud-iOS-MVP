@@ -21,6 +21,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     let playbackSpeedButton = UIButton()
     var refreshControl:UIRefreshControl!
     let progressView = UIView()
+    let segmentedView = ListenRecordSegmentedController()
     let imageLogo = UIImageView()
     
     lazy var articleTitle = UILabel()
@@ -93,6 +94,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         
         self.navigationItem.titleView = createNavigationTitleViewArticleListListenSingleTitle(listenContainer, title: "Listen", callback: { () -> Void in
         })
+        navigationController?.navigationBarHidden = true
         
         playButton.addTarget(self, action: "playFile", forControlEvents: UIControlEvents.TouchUpInside)
         listenContainer.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -134,6 +136,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         self.edgesForExtendedLayout = UIRectEdge.None
         
         self.view.addSubview(tableView)
+        self.view.addSubview(segmentedView)
+        self.view.backgroundColor = UIColor.whiteColor()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .None
@@ -142,8 +146,16 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "listenCell")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
+        
+        segmentedView.snp_makeConstraints { (make) -> Void in
+            make.left.right.equalTo(self.view)
+            make.top.equalTo(self.view).offset(20)
+            make.height.equalTo(50)
+        }
+        
         tableView.snp_makeConstraints { (make) -> Void in
-            make.left.right.top.equalTo(self.view)
+            make.left.right.equalTo(self.view)
+            make.top.equalTo(segmentedView.snp_bottom)
             make.bottom.equalTo(bottomBar.snp_top)
         }
         
