@@ -139,8 +139,8 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
             make.center.equalTo(bottomBar.center)
         }
         checkButton.snp_makeConstraints { (make) -> Void in
-            make.height.width.equalTo(35)
-            make.left.equalTo(recordButton.snp_right).offset(30)
+            make.height.width.equalTo(45)
+            make.right.equalTo(recordButton.snp_left).offset(-30)
             make.centerY.equalTo(bottomBar.snp_centerY)
         }
         
