@@ -14,11 +14,13 @@ import SwiftOverlays
 import Alamofire
 
 class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate, AVAudioPlayerDelegate {
+    var listenOrRecord = true
     let progressIndicatorView = CircularLoaderView(frame: CGRectZero)
     var buttonIndex = 0
     let listenContainer = UIButton()
     let playButton = UIButton()
     let playbackSpeedButton = UIButton()
+    var bottomBar = UIView()
     var refreshControl:UIRefreshControl!
     let progressView = UIView()
     let segmentedView = ListenRecordSegmentedController()
@@ -33,25 +35,107 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func refresh(sender:AnyObject)
     {
-        articleListJSONGet(true, forceRefresh: true) { () -> () in
-            self.tableView.reloadData()
-            self.refreshControl.endRefreshing()
+        print(segmentedView.selectedIndex)
+        if segmentedView.selectedIndex == 1 {
+            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+            articleListJSONGet(true, forceRefresh: true) { () -> () in
+                self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
+                SwiftOverlays.removeAllBlockingOverlays()
+            }
+        } else {
+            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+            readingsListGet { () -> () in
+                articleListJSONGet(true, forceRefresh: true) { () -> () in
+                    SwiftOverlays.removeAllBlockingOverlays()
+                    dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+                        self.tableView.reloadData()
+                        self.refreshControl.endRefreshing()
+                        if ArticleListArray.count == 0 {
+                            self.tableView.hidden = true
+                            let noResultsView = UIView()
+                            let noResultsLabel = UILabel()
+                            
+                            self.view.addSubview(noResultsView)
+                            noResultsView.addSubview(noResultsLabel)
+                            
+                            noResultsView.backgroundColor = UIColor.blackColor()
+                            noResultsLabel.text = "No internet found :("
+                            noResultsLabel.textColor = UIColor.whiteColor()
+                            
+                            noResultsView.snp_makeConstraints(closure: { (make) -> Void in
+                                make.left.top.right.equalTo(self.view)
+                                make.bottom.equalTo(self.bottomBar.snp_top)
+                            })
+                            noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
+                                make.center.equalTo(noResultsView)
+                            })
+                        }
+                    }
+                }
+            }
         }
     }
     
     func handleSingleTap(sender: UIButton) {
-        //        let alert: UIAlertView = UIAlertView()
-        //
-        //        alert.addButtonWithTitle("Listen")
-        //        alert.addButtonWithTitle("Record")
-        //        alert.delegate = self  // set the delegate here
-        //        alert.show()
-        print("Record was clicked")
-        SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            SwiftOverlays.removeAllBlockingOverlays()
-            self.navigationController?.setViewControllers([ArticleListRecord()], animated: true)
-        })
+        //THIS IS THE RECORD VIEW
+        if segmentedView.selectedIndex == 1 {
+            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+            if fileURL != nil {
+                self.Readingplayer.stop()
+                playButton.selected = false
+                
+            }
+            articleListJSONGet(false, forceRefresh: false) { () -> () in
+                self.tableView.reloadData()
+                SwiftOverlays.removeAllBlockingOverlays()
+                self.bottomBar.snp_updateConstraints(closure: { (make) -> Void in
+                    make.height.equalTo(0)
+                })
+            }
+        } else {
+            //THIS IS THE LISTEN VIEW
+            SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+            readingsListGet { () -> () in
+                articleListJSONGet(true, forceRefresh: false) { () -> () in
+                    SwiftOverlays.removeAllBlockingOverlays()
+                    
+                    dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+                        self.bottomBar.snp_updateConstraints(closure: { (make) -> Void in
+                            if self.fileURL != nil {
+                                make.height.equalTo(70)
+                            } else {
+                                make.height.equalTo(0)
+                            }
+                        })
+                        self.tableView.reloadData()
+                        
+                        if ArticleListArray.count == 0 {
+                            self.tableView.hidden = true
+                            let noResultsView = UIView()
+                            let noResultsLabel = UILabel()
+                            
+                            self.view.addSubview(noResultsView)
+                            noResultsView.addSubview(noResultsLabel)
+                            
+                            noResultsView.backgroundColor = UIColor.blackColor()
+                            noResultsLabel.text = "No internet found :("
+                            noResultsLabel.textColor = UIColor.whiteColor()
+                            
+                            noResultsView.snp_makeConstraints(closure: { (make) -> Void in
+                                make.left.top.right.equalTo(self.view)
+                                make.bottom.equalTo(self.bottomBar.snp_top)
+                            })
+                            noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
+                                make.center.equalTo(noResultsView)
+                            })
+                            
+                        }
+                    }
+                }
+                
+            }
+        }
     }
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         alertView.buttonTitleAtIndex(buttonIndex)
@@ -77,12 +161,16 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidAppear(animated: Bool) {
         currentTrackIndex = -1
         self.tableView.reloadData()
+        navigationController?.navigationBarHidden = true
         SwiftOverlays.removeAllBlockingOverlays()
     }
     
     override func viewDidLoad() {
         SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-        let bottomBar = createBottomArticleListBar(self.view, playButton: playButton, playbackSpeedButton: playbackSpeedButton)
+        bottomBar = createBottomArticleListBar(self.view, playButton: playButton, playbackSpeedButton: playbackSpeedButton)
+        self.bottomBar.snp_updateConstraints(closure: { (make) -> Void in
+            make.height.equalTo(0)
+        })
         
         playButton.enabled = false
         playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
@@ -124,7 +212,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                         
                         noResultsView.snp_makeConstraints(closure: { (make) -> Void in
                             make.left.top.right.equalTo(self.view)
-                            make.bottom.equalTo(bottomBar.snp_top)
+                            make.bottom.equalTo(self.bottomBar.snp_top)
                         })
                         noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
                             make.center.equalTo(noResultsView)
@@ -204,71 +292,106 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         return 1
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ArticleListArray.count
+        if segmentedView.selectedIndex == 0 {
+            return ArticleListArray.count
+        } else {
+            return ArticleListArray.count
+        }
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = generateArticleListListenCell(tableView, indexPath: indexPath)
-        cell.backgroundColor = UIColor.whiteColor()
-        if currentTrackIndex == indexPath.row {
-            cell.backgroundColor = yellowColor.colorWithAlphaComponent(0.1)
-        } else {
+        if segmentedView.selectedIndex == 0 {
+            let cell = generateArticleListListenCell(tableView, indexPath: indexPath)
             cell.backgroundColor = UIColor.whiteColor()
+            if currentTrackIndex == indexPath.row {
+                cell.backgroundColor = yellowColor.colorWithAlphaComponent(0.1)
+            } else {
+                cell.backgroundColor = UIColor.whiteColor()
+            }
+            return cell
+        } else {
+            return generateArticleListRecordCell(tableView, indexPath: indexPath)
         }
-        return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        var cellHeight : CGFloat = 0
-        if (ArticleListArray[indexPath.row].title != "") {
-            cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
+        if segmentedView.selectedIndex == 0 {
+            var cellHeight : CGFloat = 0
+            if (ArticleListArray[indexPath.row].title != "") {
+                cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
+            } else {
+                cellHeight = heightForJustifiedView("Title is being processed!", font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView("We are currently processing this recording!  Please have patience with us!", font: articleListAbstractFont, width: (tableView.frame.width - 115))
+            }
+            //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
+            //        return cellHeight + 25 + 5 + 25 + 20 + 20
+            return cellHeight + 25 + 5 + 25 + 20
         } else {
-            cellHeight = heightForJustifiedView("Title is being processed!", font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView("We are currently processing this recording!  Please have patience with us!", font: articleListAbstractFont, width: (tableView.frame.width - 115))
+            let cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
+            //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
+            //        return cellHeight + 25 + 5 + 25 + 20 + 20
+            return cellHeight + 25 + 5 + 25 + 20
         }
-        //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
-        //        return cellHeight + 25 + 5 + 25 + 20 + 20
-        return cellHeight + 25 + 5 + 25 + 20
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 1
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if fileURL != nil {
-            self.Readingplayer.stop()
-        }
-        playOrPause = false
-        playButton.enabled = false
-        playButton.selected = false
-        playbackSpeedButton.selected = false
-        articleTitle.text = ArticleListArray[indexPath.row].title
-        articleTitle.textColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
-        transformIntoJustified(articleTitle, lineSpace: 1)
-        
-        getTrackURL(indexPath)
-        
-        var error:NSError?
-        currentTrackIndex = indexPath.row
-        tableView.reloadData()
-        let folderExists = self.fileURL!.checkResourceIsReachableAndReturnError(&error)
-        if folderExists != true {
-            downloadFile(indexPath)
-        } else {
-            do {
-                let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
-                self.Readingplayer = Readingplayer
-                self.Readingplayer.enableRate = true
-                self.Readingplayer.delegate = self
-                self.Readingplayer.play()
-                playButton.selected = true
-                playButton.enabled = true
-                playbackSpeedButton.enabled = true
+        if segmentedView.selectedIndex == 0 {
+            self.bottomBar.snp_updateConstraints(closure: { (make) -> Void in
+                make.height.equalTo(70)
+            })
+            if fileURL != nil {
+                self.Readingplayer.stop()
+            }
+            playOrPause = false
+            playButton.enabled = false
+            playButton.selected = false
+            playbackSpeedButton.selected = false
+            articleTitle.text = ArticleListArray[indexPath.row].title
+            articleTitle.textColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+            transformIntoJustified(articleTitle, lineSpace: 1)
+            
+            getTrackURL(indexPath)
+            
+            var error:NSError?
+            currentTrackIndex = indexPath.row
+            tableView.reloadData()
+            let folderExists = self.fileURL!.checkResourceIsReachableAndReturnError(&error)
+            if folderExists != true {
+                downloadFile(indexPath)
+            } else {
                 do {
-                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: AVAudioSessionCategoryOptions.DefaultToSpeaker)
+                    let Readingplayer = try AVAudioPlayer(contentsOfURL: self.fileURL)
+                    self.Readingplayer = Readingplayer
+                    self.Readingplayer.enableRate = true
+                    self.Readingplayer.delegate = self
+                    self.Readingplayer.play()
+                    playButton.selected = true
+                    playButton.enabled = true
+                    playbackSpeedButton.enabled = true
+                    do {
+                        try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: AVAudioSessionCategoryOptions.DefaultToSpeaker)
+                    } catch {
+                        print("Could not set the default to speaker")
+                    }
                 } catch {
-                    print("Could not set the default to speaker")
+                    print(error)
                 }
-            } catch {
-                print(error)
+            }
+        } else {
+            if(indexPath.row != 0) {
+                SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+                articleJSONGet(&articleDetailDictionary, articleID: ArticleListArray[indexPath.row].uuid!) { () -> () in
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        SwiftOverlays.removeAllBlockingOverlays()
+                        //                self.navigationController?.pushViewController(ArticleDetail(), animated: true)
+                        CurrentArticleUuid = ArticleListArray[indexPath.row].uuid
+                        self.navigationController?.pushViewController(RecordDetails(), animated: true)
+                    })
+                }
+                //HERE WE GO TO WEB VIEW
+            } else {
+                self.navigationController?.pushViewController(CustomRecordWebView(), animated: true)
             }
         }
     }

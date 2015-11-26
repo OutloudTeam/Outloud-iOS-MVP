@@ -33,7 +33,7 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     override func viewDidLoad() {
-        
+        navigationController?.navigationBarHidden = false
         self.title = ""
         
         let longpress = UILongPressGestureRecognizer(target: self, action: "longPressGestureRecognized:")

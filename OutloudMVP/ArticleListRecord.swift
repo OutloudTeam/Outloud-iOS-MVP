@@ -16,6 +16,7 @@ import SwiftOverlays
 class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let listenContainer = UIButton()
     var refreshControl:UIRefreshControl!
+    let segmentedView = ListenRecordSegmentedController()
     func refresh(sender:AnyObject)
     {
         articleListJSONGet(false, forceRefresh: true) { () -> () in
@@ -28,7 +29,10 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     
     
     override func viewDidAppear(animated: Bool) {
+//        segmentedView.selectedIndex = 1
+//        segmentedView.displayNewSelectedIndex(0.0)
         self.tableView.reloadData()
+        navigationController?.navigationBarHidden = true
         SwiftOverlays.removeAllBlockingOverlays()
     }
     func handleSingleTap(sender: UIButton) {
@@ -65,9 +69,11 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     override func viewDidLoad() {
+        navigationController?.navigationBarHidden = true
+        self.view.backgroundColor = UIColor.whiteColor()
         SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-        self.navigationItem.titleView = createNavigationTitleViewArticleListRecordSingleTitle(listenContainer, title: "Record", callback: { () -> Void in
-        })
+//        self.navigationItem.titleView = createNavigationTitleViewArticleListRecordSingleTitle(listenContainer, title: "Record", callback: { () -> Void in
+//        })
         self.navigationItem.setLeftBarButtonItem(nil, animated: true)
         
         listenContainer.addTarget(self, action: "handleSingleTap:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -88,6 +94,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         
         
         self.view.addSubview(tableView)
+        self.view.addSubview(segmentedView)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .None
@@ -95,30 +102,35 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
+        segmentedView.snp_makeConstraints { (make) -> Void in
+            make.left.right.equalTo(self.view)
+            make.top.equalTo(self.view).offset(20)
+            make.height.equalTo(50)
+        }
         tableView.snp_makeConstraints { (make) -> Void in
-            make.left.bottom.right.top.equalTo(self.view)
+            make.left.bottom.right.equalTo(self.view)
+            make.top.equalTo(segmentedView.snp_bottom)
         }
         
-        if ArticleListArray.count == 0 {
-            tableView.hidden = true
-            let noResultsView = UIView()
-            let noResultsLabel = UILabel()
-            
-            self.view.addSubview(noResultsView)
-            noResultsView.addSubview(noResultsLabel)
-            
-            noResultsView.backgroundColor = UIColor.blackColor()
-            noResultsLabel.text = "No internet found :("
-            noResultsLabel.textColor = UIColor.whiteColor()
-            
-            noResultsView.snp_makeConstraints(closure: { (make) -> Void in
-                make.left.top.bottom.right.equalTo(self.view)
-            })
-            noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
-                make.center.equalTo(noResultsView)
-            })
-        }
+//        if ArticleListArray.count == 0 {
+//            tableView.hidden = true
+//            let noResultsView = UIView()
+//            let noResultsLabel = UILabel()
+//            
+//            self.view.addSubview(noResultsView)
+//            noResultsView.addSubview(noResultsLabel)
+//            
+//            noResultsView.backgroundColor = UIColor.blackColor()
+//            noResultsLabel.text = "No internet found :("
+//            noResultsLabel.textColor = UIColor.whiteColor()
+//            
+//            noResultsView.snp_makeConstraints(closure: { (make) -> Void in
+//                make.left.top.bottom.right.equalTo(self.view)
+//            })
+//            noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
+//                make.center.equalTo(noResultsView)
+//            })
+//        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -153,7 +165,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
                     self.navigationController?.pushViewController(RecordDetails(), animated: true)
                 })
             }
-          //HERE WE GO TO WEB VIEW
+            //HERE WE GO TO WEB VIEW
         } else {
             self.navigationController?.pushViewController(CustomRecordWebView(), animated: true)
         }

@@ -145,6 +145,7 @@ func readingsListGet(success:()->()) {
         removeTime(0)
         writeTime(currentYearDayHourMinute())
     }
+    ReadingsListArray.removeAll()
     let URL = NSURL(string: urlString)!
     cache.fetch(URL: URL).onSuccess { (Data) -> () in
         let readingsListJSON = JSON(data: Data)

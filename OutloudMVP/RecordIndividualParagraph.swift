@@ -297,6 +297,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     var audioFiles : NSMutableArray!
     
     override func viewDidLoad() {
+                navigationController?.navigationBarHidden = false
         // debug
         
         // end debug

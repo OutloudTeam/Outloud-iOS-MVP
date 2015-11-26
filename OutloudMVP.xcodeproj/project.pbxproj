@@ -280,7 +280,6 @@
 				DBB0AD031BF6B3E2004CE574 /* Readings */,
 				DBBC14601BFD6A6F000753FB /* Listen Views */,
 				DBBC14611BFD6A85000753FB /* Recording Views */,
-				DB11F60A1C063E390089CC2A /* ListenRecordSegmentClass.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -290,6 +289,7 @@
 			children = (
 				F3C40AB91BCAB44A00A033FF /* RecordButton.swift */,
 				DBDCD1901BE6BAF800984608 /* ListenRecordNavButton.swift */,
+				DB11F60A1C063E390089CC2A /* ListenRecordSegmentClass.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";

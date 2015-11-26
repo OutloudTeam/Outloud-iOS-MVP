@@ -34,6 +34,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     
     
     override func viewDidLoad() {
+        navigationController?.navigationBarHidden = false
         // Clear all previous recordings
         let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
         if let enumerator = NSFileManager.defaultManager().enumeratorAtPath(documentsDirectory.absoluteString) {
