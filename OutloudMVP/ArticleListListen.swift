@@ -38,10 +38,13 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         print(segmentedView.selectedIndex)
         if segmentedView.selectedIndex == 1 {
             SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
-            articleListJSONGet(true, forceRefresh: true) { () -> () in
+            articleListJSONGet(false, forceRefresh: false) { () -> () in
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
                 SwiftOverlays.removeAllBlockingOverlays()
+                self.bottomBar.snp_updateConstraints(closure: { (make) -> Void in
+                    make.height.equalTo(0)
+                })
             }
         } else {
             SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")

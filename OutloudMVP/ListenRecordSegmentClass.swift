@@ -22,7 +22,7 @@ class ListenRecordSegmentedController: UIControl {
     
     var selectedIndex: Int = 0 {
         didSet {
-            displayNewSelectedIndex(0.5)
+            displayNewSelectedIndex()
         }
     }
     
@@ -62,7 +62,11 @@ class ListenRecordSegmentedController: UIControl {
             label.text = items[index - 1]
             label.textAlignment = .Center
             label.textColor = UIColor(red:0.54, green:0.54, blue:0.54, alpha:1.0)
-            label.font = activeFont
+            if index == 1 {
+                label.font = activeFont
+            } else {
+                label.font = inactiveFont
+            }
             self.addSubview(label)
             labels.append(label)
         }
@@ -104,14 +108,14 @@ class ListenRecordSegmentedController: UIControl {
             selectedIndex = calculatedIndex!
             sendActionsForControlEvents(.ValueChanged)
             if selectedIndex == 0 {
-//                thumbView.backgroundColor = yellowColor
+                //                thumbView.backgroundColor = yellowColor
                 labels[1].textColor = UIColor(red:0.54, green:0.54, blue:0.54, alpha:1.0)
                 labels[1].font = inactiveFont
                 labels[0].textColor = UIColor.whiteColor()
                 labels[0].font = activeFont
                 sendAction("handleSingleTap:", to: nil, forEvent: nil)
             } else {
-//                thumbView.backgroundColor = redColor
+                //                thumbView.backgroundColor = redColor
                 labels[0].textColor = UIColor(red:0.54, green:0.54, blue:0.54, alpha:1.0)
                 labels[0].font = inactiveFont
                 labels[1].textColor = UIColor.whiteColor()
@@ -122,9 +126,9 @@ class ListenRecordSegmentedController: UIControl {
         return false
     }
     
-    func displayNewSelectedIndex(duration: Double) {
+    func displayNewSelectedIndex() {
         let label = labels[selectedIndex]
-        UIView.animateWithDuration(duration, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: {
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: {
             
             self.thumbView.frame = label.frame
             if self.selectedIndex == 0 {
