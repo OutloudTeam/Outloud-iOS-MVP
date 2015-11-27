@@ -13,7 +13,7 @@ import AVFoundation
 import Foundation
 import Alamofire
 
-class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
+class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate, UIGestureRecognizerDelegate {
     let webView = UIWebView()
     let backgroundView = UIView()
     let initialURL = "http://google.com"
@@ -31,10 +31,39 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     var recordingsCount = 1
     var currentRecording = 0
     var WebViewFullArticleContentArray = [FullArticleContent]()
+    var tapRecognizer: UITapGestureRecognizer?
+    var imageSource = ""
     
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func tapAction(sender: UITapGestureRecognizer) {
+        print("Touched")
+        let point = sender.locationInView(self.view)
+        imageSource = webView.stringByEvaluatingJavaScriptFromString("document.elementFromPoint(\(point.x),\(point.y)).src")!
+        if imageSource != "" {
+            let canOpen = UIApplication.sharedApplication().canOpenURL(NSURL(string: imageSource)!)
+            if canOpen == true {
+                let urlLength = imageSource.characters.count
+                let urlEnd = imageSource[urlLength-3...urlLength-1]
+                if urlEnd == "png" || urlEnd == "jpeg" || urlEnd == "jpg" || urlEnd == "gif"  {
+                    tapRecognizer?.enabled = false
+                    checkButton.sendAction("preWebCheckTapped:", to: nil, forEvent: nil)
+                }
+            }
+        }
+    }
     
     override func viewDidLoad() {
         navigationController?.navigationBarHidden = false
+        tapRecognizer = UITapGestureRecognizer(target: self, action: "tapAction:")
+        tapRecognizer?.numberOfTapsRequired = 1
+        tapRecognizer?.delegate = self
+        tapRecognizer?.enabled = false
+        webView.addGestureRecognizer(tapRecognizer!)
+        
         // Clear all previous recordings
         let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
         if let enumerator = NSFileManager.defaultManager().enumeratorAtPath(documentsDirectory.absoluteString) {
@@ -61,7 +90,6 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         playbackButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
         playbackButton.setBackgroundImage(UIImage(named: "pause-button"), forState: .Selected)
         playbackToolbar.addSubview(playbackButton)
-        
         playbackButton.addTarget(self, action: "playback_tapped", forControlEvents: .TouchUpInside)
         
         playbackButton.snp_makeConstraints { (make) -> Void in
@@ -104,7 +132,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         
         checkButton = UIButton(type: UIButtonType.System) as UIButton
         checkButton.enabled = false
-        checkButton.addTarget(self, action: "preWebCheckTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+        checkButton.addTarget(self, action: "prePreWebCheckTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         
         forwardButton.frame = CGRectMake(50, 50, 70, 50)
         recordButton.frame = CGRectMake(100,100,100,100)
@@ -182,7 +210,8 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
     
     var isForward = false
     func forwardParagraph() {
-    
+        let imageTitle = webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('img')[3].src")
+        print(imageTitle)
         if (!isForward) {
             let newElement = FullArticleContent(text: "", readings: "none", recordingUrl: nil)
             WebViewFullArticleContentArray.append(newElement)
@@ -199,7 +228,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         }
         
         currentRecording++
-
+        
         if WebViewFullArticleContentArray.count == currentRecording+1 {
             forwardButton.setBackgroundImage(UIImage(named: "plusParagraph"), forState: .Normal)
             isForward = false
@@ -207,7 +236,6 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
             forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
             isForward = true
         }
-        
         backwardButton.hidden = false
         resetPlayer()
         self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(currentRecording+1) / \(WebViewFullArticleContentArray.count)", callback: { () -> Void in
@@ -219,22 +247,17 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         forwardButton.enabled = true
         forwardButton.hidden = false
         forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
-//        if(currentRecording > 0) {
-            if (currentRecording-1 == 0) {
-                forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
-                backwardButton.hidden = true
-                //                forwardParagraphLabel.hidden = false
-            } else {
-                backwardButton.hidden = false
-                //                forwardParagraphLabel.hidden = true
-            }
-            currentRecording--
+        if (currentRecording-1 == 0) {
+            forwardButton.setBackgroundImage(UIImage(named: "forward"), forState: .Normal)
+            backwardButton.hidden = true
+        } else {
+            backwardButton.hidden = false
+        }
+        currentRecording--
         self.navigationItem.titleView = createNavigationTitleViewArticleRecordParagraph("Paragraph \(currentRecording+1) / \(WebViewFullArticleContentArray.count)", callback: { () -> Void in
         })
-        
-            // Reset player
-            resetPlayer()
-        
+        // Reset player
+        resetPlayer()
     }
     
     func updateAudioMeter() {
@@ -260,7 +283,6 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
             timeLabel.text = "00:00"
             
         }
-        //        checkButton.enabled = false
     }
     
     func loadAddressURL() {
@@ -314,18 +336,27 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         }
     }
     
+    func prePreWebCheckTapped(sender: UIButton) {
+        tapRecognizer?.enabled = true
+        let initialAlert = UIAlertController(title: "Thanks!", message: "Do you wish to click on an image that you would like associated with your recording?", preferredStyle: UIAlertControllerStyle.Alert)
+        let noAction = UIAlertAction(title: "No", style: .Default) { (action) in
+            self.checkButton.sendAction("preWebCheckTapped:", to: nil, forEvent: nil)
+        }
+        initialAlert.addAction(noAction)
+        initialAlert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(initialAlert, animated: true, completion: nil)
+    }
+    
+    
     func preWebCheckTapped(sender: UIButton) {
         let alert = UIAlertController(title: "Thanks!", message: "Your article will now appear in our listen ", preferredStyle: UIAlertControllerStyle.Alert)
-        
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
             textField.placeholder = "Enter name:"
-            
         })
         alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
             textField.placeholder = "Enter email:"
-            
         })
         let sendAction = UIAlertAction(title: "Send", style: .Default) { (action) in
             var didFillFields = true
@@ -340,7 +371,6 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
                         return
                 }
                 self.webCheckTapped(name, email: email)
-//                print(self.webView.request?.mainDocumentURL)
             }
         }
         alert.addAction(sendAction)
@@ -351,8 +381,6 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         // upload the file if there is any.
         // you're good, go back to the paragraph
         let htmlTitle = webView.stringByEvaluatingJavaScriptFromString("document.title")
-        
-        
         let audioFiles = NSMutableArray()
         for(var i = 0; i < WebViewFullArticleContentArray.count; i++) {
             if(WebViewFullArticleContentArray[i].text! == "none") {
@@ -360,9 +388,8 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
             }
         }
         mergeAudioFiles(audioFiles, callback: { (url, error) -> () in
-            
             if(url != nil) {
-                let parameters = ["is_human":"true","reader_id":"\(name)","email":"\(email)", "content_url":"\(self.webView.request!.mainDocumentURL!)", "title":"\(htmlTitle!)"]
+                let parameters = ["is_human":"true","reader_id":"\(name)","email":"\(email)", "content_url":"\(self.webView.request!.mainDocumentURL!)", "title":"\(htmlTitle!)", "img_url":"\(self.imageSource)"]
                 
                 let data = NSData(contentsOfURL: url!)
                 
@@ -370,7 +397,6 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
                 
                 Alamofire.upload(request.0, data: request.1)
             }
-            
         })
         print("SENT")
         WebViewFullArticleContentArray = []

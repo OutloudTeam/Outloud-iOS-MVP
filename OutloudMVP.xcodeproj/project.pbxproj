@@ -17,6 +17,7 @@
 		DB6AE4721BD6FCD100BCBD95 /* GlobalArrays.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6AE4711BD6FCD100BCBD95 /* GlobalArrays.swift */; };
 		DB7B3B9D1BE0794300A392DD /* RecordIndividualParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7B3B9C1BE0794300A392DD /* RecordIndividualParagraph.swift */; };
 		DB7B3B9F1BE08EC900A392DD /* RecordingCellGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7B3B9E1BE08EC900A392DD /* RecordingCellGeneration.swift */; };
+		DB9F26CA1C0910E1004B0169 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9F26C91C0910E1004B0169 /* Extensions.swift */; };
 		DBA3B2701BF94CBE00C1D8B0 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA3B26F1BF94CBE00C1D8B0 /* ProgressView.swift */; };
 		DBAC4D1A1BE9A842002188CE /* ListenCellGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAC4D191BE9A842002188CE /* ListenCellGeneration.swift */; };
 		DBAC4D1C1BE9ACE5002188CE /* ArticleListRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAC4D1B1BE9ACE5002188CE /* ArticleListRecord.swift */; };
@@ -74,6 +75,7 @@
 		DB6AE4711BD6FCD100BCBD95 /* GlobalArrays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalArrays.swift; sourceTree = "<group>"; };
 		DB7B3B9C1BE0794300A392DD /* RecordIndividualParagraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordIndividualParagraph.swift; sourceTree = "<group>"; };
 		DB7B3B9E1BE08EC900A392DD /* RecordingCellGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingCellGeneration.swift; sourceTree = "<group>"; };
+		DB9F26C91C0910E1004B0169 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DBA3B26F1BF94CBE00C1D8B0 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		DBAC4D191BE9A842002188CE /* ListenCellGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenCellGeneration.swift; sourceTree = "<group>"; };
 		DBAC4D1B1BE9ACE5002188CE /* ArticleListRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleListRecord.swift; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 		F3F127251BCC867100F15E21 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				DB9F26C91C0910E1004B0169 /* Extensions.swift */,
 			);
 			name = SupportFiles;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				DBECB99B1BFE4B1F003B9A77 /* CircularLoadingView.swift in Sources */,
 				DB02F2081BCA25F800064CEB /* ArticleDetails.swift in Sources */,
 				DBB683FF1BE02BD6002ED471 /* RecordDetails.swift in Sources */,
+				DB9F26CA1C0910E1004B0169 /* Extensions.swift in Sources */,
 				DBB0AD021BF6B213004CE574 /* ReadingsList.swift in Sources */,
 				DB11F60B1C063E390089CC2A /* ListenRecordSegmentClass.swift in Sources */,
 				DBDCD1911BE6BAF800984608 /* ListenRecordNavButton.swift in Sources */,

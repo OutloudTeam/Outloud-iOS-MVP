@@ -348,12 +348,21 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             }
             //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
             //        return cellHeight + 25 + 5 + 25 + 20 + 20
-            return cellHeight + 25 + 5 + 25 + 20
+            print(cellHeight + 25 + 5 + 25 + 20)
+            cellHeight = cellHeight + 25 + 5 + 25 + 20
+            if cellHeight < 100 {
+                cellHeight = 110
+            }
+            return cellHeight
         } else {
-            let cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
+            var cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
             //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
             //        return cellHeight + 25 + 5 + 25 + 20 + 20
-            return cellHeight + 25 + 5 + 25 + 20
+            cellHeight = cellHeight + 25 + 5 + 25 + 20
+            if cellHeight < 100 {
+                cellHeight = 110
+            }
+            return cellHeight
         }
     }
     
