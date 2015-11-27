@@ -83,6 +83,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     func handleSingleTap(sender: UIButton) {
         //THIS IS THE RECORD VIEW
         if segmentedView.selectedIndex == 1 {
+            sideSwipeRecognizer!.direction = .Right
             SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
             if fileURL != nil {
                 self.Readingplayer.stop()
@@ -99,6 +100,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         } else {
             //THIS IS THE LISTEN VIEW
             SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+            sideSwipeRecognizer!.direction = .Left
             readingsListGet { () -> () in
                 articleListJSONGet(true, forceRefresh: false) { () -> () in
                     SwiftOverlays.removeAllBlockingOverlays()
