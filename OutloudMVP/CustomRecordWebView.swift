@@ -352,6 +352,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate {
         // you're good, go back to the paragraph
         let htmlTitle = webView.stringByEvaluatingJavaScriptFromString("document.title")
         
+        
         let audioFiles = NSMutableArray()
         for(var i = 0; i < WebViewFullArticleContentArray.count; i++) {
             if(WebViewFullArticleContentArray[i].text! == "none") {
