@@ -390,7 +390,7 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate, UIGestureRec
         mergeAudioFiles(audioFiles, callback: { (url, error) -> () in
             if(url != nil) {
                 let parameters = ["is_human":"true","reader_id":"\(name)","email":"\(email)", "content_url":"\(self.webView.request!.mainDocumentURL!)", "title":"\(htmlTitle!)", "img_url":"\(self.imageSource)"]
-                
+
                 let data = NSData(contentsOfURL: url!)
                 
                 let request = urlRequestWithComponents("http://www.outloud.io:8080/api/reading/new", parameters: parameters, imageData: data!)

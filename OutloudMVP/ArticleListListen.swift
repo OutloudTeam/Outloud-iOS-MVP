@@ -171,8 +171,6 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func swipeLeft(recognizer : UISwipeGestureRecognizer) {
-        print("Swiping \(sideSwipeRecognizer?.direction)")
-        
         if self.segmentedView.selectedIndex == 0 {
             self.segmentedView.selectedIndex = 1
             self.sideSwipeRecognizer?.direction = .Right
@@ -348,7 +346,6 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             }
             //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
             //        return cellHeight + 25 + 5 + 25 + 20 + 20
-            print(cellHeight + 25 + 5 + 25 + 20)
             cellHeight = cellHeight + 25 + 5 + 25 + 20
             if cellHeight < 100 {
                 cellHeight = 110
