@@ -25,7 +25,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     let progressView = UIView()
     let segmentedView = ListenRecordSegmentedController()
     let imageLogo = UIImageView()
-    
+    var sideSwipeRecognizer: UISwipeGestureRecognizer?
     lazy var articleTitle = UILabel()
     lazy var playOrPause = false
     lazy var Readingplayer = AVAudioPlayer()
@@ -83,6 +83,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     func handleSingleTap(sender: UIButton) {
         //THIS IS THE RECORD VIEW
         if segmentedView.selectedIndex == 1 {
+            sideSwipeRecognizer!.direction = .Right
             SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
             if fileURL != nil {
                 self.Readingplayer.stop()
@@ -99,6 +100,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         } else {
             //THIS IS THE LISTEN VIEW
             SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+            sideSwipeRecognizer!.direction = .Left
             readingsListGet { () -> () in
                 articleListJSONGet(true, forceRefresh: false) { () -> () in
                     SwiftOverlays.removeAllBlockingOverlays()
@@ -168,8 +170,26 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         SwiftOverlays.removeAllBlockingOverlays()
     }
     
+    func swipeLeft(recognizer : UISwipeGestureRecognizer) {
+        if self.segmentedView.selectedIndex == 0 {
+            self.segmentedView.selectedIndex = 1
+            self.sideSwipeRecognizer?.direction = .Right
+            
+        } else {
+            self.segmentedView.selectedIndex = 0
+            self.sideSwipeRecognizer?.direction = .Left
+        }
+        self.segmentedView.displayNewSelectedIndex()
+        segmentedView.sendAction("handleSingleTap:", to: nil, forEvent: nil)
+    }
+    
     override func viewDidLoad() {
         SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
+        
+        sideSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeLeft:")
+        sideSwipeRecognizer!.direction = .Left
+        self.view.addGestureRecognizer(sideSwipeRecognizer!)
+        
         bottomBar = createBottomArticleListBar(self.view, playButton: playButton, playbackSpeedButton: playbackSpeedButton)
         self.bottomBar.snp_updateConstraints(closure: { (make) -> Void in
             make.height.equalTo(0)
@@ -241,7 +261,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
         segmentedView.snp_makeConstraints { (make) -> Void in
             make.left.right.equalTo(self.view)
             make.top.equalTo(self.view).offset(20)
-            make.height.equalTo(50)
+            make.height.equalTo(30)
         }
         
         tableView.snp_makeConstraints { (make) -> Void in
@@ -326,12 +346,20 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             }
             //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
             //        return cellHeight + 25 + 5 + 25 + 20 + 20
-            return cellHeight + 25 + 5 + 25 + 20
+            cellHeight = cellHeight + 25 + 5 + 25 + 20
+            if cellHeight < 100 {
+                cellHeight = 110
+            }
+            return cellHeight
         } else {
-            let cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
+            var cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
             //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
             //        return cellHeight + 25 + 5 + 25 + 20 + 20
-            return cellHeight + 25 + 5 + 25 + 20
+            cellHeight = cellHeight + 25 + 5 + 25 + 20
+            if cellHeight < 100 {
+                cellHeight = 110
+            }
+            return cellHeight
         }
     }
     

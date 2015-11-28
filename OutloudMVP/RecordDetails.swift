@@ -27,13 +27,19 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
     var intVoteCount = 1023
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     var scrollView: UIScrollView!
+    let titleView = UIView()
     
     override func viewDidAppear(animated: Bool) {
         self.tableView.reloadData()
+        navigationController?.navigationBarHidden = true
+    }
+    
+    func popView() {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     override func viewDidLoad() {
-        navigationController?.navigationBarHidden = false
+        navigationController?.navigationBarHidden = true
         self.title = ""
         
         let longpress = UILongPressGestureRecognizer(target: self, action: "longPressGestureRecognized:")
@@ -45,17 +51,57 @@ class RecordDetails: UIViewController, UITableViewDelegate, UITableViewDataSourc
         self.navigationItem.titleView = createNavigationTitleViewArticleDetail(false, title: "Hold a paragraph to start recording!", callback: { () -> Void in
         })
         
-        //        let bottomBar = createBottomRecordDetailBar(self.view)
+        let title = UILabel()
+        let sepBar = UIView()
+        let backButton = UIButton()
+        
+        title.text = "Hold a paragraph to start recording!"
+        title.textColor = redColor
+        title.textAlignment = .Center
+        
+        sepBar.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.15)
+        
+        backButton.setBackgroundImage(UIImage(named: "back"), forState: UIControlState.Normal)
+//        backButton.setTitle("<", forState: UIControlState.Normal)
+        backButton.addTarget(self, action: "popView", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(tableView)
+        self.view.addSubview(titleView)
+        titleView.addSubview(title)
+        titleView.addSubview(sepBar)
+        titleView.addSubview(backButton)
+        
         tableView.backgroundColor = backgroundColorAll
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .None
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Test")
         tableView.tableFooterView = UIView(frame: CGRect.zero)
+        
+        self.view.backgroundColor = UIColor.whiteColor()
+        titleView.snp_makeConstraints { (make) -> Void in
+            make.right.left.equalTo(self.view)
+            make.top.equalTo(self.view).offset(20)
+            make.height.equalTo(44)
+        }
         tableView.snp_makeConstraints { (make) -> Void in
-            make.left.right.top.bottom.equalTo(self.view)
+            make.top.equalTo(titleView.snp_bottom)
+            make.left.right.bottom.equalTo(self.view)
             //            make.bottom.equalTo(bottomBar.snp_top)
+        }
+        title.snp_makeConstraints { (make) -> Void in
+            make.left.equalTo(titleView.snp_left).offset(10)
+            make.right.equalTo(titleView).offset(-10)
+            make.centerY.equalTo(titleView)
+        }
+        sepBar.snp_makeConstraints { (make) -> Void in
+            make.left.right.bottom.equalTo(titleView)
+            make.height.equalTo(0.5)
+        }
+        backButton.snp_makeConstraints { (make) -> Void in
+            make.left.equalTo(titleView)
+            make.centerY.equalTo(titleView)
+            make.height.equalTo(40)
+            
         }
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

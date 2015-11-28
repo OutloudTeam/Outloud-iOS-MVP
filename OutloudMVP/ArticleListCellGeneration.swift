@@ -172,7 +172,7 @@ func generateArticleListListenCell(tableView: UITableView,indexPath: NSIndexPath
 //    articleOrigin.text = fullURLArray[1]
     articleIcon.image = UIImage(named: "parrot-load")
     downloadAndCacheImage(articleIcon, indexPath: indexPath)
-    
+    articleIcon.contentMode = .ScaleAspectFill
     
     articleIcon.snp_makeConstraints { (make) -> Void in
         
