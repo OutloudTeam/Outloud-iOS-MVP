@@ -164,10 +164,13 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     
     override func viewDidAppear(animated: Bool) {
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         currentTrackIndex = -1
         self.tableView.reloadData()
-        navigationController?.navigationBarHidden = true
         SwiftOverlays.removeAllBlockingOverlays()
+        navigationController?.navigationBarHidden = true
     }
     
     func swipeLeft(recognizer : UISwipeGestureRecognizer) {

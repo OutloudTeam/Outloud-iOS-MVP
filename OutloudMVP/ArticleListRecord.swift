@@ -31,10 +31,15 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidAppear(animated: Bool) {
 //        segmentedView.selectedIndex = 1
 //        segmentedView.displayNewSelectedIndex(0.0)
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         self.tableView.reloadData()
         navigationController?.navigationBarHidden = true
         SwiftOverlays.removeAllBlockingOverlays()
     }
+    
     func handleSingleTap(sender: UIButton) {
         //        let alert: UIAlertView = UIAlertView()
         //
