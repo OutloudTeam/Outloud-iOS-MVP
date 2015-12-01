@@ -67,7 +67,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                             noResultsLabel.textColor = UIColor.whiteColor()
                             
                             noResultsView.snp_makeConstraints(closure: { (make) -> Void in
-                                make.left.top.right.equalTo(self.view)
+                                make.left.right.equalTo(self.view)
+                                make.top.equalTo(self.segmentedView.snp_bottom)
                                 make.bottom.equalTo(self.bottomBar.snp_top)
                             })
                             noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
@@ -128,7 +129,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                             noResultsLabel.textColor = UIColor.whiteColor()
                             
                             noResultsView.snp_makeConstraints(closure: { (make) -> Void in
-                                make.left.top.right.equalTo(self.view)
+                                make.left.right.equalTo(self.view)
+                                make.top.equalTo(self.segmentedView.snp_bottom)
                                 make.bottom.equalTo(self.bottomBar.snp_top)
                             })
                             noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
@@ -234,7 +236,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                         noResultsLabel.textColor = UIColor.whiteColor()
                         
                         noResultsView.snp_makeConstraints(closure: { (make) -> Void in
-                            make.left.top.right.equalTo(self.view)
+                            make.left.right.equalTo(self.view)
+                            make.top.equalTo(self.segmentedView.snp_bottom)
                             make.bottom.equalTo(self.bottomBar.snp_top)
                         })
                         noResultsLabel.snp_makeConstraints(closure: { (make) -> Void in
