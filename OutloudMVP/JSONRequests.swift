@@ -69,6 +69,7 @@ func articleJSONGet(inout articleDictionary: Dictionary<String,AnyObject>, artic
         success()
     }
 }
+
 // MARK: - Generate article list from API
 func articleListJSONGet(read: Bool, forceRefresh: Bool, success:()->()) {
     var urlString = ""
