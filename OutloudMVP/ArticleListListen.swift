@@ -348,7 +348,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             if (ArticleListArray[indexPath.row].title != "") {
                 cellHeight = heightForJustifiedView(ArticleListArray[indexPath.row].title!, font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(ArticleListArray[indexPath.row].abstract!, font: articleListAbstractFont, width: (tableView.frame.width - 115))
             } else {
-                cellHeight = heightForJustifiedView("Title is being processed!", font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView("We are currently processing this recording!  Please have patience with us!", font: articleListAbstractFont, width: (tableView.frame.width - 115))
+                cellHeight = heightForJustifiedView("Title is being processed!", font: articleListTileFont, width: (tableView.frame.width - 115), lineSpace: 0) + heightForView(" ", font: articleListAbstractFont, width: (tableView.frame.width - 115))
             }
             //Height for title and abstract + height from top + space between title and abstract + space from abstract and height for rating + BOTTOM ROW FOR NYTIMES AND STUFF
             //        return cellHeight + 25 + 5 + 25 + 20 + 20
@@ -385,7 +385,8 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
             playButton.selected = false
             playbackSpeedButton.selected = false
             articleTitle.text = ArticleListArray[indexPath.row].title
-            articleTitle.textColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+            articleTitle.font = UIFont.systemFontOfSize(13, weight: UIFontWeightRegular);
+            articleTitle.textColor = UIColor.blackColor().colorWithAlphaComponent(0.6)
             transformIntoJustified(articleTitle, lineSpace: 1)
             
             getTrackURL(indexPath)
