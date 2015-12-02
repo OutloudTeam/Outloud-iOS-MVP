@@ -378,6 +378,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
                 make.height.equalTo(70)
             })
             if fileURL != nil {
+                // TODO - Have to implement a better check, currently crashes if we try to upload an audio file but quickly switch over and try to play it.
                 self.Readingplayer.stop()
             }
             playOrPause = false
@@ -502,7 +503,7 @@ class ArticleListListen: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         playOrPause = false
-        playButton.setBackgroundImage(UIImage(named: "play-button"), forState: .Normal)
+        playButton.selected = false
     }
     
     func playFile() {
