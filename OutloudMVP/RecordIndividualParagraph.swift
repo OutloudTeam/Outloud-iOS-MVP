@@ -307,6 +307,7 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 1 {
+            self.navigationController?.navigationBarHidden = true
             self.navigationController?.popViewControllerAnimated(true)
         }
     }
