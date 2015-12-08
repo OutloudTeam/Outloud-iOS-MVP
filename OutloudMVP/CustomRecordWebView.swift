@@ -13,7 +13,7 @@ import AVFoundation
 import Foundation
 import Alamofire
 
-class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate, UIGestureRecognizerDelegate {
+class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate {
     let webView = UIWebView()
     let backgroundView = UIView()
     let initialURL = "http://google.com"
@@ -56,8 +56,27 @@ class CustomRecordWebView: UIViewController, AVAudioPlayerDelegate, UIGestureRec
         }
     }
     
+    func backButtonPressed() {
+        let alertView = UIAlertView(title: "Confirmation", message: "By going back, you'll lose all recordings, are you sure you want to continue?", delegate: self, cancelButtonTitle: "No, I'm not finished", otherButtonTitles: "Yes, I understand")
+        alertView.show()
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if buttonIndex == 1 {
+            self.navigationController?.navigationBarHidden = true
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+    }
+    
     override func viewDidLoad() {
+        
         navigationController?.navigationBarHidden = false
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back"), style: .Done, target: self, action: "backButtonPressed")
+        self.navigationItem.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: 5, left: -15, bottom: 5, right: 15)
+        
+        
+        
         tapRecognizer = UITapGestureRecognizer(target: self, action: "tapAction:")
         tapRecognizer?.numberOfTapsRequired = 1
         tapRecognizer?.delegate = self
