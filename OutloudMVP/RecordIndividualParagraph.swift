@@ -206,7 +206,7 @@ class Recorder {
     
 }
 
-class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
+class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate, UIAlertViewDelegate {
     let backwardButton = UIButton(type: UIButtonType.System) as UIButton
     let forwardButton = UIButton(type: UIButtonType.System) as UIButton
     let forwardParagraphLabel = UILabel()
@@ -296,11 +296,26 @@ class RecordIndividualParagraph: UIViewController, UITableViewDelegate, UITableV
     var playerTimer : NSTimer!
     var audioFiles : NSMutableArray!
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = false
+    }
+    
+    func backButtonPressed() {
+        let alertView = UIAlertView(title: "Confirmation", message: "By going back, you'll lose all recordings, are you sure you want to continue?", delegate: self, cancelButtonTitle: "No, I'm not finished", otherButtonTitles: "Yes, I understand")
+        alertView.show()
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if buttonIndex == 1 {
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+    }
+    
     override func viewDidLoad() {
-                navigationController?.navigationBarHidden = false
-        // debug
         
-        // end debug
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back"), style: .Done, target: self, action: "backButtonPressed")
+        self.navigationItem.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: 5, left: -15, bottom: 5, right: 15)
         
         // Clear all previous recordings
         let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]

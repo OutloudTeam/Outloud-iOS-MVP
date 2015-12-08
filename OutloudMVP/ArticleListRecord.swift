@@ -27,16 +27,9 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
     var tableView = UITableView(frame: CGRectMake(100, 100, 100, 100), style: .Grouped)
     let playAllButton = UIButton(type: UIButtonType.System) as UIButton
     
-    
-    override func viewDidAppear(animated: Bool) {
-//        segmentedView.selectedIndex = 1
-//        segmentedView.displayNewSelectedIndex(0.0)
-
-    }
-    
     override func viewWillAppear(animated: Bool) {
-        self.tableView.reloadData()
         navigationController?.navigationBarHidden = true
+        self.tableView.reloadData()
         SwiftOverlays.removeAllBlockingOverlays()
     }
     
@@ -55,7 +48,7 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         })
     }
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        let buttonTitle = alertView.buttonTitleAtIndex(buttonIndex)
+        _ = alertView.buttonTitleAtIndex(buttonIndex)
         print("\(buttonIndex) pressed")
         if buttonIndex == 0 {
             print("Listen was clicked")
@@ -74,7 +67,6 @@ class ArticleListRecord: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     override func viewDidLoad() {
-        navigationController?.navigationBarHidden = true
         self.view.backgroundColor = UIColor.whiteColor()
         SwiftOverlays.showBlockingWaitOverlayWithText("Loading!")
 //        self.navigationItem.titleView = createNavigationTitleViewArticleListRecordSingleTitle(listenContainer, title: "Record", callback: { () -> Void in
